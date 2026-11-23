@@ -22,6 +22,12 @@ SRC_DIR <- file.path(REPO_ROOT, "src")
 SOURCE_URL <- "https://github.com/FluSightNetwork/cdc-flusight-ensemble"
 SOURCE_MASTER_SHA <- "8c3100af015cae2fb43db823c3f61e7e6a7d59ea"  # master HEAD, 2020-05-04
 
+# Second source: CDC's FluSight submissions, for FluSight-unweighted_avg 2018/19-2019/20 only
+# (create with: git clone --mirror https://github.com/cdcepi/FluSight-forecasts.git .cache/FluSight-forecasts.git)
+CDC_GIT <- Sys.getenv("FSN_CDC_GIT", file.path(REPO_ROOT, ".cache", "FluSight-forecasts.git"))
+CDC_URL <- "https://github.com/cdcepi/FluSight-forecasts"
+CDC_MASTER_SHA <- "b1ac38304cf07d8cdae7f96d7e384a2201a292e7"     # master HEAD, 2026-05-08
+
 dir.create(WORK_DIR, recursive = TRUE, showWarnings = FALSE)
 dir.create(VALIDATION_DIR, recursive = TRUE, showWarnings = FALSE)
 
@@ -34,7 +40,26 @@ git <- function(..., stdout = TRUE) {
   out
 }
 
+git_cdc <- function(...) {
+  args <- c("--git-dir", CDC_GIT, ...)
+  out <- suppressWarnings(system2("git", shQuote(args), stdout = TRUE, stderr = FALSE))
+  status <- attr(out, "status")
+  if (!is.null(status) && status != 0) stop("git failed: git ", paste(args, collapse = " "))
+  out
+}
+
+# Contents of a source blob, from whichever source repository holds it (FSN first, then CDC).
+git_blob <- function(blob) {
+  for (g in c(SOURCE_GIT, CDC_GIT)) {
+    ok <- suppressWarnings(system2("git", shQuote(c("--git-dir", g, "cat-file", "-e", blob)), stdout = FALSE, stderr = FALSE))
+    if (ok == 0) return(suppressWarnings(system2("git", shQuote(c("--git-dir", g, "cat-file", "-p", blob)), stdout = TRUE)))
+  }
+  stop("blob not found in either source repository: ", blob)
+}
+
 stopifnot_source <- function() {
+  if (!dir.exists(CDC_GIT)) stop("CDC source mirror not found at ", CDC_GIT)
+  if (git_cdc("rev-parse", "refs/heads/master") != CDC_MASTER_SHA) stop("CDC source master is not ", CDC_MASTER_SHA)
   if (!dir.exists(SOURCE_GIT)) stop("Source mirror not found at ", SOURCE_GIT)
   head <- git("rev-parse", "refs/heads/master")
   if (head != SOURCE_MASTER_SHA) {

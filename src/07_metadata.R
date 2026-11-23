@@ -3,7 +3,9 @@
 # Outputs (committed):
 #   model-metadata/<model_id>.yml
 #   auxiliary-data/original-point-forecasts.parquet   source Point rows, unchanged
-#   auxiliary-data/file-provenance.csv                one row per model-output file
+#   auxiliary-data/file-provenance.csv                one row per model-output file (with is_real_time)
+#   auxiliary-data/superseded-forecasts.parquet       training versions replaced by a different real-time version
+#   validation/ensemble-components.csv                FSN ensemble components per operational season
 #   excluded_output/excluded-forecasts.parquet         every excluded pmf row, with reason
 #   validation/changes.parquet                        every renormalised/excluded forecast
 #   validation/conversion-stats.csv                   per-file row accounting
@@ -32,12 +34,41 @@ setorder(changes, model_id, origin_date, location, target)
 write_parquet(changes, file.path(VALIDATION_DIR, "changes.parquet"))
 fwrite_csv(stats, "conversion-stats.csv")
 
-prov <- fm[, .(model_id, record, origin_date, season, output_file, source_path = path, source_blob = blob,
+prov <- fm[, .(model_id, record, is_real_time, origin_date, season, output_file, source_repo, source_path = path, source_blob = blob,
                source_commit = commit, source_author_date = author_date, selection, lag_days,
-               week_rolled_over, year_corrected, from_unmerged_pr, duplicate_of, train_vs_realtime)]
+               week_rolled_over, year_corrected, from_unmerged_pr, duplicate_of)]
 prov[, source_file := basename(source_path)]
 fwrite(prov, file.path(REPO_ROOT, "auxiliary-data", "file-provenance.csv"))
 message("wrote auxiliary-data/file-provenance.csv (", nrow(prov), " rows)")
+
+# ---- superseded training versions: kept unchanged (standardised source rows) ----------------------------
+sup <- fread(file.path(VALIDATION_DIR, "file-map-superseded.csv"))
+sup_rows <- rbindlist(lapply(seq_len(nrow(sup)), function(i) {
+  d <- as.data.table(read_parquet(file.path(WORK_DIR, "std", paste0(sup$blob[i], ".parquet"))))
+  d[, .(model_id = sup$model_id[i], origin_date = as.Date(sup$origin_date[i]), location, target, type, unit,
+        bin_start_raw, bin_end_raw, value_raw, value, source_row = row_id, source_path = sup$path[i], source_blob = sup$blob[i],
+        replaced_by_blob = sup$replaced_by_blob[i])]
+}))
+write_parquet(sup_rows, file.path(REPO_ROOT, "auxiliary-data", "superseded-forecasts.parquet"))
+message("wrote auxiliary-data/superseded-forecasts.parquet (", nrow(sup), " files, ", nrow(sup_rows), " rows)")
+
+# ---- FSN ensemble components per operational season (from FSN's weights at each build) -----------------
+vers <- fread(file.path(SRC_DIR, "model_versions.csv"))
+v_rt <- vers[, .(season = strsplit(real_time_seasons, ";", fixed = TRUE)[[1]]), by = .(dir, version_id)]
+WEIGHT_BUILDS <- c("2017/2018" = "76d9a33f62036fb9ac7ffc8a5fb03cc490409660",   # 2017-11-04
+                   "2018/2019" = "c1d19274",                                     # 2018-10-23
+                   "2019/2020" = "3b73e337")                                     # 2019-10-25
+ens_comp <- rbindlist(lapply(names(WEIGHT_BUILDS), function(s) {
+  c0 <- WEIGHT_BUILDS[[s]]
+  w <- fread(text = git("show", paste0(c0, ":weights/constant-weights.csv")))
+  idm <- fread(text = git("show", paste0(c0, ":model-forecasts/component-models/model-id-map.csv")))
+  setnames(idm, c("fsn_id", "dir", "complete")[seq_along(names(idm))])
+  data.table(season = s, fsn_id = unique(w$component_model_id))[idm, on = "fsn_id", dir := i.dir][, build_commit := c0]
+}))
+ens_comp[, model_id := ids[match(ens_comp$dir, ids$dir), realtime_id]]
+ens_comp[v_rt, on = .(dir, season), model_id := i.version_id]
+stopifnot(!anyNA(ens_comp$model_id), all(ens_comp$model_id %in% fm$model_id))
+fwrite_csv(ens_comp[, .(season, fsn_component_id = fsn_id, source_dir = dir, model_id, build_commit)], "ensemble-components.csv")
 
 # ---- model metadata ----------------------------------------------------------------------------------
 meta_txt <- function(collection, dir) {
@@ -50,37 +81,50 @@ meta_txt <- function(collection, dir) {
   tryCatch(yaml.load(paste(txt, collapse = "\n")), error = function(e) NULL)
 }
 
-src_dirs <- unique(fm[, .(model_id, record, dir_key, path)])
-src_dirs[, collection := tstrsplit(path, "/", fixed = TRUE)[[2]]]
-src_dirs[, dir := sub("^model-forecasts/[^/]+/", "", dirname(path))]
+src_dirs <- unique(fm[, .(model_id, dir_key, path, source_repo)])
+src_dirs[, fsn := source_repo == SOURCE_URL]
+src_dirs[fsn == TRUE, `:=`(collection = tstrsplit(path, "/", fixed = TRUE)[[2]], dir = sub("^model-forecasts/[^/]+/", "", dirname(path)))]
+src_dirs[fsn == FALSE, `:=`(collection = NA_character_, dir = paste0(sub("^https://github.com/", "", source_repo), ": ", dirname(path)))]
+src_dirs[, label := fifelse(fsn, paste0(collection, "/", dir), dir)]
 
-pair_of <- function(id, rec) {
+pair_of <- function(id) {
   if (endsWith(id, "_cv_repaired")) return(sub("_repaired$", "", id))
-  if (endsWith(id, "_cv") && paste0(id, "_repaired") %in% fm$model_id) return(paste0(id, "_repaired"))
-  base <- sub("_(train|cv)$", "", id)
-  cands <- if (rec == "real-time") c(paste0(base, "_train"), paste0(base, "_cv")) else base
-  hit <- intersect(cands, unique(fm$model_id)); if (length(hit)) hit[1] else NULL
+  if (endsWith(id, "_cv")) return(intersect(c(paste0(id, "_repaired"), sub("_cv$", "", id)), unique(fm$model_id))[1])
+  if (startsWith(id, "FSNetwork-") && paste0(id, "_cv") %in% fm$model_id) return(paste0(id, "_cv"))
+  NULL
 }
+seasons_of <- function(x) as.list(sort(unique(x)))
 
 write_meta <- function(id) {
   x <- src_dirs[model_id == id]
-  rec <- x$record[1]
-  is_rep <- endsWith(id, "_cv_repaired")
+  f <- fm[model_id == id]
+  is_rep <- endsWith(id, "_cv_repaired"); is_cv <- grepl("_cv(_repaired)?$", id); is_ens <- startsWith(id, "FSNetwork-")
+  vv <- vers[version_id == id]
   m <- NULL
-  for (k in seq_len(nrow(x))) { m <- meta_txt(x$collection[k], x$dir[k]); if (!is.null(m)) break }
+  for (k in which(x$fsn)) { m <- meta_txt(x$collection[k], x$dir[k]); if (!is.null(m)) break }
   if (is.null(m)) { cand <- unique(x$dir_key); for (cl in c("component-models", "real-time-component-models",
                     "cv-ensemble-models", "real-time-ensemble-models")) for (dd in cand) if (is.null(m)) m <- meta_txt(cl, dd) }
   parts <- strsplit(id, "-", fixed = TRUE)[[1]]
   note <- ids[dir %in% x$dir_key, paste(unique(na.omit(note)), collapse = "; ")]
   members <- if (!is.null(m$team_members)) trimws(strsplit(gsub("'", "", m$team_members), ",")[[1]]) else character()
+  n_late <- f[record == "late", .N]; n_rt <- f[is_real_time == TRUE, .N]
+  kind_note <- if (is_cv) "Leave-one-season-out cross-validated ensemble built by FSN before the 2019/20 season; not real-time."
+    else if (is_ens) "FSN real-time ensemble forecasts (for the ensemble FSN submitted to CDC, the submitted file)."
+    else paste0("One model ID holding every round of this model: ", n_rt, " real-time forecasts and ",
+                nrow(f) - n_rt, " forecasts not made in real time (FSN training backcasts",
+                if (n_late) paste0(", and ", n_late, " real-time-folder files committed after the cutoff") else "",
+                "). The per-round flag is is_real_time in auxiliary-data/file-provenance.csv.")
   out <- list(
     team_abbr = parts[1], model_abbr = parts[2],
     team_name = m$team_name %||% NA, model_name = m$model_name %||% NA,
     model_contributors = lapply(members, function(n) list(name = n)),
-    forecast_mode = rec,
-    paired_model_id = pair_of(id, rec),
-    source_dirs = as.list(sort(unique(paste0(x$collection, "/", x$dir)))),
-    seasons = as.list(sort(unique(fm[model_id == id, season]))),
+    real_time_seasons = seasons_of(f[is_real_time == TRUE, season]),
+    fsn_ensemble_component_seasons = if (!is_ens && nrow(ens_comp[model_id == id])) seasons_of(ens_comp[model_id == id, season]) else NULL,
+    version_of = if (nrow(vv)) ids[dir == vv$dir, realtime_id] else NULL,
+    version_note = if (nrow(vv)) vv$version_note else NULL,
+    paired_model_id = pair_of(id),
+    source_dirs = as.list(sort(unique(x$label))),
+    seasons = seasons_of(f$season),
     this_model_is_an_ensemble = isTRUE(as.logical(m$this_model_is_an_ensemble)),
     real_time_start_season = if (is.null(m$real_time_start_season)) NULL else as.character(m$real_time_start_season),
     methods = if (is.null(m$methods)) NULL else trimws(m$methods),
@@ -91,16 +135,18 @@ write_meta <- function(id) {
                                       "FSN's stacking code dropped other models' probability for the last week of the year (week 52; week 53 in 2014/15)",
                                       "because CU-BMA labels that bin's end differently. Only that bin is recomputed, from FSN's own components and weights;",
                                       "all other values are identical to the original (see validation/cv-repair.csv)."),
-                    switch(rec,
-                      "real-time" = "Real-time record: forecasts as submitted (last version committed by the due date + 3 days). Do not combine with _train/_cv IDs.",
-                      "training" = "Training record: the series held in component-models/ (training pin 2019-10-25 unless noted). Includes copies of real-time files; do not combine with plain IDs.",
-                      "cross-validated" = "Leave-one-season-out cross-validated ensemble built by FSN from the _train components. Do not combine with plain IDs.")),
+                    kind_note,
+                    if (id == "FluSight-unweighted_avg") paste("CDC's unweighted average of FluSight submissions. 2015/16-2017/18 from FSN's copies;",
+                      "2018/19-2019/20 from CDC's originals in cdcepi/FluSight-forecasts (CC BY 4.0). FSN's 2016/17-2017/18 copies are",
+                      "byte-identical to CDC's; FSN's 2015/16 copies use the one-decimal bins, unlike CDC's 2015/16 originals.")),
                   collapse = " "))
   out <- Filter(function(v) !is.null(v) && !(length(v) == 1 && is.na(v)), out)
-  write_yaml(out, file.path(REPO_ROOT, "model-metadata", paste0(id, ".yml")))
+  write_yaml(out, file.path(REPO_ROOT, "model-metadata", paste0(id, ".yml")), handlers = list(
+    logical = function(v) { r <- ifelse(v, "true", "false"); class(r) <- "verbatim"; r }))
   data.table(model_id = id, has_source_metadata = !is.null(m))
 }
 `%||%` <- function(a, b) if (is.null(a)) b else a
+unlink(list.files(file.path(REPO_ROOT, "model-metadata"), pattern = "\\.yml$", full.names = TRUE))
 mm <- rbindlist(lapply(sort(unique(fm$model_id)), write_meta))
 cat("model metadata files:", nrow(mm), " without source metadata.txt:", mm[has_source_metadata == FALSE, .N], "\n")
 print(mm[has_source_metadata == FALSE])

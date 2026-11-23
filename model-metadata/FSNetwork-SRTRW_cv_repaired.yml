@@ -6,7 +6,7 @@ model_contributors:
 - name: Nutcha Wattanachit
 - name: Thomas McAndrew
 - name: Nicholas G. Reich
-forecast_mode: cross-validated
+real_time_seasons: []
 paired_model_id: FSNetwork-SRTRW_cv
 source_dirs:
 - cv-ensemble-models/static-regularized-target-region-weights
@@ -20,16 +20,15 @@ seasons:
 - 2016/2017
 - 2017/2018
 - 2018/2019
-this_model_is_an_ensemble: yes
+this_model_is_an_ensemble: true
 methods: This is an ensemble of stacked entries from all component models. We use
   a variational inference algorithm to shrink target-and-region specific weights towards
   an equal weighted average.
 data_inputs: other models
-designated_model: no
+designated_model: false
 notes: 'REPAIRED copy of FSNetwork-SRTRW_cv (user decision 2026-11-23: keep original
   and revised). FSN''s stacking code dropped other models'' probability for the last
   week of the year (week 52; week 53 in 2014/15) because CU-BMA labels that bin''s
   end differently. Only that bin is recomputed, from FSN''s own components and weights;
   all other values are identical to the original (see validation/cv-repair.csv). Leave-one-season-out
-  cross-validated ensemble built by FSN from the _train components. Do not combine
-  with plain IDs.'
+  cross-validated ensemble built by FSN before the 2019/20 season; not real-time.'

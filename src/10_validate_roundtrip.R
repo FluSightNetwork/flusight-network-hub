@@ -29,7 +29,7 @@ tmap <- c("1 wk ahead" = "ili perc", "2 wk ahead" = "ili perc", "3 wk ahead" = "
 check_one <- function(i) {
   r <- fm[i]; origin <- as.Date(r$origin_date)
   # repaired cv files: start from FSN's original blob, then apply the logged week-52/53 repairs
-  src <- fread(text = git("cat-file", "-p", sub("^repaired-", "", r$blob)), colClasses = "character", na.strings = NULL)
+  src <- fread(text = git_blob(sub("^repaired-", "", r$blob)), colClasses = "character", na.strings = NULL)
   setnames(src, tolower(trimws(names(src))))
   src <- src[trimws(type) == "Bin"]
   src[, `:=`(location = trimws(location), target = trimws(target), v = as.numeric(trimws(value)))]
@@ -97,9 +97,9 @@ res[is.na(ok) | ok == TRUE, ok := src_rows_unmatched == 0 & hub_rows_without_sou
 
 # ---- duplicates are byte-identical -------------------------------------------------------------
 dups <- fm[!is.na(duplicate_of) & duplicate_of != ""]
-dups[, c("dup_model", "dup_origin") := tstrsplit(duplicate_of, " ", fixed = TRUE)]
+dups[, `:=`(dup_model = sub(" .*$", "", duplicate_of), dup_origin = sub("^.* ", "", duplicate_of))]
 dups[, dup_file := sprintf("model-output/%s/%s-%s.parquet", dup_model, dup_origin, dup_model)]
-dups[, identical_bytes := md5sum(output_file) == md5sum(dup_file)]
+dups[, identical_bytes := if (.N) md5sum(output_file) == md5sum(dup_file) else logical()]
 
 fwrite_csv(res, "roundtrip.csv")
 fwrite_csv(dups[, .(model_id, origin_date, output_file, duplicate_of, dup_file, identical_bytes)], "duplicate-check.csv")

@@ -1,0 +1,3 @@
+model_id,origin_date,season,path,blob,commit,author_date,selection,replaced_by_blob
+CU-EAKFC_SIRS,2018-12-08,2018/2019,model-forecasts/component-models/CU_EAKFC_SIRS/EW49-2018-CU_EAKFC_SIRS.csv,115309d8a7a7a29e48b08afdd366788bee751910,5d097889a8b8e62f346f0d99079dacbdce5979b1,2019-10-18T10:58:06-04:00,state at training pin,4774f25c15c6fe8d61b432319cc26b875168572b
+ReichLab-KCDE,2019-03-02,2018/2019,model-forecasts/component-models/ReichLab_kcde/EW09-2019-ReichLab_kcde.csv,0dd62621bfdae192b511b0f0665c73ceaef4480a,903e82079300239fb90ffb3808909d9aa3a59bd0,2019-10-15T21:47:12-04:00,last state before removal,783fff740d7f05ff0d54eb3ffad594d38504e380

@@ -2,9 +2,9 @@
 
 A [hubverse](https://hubverse.io)-format archive of the influenza forecasts collected by the
 [FluSight Network](https://github.com/FluSightNetwork/cdc-flusight-ensemble) (FSN) for the
-2010/11–2019/20 US influenza seasons: 30+ component models and the FSN collaborative ensembles,
-both as **real-time** submissions (2017/18–2019/20) and as the **training** (out-of-sample backcast)
-series used to fit ensemble weights.
+2010/11–2019/20 US influenza seasons: 30+ component models, each with its **real-time** submissions
+(2017/18–2019/20) and the **training** (out-of-sample backcast) series used to fit ensemble weights,
+the FSN collaborative ensembles, and CDC's unweighted average of FluSight submissions.
 
 > **Status:** under construction. This repository is being filled in a sequence of pull requests:
 > (1) hub setup, pipeline and validation; (2) target data and auxiliary data; (3) model output, in
@@ -35,28 +35,38 @@ file names).
   scale; 13.0 where it falls in the open bin. Only for weekly `ili perc`, as in the current CDC
   FluSight hub. The original points are kept unchanged in `auxiliary-data/`.
 
-## Two records: real-time and training — do not mix them
+## Model IDs and real-time forecasts
 
-| Model ID | Record | Contents |
-|---|---|---|
-| `<team>-<model>` | real-time | forecasts as submitted in real time (2017/18–2019/20) |
-| `<team>-<model>_train` | training | the model's 2010/11–2018/19 series as FSN held it in `component-models/` (backcasts plus copies of real-time files) |
-| `FSNetwork-<ABBR>` | real-time | FSN ensembles; for the ensemble sent to CDC, the file actually submitted |
-| `FSNetwork-<ABBR>_cv` | cross-validated | leave-one-season-out ensembles, exactly as FSN built them |
-| `FSNetwork-<ABBR>_cv_repaired` | cross-validated | the same, with FSN's week-52 stacking bug repaired (see below) |
+| Model ID | Contents |
+|---|---|
+| `<team>-<model>` | every round of a component model: real-time forecasts where they exist, FSN's training backcasts otherwise |
+| `<team>-<model>1`, `…2` | one ID per version, for models retrained between seasons (`CU-BMA`, `Protea-Cheetah/Kudu/Springbok`) |
+| `FluSight-unweighted_avg` | CDC's unweighted average of FluSight submissions, 2015/16–2019/20 (real-time) |
+| `FSNetwork-<ABBR>` | FSN real-time ensembles; for the ensemble sent to CDC, the file actually submitted |
+| `FSNetwork-<ABBR>_cv` | leave-one-season-out ensembles from FSN's 2019/20 build, exactly as FSN built them |
+| `FSNetwork-<ABBR>_cv_repaired` | the same, with FSN's week-52 stacking bug repaired (see below) |
 
-**Never combine plain IDs with `_train` / `_cv` IDs in one analysis**: ~1,100 training files are
-byte-identical copies of real-time files, so the same forecast would be counted twice. Use plain IDs
-for real-time evaluation and `_train` + `_cv` for training / cross-validation work. Each model's
-metadata (`model-metadata/`) gives its `forecast_mode` and paired ID.
+**Which forecasts were made in real time?** Each model's metadata lists its `real_time_seasons`, and
+`auxiliary-data/file-provenance.csv` has an exact `is_real_time` flag for every file. For real-time
+evaluation, filter on `is_real_time`; for ensemble training, use all rounds.
 
-- **Real-time** means first committed to the FSN repository no more than 3 days after the FluSight
-  due date (the Monday 9 days after `origin_date`); the last version committed by then is used.
-  Forecasts committed later are not in the real-time record.
-- **Training** is pinned to the 2019-10-25 commit from which FSN built its cross-validated ensembles
-  and 2019/20 weights (exception: the ReichLab `kcde_backfill` models use their 2019-10-26 re-run).
-  Models FSN later removed (e.g. Delphi `…_PD`, LANL-DBM, UTAustin-edm, ReichLab-KCDE) are included
-  at their last state; they are the components of the 2017/18 real-time ensemble.
+- **Real-time** means first committed to the FSN repository (or CDC's, for the unweighted average) no
+  more than 3 days after the FluSight due date (the Monday 9 days after `origin_date`); the last version
+  committed by then is used.
+- **Training backcasts** are FSN's `component-models/` series as of the 2019-10-25 commit from which FSN
+  built its cross-validated ensembles and 2019/20 weights (exception: the ReichLab `kcde_backfill` models
+  use their 2019-10-26 re-run). Models FSN later removed (e.g. Delphi `…_PD`, LANL-DBM, UTAustin-edm,
+  ReichLab-KCDE) are included at their last state.
+- **One version of each forecast.** Where FSN's training copy of a round is identical to the real-time
+  file, it is not repeated. Where it differs (2 files), the real-time file is used and the training
+  version is kept unchanged in `auxiliary-data/superseded-forecasts.parquet`. A few rounds exist only as
+  real-time-folder files committed after the cutoff; they are included with `is_real_time = FALSE`.
+- **Versions.** CU-BMA and the three Protea models were retrained before the 2019/20 season. Version 1
+  holds the original backcasts plus the 2017/18–2018/19 (CU) or 2018/19 (Protea) real-time forecasts;
+  version 2 holds the retrained backcasts plus 2019/20. Metadata `fsn_ensemble_component_seasons`
+  records which seasons' FSN ensembles each model (version) was a component of.
+- **Do not combine `FSNetwork-<ABBR>` with `_cv` IDs** for the same season: the cv files are FSN's later
+  re-creation of forecasts the real-time ensembles had already made.
 
 ## Changes made to the source data
 
@@ -92,8 +102,10 @@ output: 1 for the observed bin, 0 otherwise; observed value for medians), keyed 
 library(hubData)
 hub <- connect_hub("path/to/flusight-network-hub", file_format = "parquet")
 hub |> dplyr::filter(target == "ili perc", output_type == "pmf",
-                     !grepl("_(train|cv|cv_repaired)$", model_id)) |>   # real-time record only
+                     !grepl("_cv", model_id)) |>
   hubData::collect_hub()
+prov <- read.csv("path/to/flusight-network-hub/auxiliary-data/file-provenance.csv")
+# keep real-time forecasts only: semi-join on model_id + origin_date where prov$is_real_time
 ```
 
 Known tool limitations (see `src/11_smoke_modelimportance.R`):
@@ -112,7 +124,7 @@ Known tool limitations (see `src/11_smoke_modelimportance.R`):
 | `model-output/` | one parquet file per model and round *(added in later PRs)* |
 | `model-metadata/` | one YAML file per model ID |
 | `target-data/` | time series and oracle output *(PR 2)* |
-| `auxiliary-data/` | original point forecasts, file provenance, ILINet snapshots *(PR 2)* |
+| `auxiliary-data/` | original point forecasts, file provenance (`is_real_time`), superseded forecasts, ILINet snapshots *(PR 2)* |
 | `excluded_output/` | forecasts excluded by the quality rules *(with model output)* |
 | `src/` | the conversion pipeline (see `src/README.md`) |
 | `validation/` | manifests, file map, change logs and check results |
@@ -121,7 +133,9 @@ Known tool limitations (see `src/11_smoke_modelimportance.R`):
 ## Source and licence
 
 Source: [FluSightNetwork/cdc-flusight-ensemble](https://github.com/FluSightNetwork/cdc-flusight-ensemble)
-(master `8c3100af`, 2020-05-04, plus earlier versions from its full git history). This repository is
+(master `8c3100af`, 2020-05-04, plus earlier versions from its full git history), and, for
+FluSight-unweighted_avg 2018/19–2019/20, [cdcepi/FluSight-forecasts](https://github.com/cdcepi/FluSight-forecasts)
+(master `b1ac3830`, CC BY 4.0). This repository is
 licensed [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/), as is the source (see [`LICENSE`](LICENSE)).
 Related archive: [hubverse-org/flusight_hub_archive](https://github.com/hubverse-org/flusight_hub_archive)
 (CDC FluSight submissions, 2015/16–2019/20).

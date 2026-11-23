@@ -1,11 +1,11 @@
 item,model_id,origin_date,path,detail
-selected file has week number past year end (rolled over),CU-BMA,2018-01-06,model-forecasts/real-time-component-models/CUBMA/EW53-2017-CUBMA.csv,""
-selected file has week number past year end (rolled over),CU-BMA,2019-01-05,model-forecasts/real-time-component-models/CUBMA/EW53-2018-CUBMA.csv,""
-selected file has week number past year end (rolled over),CU-BMA,2019-01-12,model-forecasts/real-time-component-models/CUBMA/EW54-2018-CUBMA.csv,""
-selected file has week number past year end (rolled over),CU-BMA,2019-01-19,model-forecasts/real-time-component-models/CUBMA/EW55-2018-CUBMA.csv,""
-selected file has week number past year end (rolled over),CU-BMA,2020-03-07,model-forecasts/real-time-component-models/CUBMA/EW62-2019-CUBMA.csv,""
-selected file has week number past year end (rolled over),CU-BMA,2020-03-14,model-forecasts/real-time-component-models/CUBMA/EW63-2019-CUBMA.csv,""
-selected file has week number past year end (rolled over),CU-BMA,2020-03-28,model-forecasts/real-time-component-models/CUBMA/EW65-2019-CUBMA.csv,""
+selected file has week number past year end (rolled over),CU-BMA1,2018-01-06,model-forecasts/real-time-component-models/CUBMA/EW53-2017-CUBMA.csv,""
+selected file has week number past year end (rolled over),CU-BMA1,2019-01-05,model-forecasts/real-time-component-models/CUBMA/EW53-2018-CUBMA.csv,""
+selected file has week number past year end (rolled over),CU-BMA1,2019-01-12,model-forecasts/real-time-component-models/CUBMA/EW54-2018-CUBMA.csv,""
+selected file has week number past year end (rolled over),CU-BMA1,2019-01-19,model-forecasts/real-time-component-models/CUBMA/EW55-2018-CUBMA.csv,""
+selected file has week number past year end (rolled over),CU-BMA2,2020-03-07,model-forecasts/real-time-component-models/CUBMA/EW62-2019-CUBMA.csv,""
+selected file has week number past year end (rolled over),CU-BMA2,2020-03-14,model-forecasts/real-time-component-models/CUBMA/EW63-2019-CUBMA.csv,""
+selected file has week number past year end (rolled over),CU-BMA2,2020-03-28,model-forecasts/real-time-component-models/CUBMA/EW65-2019-CUBMA.csv,""
 selected file has week number past year end (rolled over),CU-EAKFC_SEIRS,2018-01-06,model-forecasts/real-time-component-models/CU_EAKFC_SEIRS/EW53-2017-CU_EAKFC_SEIRS.csv,""
 selected file has week number past year end (rolled over),CU-EAKFC_SEIRS,2019-01-05,model-forecasts/real-time-component-models/CU_EAKFC_SEIRS/EW53-2018-CU_EAKFC_SEIRS.csv,""
 selected file has week number past year end (rolled over),CU-EAKFC_SEIRS,2019-01-12,model-forecasts/real-time-component-models/CU_EAKFC_SEIRS/EW54-2018-CU_EAKFC_SEIRS.csv,""
@@ -93,9 +93,28 @@ not real-time: first committed after cutoff (due date + 3 days),UTAustin-edm,201
 not real-time: first committed after cutoff (due date + 3 days),UTAustin-edm,2018-01-20,model-forecasts/real-time-component-models/UTAustin_edm/EW03-2018-UTAustin_edm.csv,"first commit 2018-02-19, 30 d after origin"
 not real-time: first committed after cutoff (due date + 3 days),UTAustin-edm,2018-01-27,model-forecasts/real-time-component-models/UTAustin_edm/EW04-2018-UTAustin_edm.csv,"first commit 2018-02-19, 23 d after origin"
 not real-time: first committed after cutoff (due date + 3 days),UTAustin-edm,2018-02-03,model-forecasts/real-time-component-models/UTAustin_edm/EW05-2018-UTAustin_edm.csv,"first commit 2018-02-19, 16 d after origin"
-real-time file from an unmerged pull request (included),CU-BMA,2020-04-04,model-forecasts/real-time-component-models/CUBMA/EW14-2020-CUBMA.csv,""
-real-time file from an unmerged pull request (included),CU-BMA,2020-04-11,model-forecasts/real-time-component-models/CUBMA/EW15-2020-CUBMA.csv,""
-real-time file from an unmerged pull request (included),CU-BMA,2020-04-18,model-forecasts/real-time-component-models/CUBMA/EW16-2020-CUBMA.csv,""
+late real-time file used (no other version; is_real_time = FALSE),CU-BMA2,2019-10-05,model-forecasts/real-time-component-models/CUBMA/EW40-2019-CUBMA.csv,""
+late real-time file used (no other version; is_real_time = FALSE),CU-EAKFC_SEIRS,2019-10-05,model-forecasts/real-time-component-models/CU_EAKFC_SEIRS/EW40-2019-CU_EAKFC_SEIRS.csv,""
+late real-time file used (no other version; is_real_time = FALSE),CU-EAKFC_SIRS,2019-10-05,model-forecasts/real-time-component-models/CU_EAKFC_SIRS/EW40-2019-CU_EAKFC_SIRS.csv,""
+late real-time file used (no other version; is_real_time = FALSE),CU-EKF_SEIRS,2019-10-05,model-forecasts/real-time-component-models/CU_EKF_SEIRS/EW40-2019-CU_EKF_SEIRS.csv,""
+late real-time file used (no other version; is_real_time = FALSE),CU-EKF_SIRS,2019-10-05,model-forecasts/real-time-component-models/CU_EKF_SIRS/EW40-2019-CU_EKF_SIRS.csv,""
+late real-time file used (no other version; is_real_time = FALSE),CU-RHF_SEIRS,2019-10-05,model-forecasts/real-time-component-models/CU_RHF_SEIRS/EW40-2019-CU_RHF_SEIRS.csv,""
+late real-time file used (no other version; is_real_time = FALSE),CU-RHF_SIRS,2019-10-05,model-forecasts/real-time-component-models/CU_RHF_SIRS/EW40-2019-CU_RHF_SIRS.csv,""
+late real-time file used (no other version; is_real_time = FALSE),LANL-DBMplus,2019-10-05,model-forecasts/real-time-component-models/LANL_DBMplus/EW40-2019-LANL_DBMplus.csv,""
+late real-time file used (no other version; is_real_time = FALSE),LANL-DBMplus,2019-10-12,model-forecasts/real-time-component-models/LANL_DBMplus/EW41-2019-LANL_DBMplus.csv,""
+late real-time file used (no other version; is_real_time = FALSE),Protea-Cheetah2,2019-10-12,model-forecasts/real-time-component-models/Protea_Cheetah/EW41-2019-Protea_Cheetah.csv,""
+late real-time file used (no other version; is_real_time = FALSE),Protea-Kudu2,2019-10-12,model-forecasts/real-time-component-models/Protea_Kudu/EW41-2019-Protea_Kudu.csv,""
+late real-time file used (no other version; is_real_time = FALSE),Protea-Springbok2,2019-10-12,model-forecasts/real-time-component-models/Protea_Springbok/EW41-2019-Protea_Springbok.csv,""
+late real-time file used (no other version; is_real_time = FALSE),ReichLab-KDE,2019-10-05,model-forecasts/real-time-component-models/ReichLab_kde/EW40-2019-ReichLab_kde.csv,""
+late real-time file used (no other version; is_real_time = FALSE),ReichLab-KDE,2019-10-12,model-forecasts/real-time-component-models/ReichLab_kde/EW41-2019-ReichLab_kde.csv,""
+late real-time file used (no other version; is_real_time = FALSE),UA-EpiCos,2019-10-05,model-forecasts/real-time-component-models/UA_EpiCos/EW40-2019-UA_EpiCos.csv,""
+late real-time file used (no other version; is_real_time = FALSE),UA-EpiCos,2019-10-12,model-forecasts/real-time-component-models/UA_EpiCos/EW41-2019-UA_EpiCos.csv,""
+late real-time file used (no other version; is_real_time = FALSE),UTAustin-edm,2017-10-07,model-forecasts/real-time-component-models/UTAustin_edm/EW40-2017-UTAustin_edm.csv,""
+late real-time file used (no other version; is_real_time = FALSE),UTAustin-edm,2017-10-14,model-forecasts/real-time-component-models/UTAustin_edm/EW41-2017-UTAustin_edm.csv,""
+late real-time file used (no other version; is_real_time = FALSE),UTAustin-edm,2017-10-21,model-forecasts/real-time-component-models/UTAustin_edm/EW42-2017-UTAustin_edm.csv,""
+real-time file from an unmerged pull request (included),CU-BMA2,2020-04-04,model-forecasts/real-time-component-models/CUBMA/EW14-2020-CUBMA.csv,""
+real-time file from an unmerged pull request (included),CU-BMA2,2020-04-11,model-forecasts/real-time-component-models/CUBMA/EW15-2020-CUBMA.csv,""
+real-time file from an unmerged pull request (included),CU-BMA2,2020-04-18,model-forecasts/real-time-component-models/CUBMA/EW16-2020-CUBMA.csv,""
 real-time file from an unmerged pull request (included),CU-EAKFC_SEIRS,2020-04-04,model-forecasts/real-time-component-models/CU_EAKFC_SEIRS/EW14-2020-CU_EAKFC_SEIRS.csv,""
 real-time file from an unmerged pull request (included),CU-EAKFC_SEIRS,2020-04-11,model-forecasts/real-time-component-models/CU_EAKFC_SEIRS/EW15-2020-CU_EAKFC_SEIRS.csv,""
 real-time file from an unmerged pull request (included),CU-EAKFC_SEIRS,2020-04-18,model-forecasts/real-time-component-models/CU_EAKFC_SEIRS/EW16-2020-CU_EAKFC_SEIRS.csv,""
@@ -114,152 +133,8 @@ real-time file from an unmerged pull request (included),CU-RHF_SEIRS,2020-04-18,
 real-time file from an unmerged pull request (included),CU-RHF_SIRS,2020-04-04,model-forecasts/real-time-component-models/CU_RHF_SIRS/EW14-2020-CU_RHF_SIRS.csv,""
 real-time file from an unmerged pull request (included),CU-RHF_SIRS,2020-04-11,model-forecasts/real-time-component-models/CU_RHF_SIRS/EW15-2020-CU_RHF_SIRS.csv,""
 real-time file from an unmerged pull request (included),CU-RHF_SIRS,2020-04-18,model-forecasts/real-time-component-models/CU_RHF_SIRS/EW16-2020-CU_RHF_SIRS.csv,""
-training file differs from real-time submission,CU-BMA_train,2017-10-28,model-forecasts/component-models/CUBMA/EW43-2017-CUBMA.csv,74f14432e1a9fd05b4eca4b4acc466bf0263fbfb
-training file differs from real-time submission,CU-BMA_train,2017-11-04,model-forecasts/component-models/CUBMA/EW44-2017-CUBMA.csv,2793058e0b771c8357a794097f99635cde30baf5
-training file differs from real-time submission,CU-BMA_train,2017-11-11,model-forecasts/component-models/CUBMA/EW45-2017-CUBMA.csv,f3c4702100c7079ea51cbef6deb451b74452f4b9
-training file differs from real-time submission,CU-BMA_train,2017-11-18,model-forecasts/component-models/CUBMA/EW46-2017-CUBMA.csv,4bffdce989171fb100d642ed5954fbbe1e0a734e
-training file differs from real-time submission,CU-BMA_train,2017-11-25,model-forecasts/component-models/CUBMA/EW47-2017-CUBMA.csv,19ff143b2b726ad100933fe4e1e05d6a0f9717b3
-training file differs from real-time submission,CU-BMA_train,2017-12-02,model-forecasts/component-models/CUBMA/EW48-2017-CUBMA.csv,bd880f3df92b29373ab4cfabf5e2f2a22dd34251
-training file differs from real-time submission,CU-BMA_train,2017-12-09,model-forecasts/component-models/CUBMA/EW49-2017-CUBMA.csv,8f7d9e56cacb4ac3a7194ad04bb429614332d4f7
-training file differs from real-time submission,CU-BMA_train,2017-12-16,model-forecasts/component-models/CUBMA/EW50-2017-CUBMA.csv,c2b4862e88525e013033539c1c1fa04b4c438648
-training file differs from real-time submission,CU-BMA_train,2017-12-23,model-forecasts/component-models/CUBMA/EW51-2017-CUBMA.csv,71b00a5025ea87ec2014841c9e6d501e8ebb2958
-training file differs from real-time submission,CU-BMA_train,2017-12-30,model-forecasts/component-models/CUBMA/EW52-2017-CUBMA.csv,b7407d33b315fcfadd4e00248c20df8027ecb475
-training file differs from real-time submission,CU-BMA_train,2018-01-06,model-forecasts/component-models/CUBMA/EW01-2018-CUBMA.csv,e47f42ffb361c734219cb515b894696868a32826
-training file differs from real-time submission,CU-BMA_train,2018-01-13,model-forecasts/component-models/CUBMA/EW02-2018-CUBMA.csv,11ab857ae67a2e648a19ccc11dd94026c9244794
-training file differs from real-time submission,CU-BMA_train,2018-01-20,model-forecasts/component-models/CUBMA/EW03-2018-CUBMA.csv,92609273dfaf47833c38fc192638bbb4863b8446
-training file differs from real-time submission,CU-BMA_train,2018-01-27,model-forecasts/component-models/CUBMA/EW04-2018-CUBMA.csv,180ef4d06dd64f1e3b875910f21a86f41d47fb28
-training file differs from real-time submission,CU-BMA_train,2018-02-03,model-forecasts/component-models/CUBMA/EW05-2018-CUBMA.csv,293ba7d69e21e2f5db7e8799302180cf213be7d4
-training file differs from real-time submission,CU-BMA_train,2018-02-10,model-forecasts/component-models/CUBMA/EW06-2018-CUBMA.csv,88d9bea5bd1d004ea9cd963ce9d9a6ec0bc3ed8d
-training file differs from real-time submission,CU-BMA_train,2018-02-17,model-forecasts/component-models/CUBMA/EW07-2018-CUBMA.csv,820055726c7bce75dc510e520c63da98b864733c
-training file differs from real-time submission,CU-BMA_train,2018-02-24,model-forecasts/component-models/CUBMA/EW08-2018-CUBMA.csv,ab291780e3022154eecb6cdc35bd3c976d0146dc
-training file differs from real-time submission,CU-BMA_train,2018-03-03,model-forecasts/component-models/CUBMA/EW09-2018-CUBMA.csv,b70e28a45ddafded7a1da69c2c601ad97f3aa1a7
-training file differs from real-time submission,CU-BMA_train,2018-03-10,model-forecasts/component-models/CUBMA/EW10-2018-CUBMA.csv,3161c547de7aa332cb0e90140e31dfcaa9d56581
-training file differs from real-time submission,CU-BMA_train,2018-03-17,model-forecasts/component-models/CUBMA/EW11-2018-CUBMA.csv,25572d80a60c3aa073b716b008c271c25bb5f33f
-training file differs from real-time submission,CU-BMA_train,2018-03-24,model-forecasts/component-models/CUBMA/EW12-2018-CUBMA.csv,58a286eb319235e516b8376ee676ef6f7ba25af5
-training file differs from real-time submission,CU-BMA_train,2018-03-31,model-forecasts/component-models/CUBMA/EW13-2018-CUBMA.csv,b0ccccb7b813991e2f8d20862768f774940348db
-training file differs from real-time submission,CU-BMA_train,2018-04-07,model-forecasts/component-models/CUBMA/EW14-2018-CUBMA.csv,59714cfee66ae4bfd944252f846e1558c1136e86
-training file differs from real-time submission,CU-BMA_train,2018-04-14,model-forecasts/component-models/CUBMA/EW15-2018-CUBMA.csv,565940f9d37c8f0aa0fdd16d5989408d0fe12a4f
-training file differs from real-time submission,CU-BMA_train,2018-04-21,model-forecasts/component-models/CUBMA/EW16-2018-CUBMA.csv,ca7e087b52f226036e1e2c6ef1f667d1529c7c1c
-training file differs from real-time submission,CU-BMA_train,2018-04-28,model-forecasts/component-models/CUBMA/EW17-2018-CUBMA.csv,8da8d61a520a9191f26d7c9c84028a0b05dec5ba
-training file differs from real-time submission,CU-BMA_train,2018-05-05,model-forecasts/component-models/CUBMA/EW18-2018-CUBMA.csv,c395c3fc839e8aeb301a93324a53a79ca9fa7c3e
-training file differs from real-time submission,CU-BMA_train,2018-10-20,model-forecasts/component-models/CUBMA/EW42-2018-CUBMA.csv,0fdefaa881d5770eb812f56dd7d86192b64dc1b4
-training file differs from real-time submission,CU-BMA_train,2018-10-27,model-forecasts/component-models/CUBMA/EW43-2018-CUBMA.csv,a65d369d46c0971d22b39bd8351c68145be8ef2d
-training file differs from real-time submission,CU-BMA_train,2018-11-03,model-forecasts/component-models/CUBMA/EW44-2018-CUBMA.csv,32af4c0d1a433f1b40ac14b9b31768e2e1bc81aa
-training file differs from real-time submission,CU-BMA_train,2018-11-10,model-forecasts/component-models/CUBMA/EW45-2018-CUBMA.csv,5f2a6a4ad05efd1f48ad7ce713e99b84b75dffed
-training file differs from real-time submission,CU-BMA_train,2018-11-17,model-forecasts/component-models/CUBMA/EW46-2018-CUBMA.csv,7569d8b19e10007935039d5b7ba71954e1db9023
-training file differs from real-time submission,CU-BMA_train,2018-11-24,model-forecasts/component-models/CUBMA/EW47-2018-CUBMA.csv,d7caa447f297323204ce3a0137711031d234bea0
-training file differs from real-time submission,CU-BMA_train,2018-12-01,model-forecasts/component-models/CUBMA/EW48-2018-CUBMA.csv,1ee7a64d23b833a336fd6420823a8262eeda800e
-training file differs from real-time submission,CU-BMA_train,2018-12-08,model-forecasts/component-models/CUBMA/EW49-2018-CUBMA.csv,6e74d7221e4e817c781dc8aed5c35dc721a8e88f
-training file differs from real-time submission,CU-BMA_train,2018-12-15,model-forecasts/component-models/CUBMA/EW50-2018-CUBMA.csv,4c5b0c4591f63324cae9ef5fe56884ac6236dec9
-training file differs from real-time submission,CU-BMA_train,2018-12-22,model-forecasts/component-models/CUBMA/EW51-2018-CUBMA.csv,9bbd4fd5356d66d17b2a79f3be223c8a1d8d299f
-training file differs from real-time submission,CU-BMA_train,2018-12-29,model-forecasts/component-models/CUBMA/EW52-2018-CUBMA.csv,cd023bc0146052e0c0f2c8f22bfdc0e983297321
-training file differs from real-time submission,CU-BMA_train,2019-01-05,model-forecasts/component-models/CUBMA/EW01-2019-CUBMA.csv,c9f6cfe4a0dabcb5a91199b50ce6c1216661bbc8
-training file differs from real-time submission,CU-BMA_train,2019-01-12,model-forecasts/component-models/CUBMA/EW02-2019-CUBMA.csv,96f66e8d556cce65863ac7b55a8caef75b10684d
-training file differs from real-time submission,CU-BMA_train,2019-01-19,model-forecasts/component-models/CUBMA/EW03-2019-CUBMA.csv,b5c13658fd539a74fdeaf1f5fcc534f2cb6c8a42
-training file differs from real-time submission,CU-BMA_train,2019-01-26,model-forecasts/component-models/CUBMA/EW04-2019-CUBMA.csv,4765ddf4be5cc8a55bb92bc110f798c0495be139
-training file differs from real-time submission,CU-BMA_train,2019-02-02,model-forecasts/component-models/CUBMA/EW05-2019-CUBMA.csv,7bebb31e8f5dbfb749dd20343381291911d01919
-training file differs from real-time submission,CU-BMA_train,2019-02-09,model-forecasts/component-models/CUBMA/EW06-2019-CUBMA.csv,cb19dae75d249c6a61a0f4864e9ec18b72e80279
-training file differs from real-time submission,CU-BMA_train,2019-02-16,model-forecasts/component-models/CUBMA/EW07-2019-CUBMA.csv,d3b2573bfb0d3b6c06e17a84294aabe8adaf73da
-training file differs from real-time submission,CU-BMA_train,2019-02-23,model-forecasts/component-models/CUBMA/EW08-2019-CUBMA.csv,12607296a353b6c23ee645c363a10342d903679c
-training file differs from real-time submission,CU-BMA_train,2019-03-02,model-forecasts/component-models/CUBMA/EW09-2019-CUBMA.csv,1c35e7a4e453b5ad604123b870c34fdcab38acd8
-training file differs from real-time submission,CU-BMA_train,2019-03-09,model-forecasts/component-models/CUBMA/EW10-2019-CUBMA.csv,51fa3ccbdd71c92c9defd7744a5101063fb12d6e
-training file differs from real-time submission,CU-BMA_train,2019-03-16,model-forecasts/component-models/CUBMA/EW11-2019-CUBMA.csv,d24fa55c91f6def022e75a0e4a935e6ea72e18a0
-training file differs from real-time submission,CU-BMA_train,2019-03-23,model-forecasts/component-models/CUBMA/EW12-2019-CUBMA.csv,ad36203c5dc0396fd5e70ced2f3412061be1c098
-training file differs from real-time submission,CU-BMA_train,2019-03-30,model-forecasts/component-models/CUBMA/EW13-2019-CUBMA.csv,17b0fb8906ba690613fe6fbe2ab4ef0379043e94
-training file differs from real-time submission,CU-BMA_train,2019-04-06,model-forecasts/component-models/CUBMA/EW14-2019-CUBMA.csv,5de4cfc189b714c9cb8b953cf11c7cf1d808d96a
-training file differs from real-time submission,CU-BMA_train,2019-04-13,model-forecasts/component-models/CUBMA/EW15-2019-CUBMA.csv,1961429c4c75421c7ff74d3a45bcbf5d9311f6a0
-training file differs from real-time submission,CU-BMA_train,2019-04-20,model-forecasts/component-models/CUBMA/EW16-2019-CUBMA.csv,7135d7ee2641835fb20246dcc42d12df359a747d
-training file differs from real-time submission,CU-BMA_train,2019-04-27,model-forecasts/component-models/CUBMA/EW17-2019-CUBMA.csv,5cdbc73d5d79b7f51187e78c098efc17227e36ce
-training file differs from real-time submission,CU-BMA_train,2019-05-04,model-forecasts/component-models/CUBMA/EW18-2019-CUBMA.csv,26e0d981c85fc5119406855c8cf15be83ebf5501
-training file differs from real-time submission,CU-EAKFC_SIRS_train,2018-12-08,model-forecasts/component-models/CU_EAKFC_SIRS/EW49-2018-CU_EAKFC_SIRS.csv,115309d8a7a7a29e48b08afdd366788bee751910
-training file differs from real-time submission,Protea-Cheetah_train,2018-10-20,model-forecasts/component-models/Protea_Cheetah/EW42-2018-Protea_Cheetah.csv,41da4f12344d46fc2245e2b056b15227402fbb9c
-training file differs from real-time submission,Protea-Cheetah_train,2018-10-27,model-forecasts/component-models/Protea_Cheetah/EW43-2018-Protea_Cheetah.csv,069734f1fc9db275d3016679044c7b5f01782886
-training file differs from real-time submission,Protea-Cheetah_train,2018-11-03,model-forecasts/component-models/Protea_Cheetah/EW44-2018-Protea_Cheetah.csv,1cca7deb086a2d7236b2f59def40c4495b67aa55
-training file differs from real-time submission,Protea-Cheetah_train,2018-11-10,model-forecasts/component-models/Protea_Cheetah/EW45-2018-Protea_Cheetah.csv,eac3cbc1b9f858b11b3730877ef75cbbf6c44c72
-training file differs from real-time submission,Protea-Cheetah_train,2018-11-17,model-forecasts/component-models/Protea_Cheetah/EW46-2018-Protea_Cheetah.csv,0602970c5fe09ecdae709239c69c5c155b5388c2
-training file differs from real-time submission,Protea-Cheetah_train,2018-11-24,model-forecasts/component-models/Protea_Cheetah/EW47-2018-Protea_Cheetah.csv,f22ab24c2050bf67feb9b842db682bf19cdd7187
-training file differs from real-time submission,Protea-Cheetah_train,2018-12-01,model-forecasts/component-models/Protea_Cheetah/EW48-2018-Protea_Cheetah.csv,20219dc575d2e755107868445fd08420c7e15ced
-training file differs from real-time submission,Protea-Cheetah_train,2018-12-08,model-forecasts/component-models/Protea_Cheetah/EW49-2018-Protea_Cheetah.csv,f10079bf85766d3a37279686bbf70db40d7f1425
-training file differs from real-time submission,Protea-Cheetah_train,2018-12-15,model-forecasts/component-models/Protea_Cheetah/EW50-2018-Protea_Cheetah.csv,07766ee287bab96fe873bca1f0e1bb4b1163ee91
-training file differs from real-time submission,Protea-Cheetah_train,2018-12-22,model-forecasts/component-models/Protea_Cheetah/EW51-2018-Protea_Cheetah.csv,3cf0aedce61363cd4eab2c2c96dfd0d834015377
-training file differs from real-time submission,Protea-Cheetah_train,2018-12-29,model-forecasts/component-models/Protea_Cheetah/EW52-2018-Protea_Cheetah.csv,6d743404f73cf9fc2b36fe3bae821ebd7b36e70e
-training file differs from real-time submission,Protea-Cheetah_train,2019-01-05,model-forecasts/component-models/Protea_Cheetah/EW01-2019-Protea_Cheetah.csv,5bded9cfe70d05b91e673409288c93007c63f042
-training file differs from real-time submission,Protea-Cheetah_train,2019-01-12,model-forecasts/component-models/Protea_Cheetah/EW02-2019-Protea_Cheetah.csv,10c94b6182848d681878f52de78cc31ed02bc63b
-training file differs from real-time submission,Protea-Cheetah_train,2019-01-19,model-forecasts/component-models/Protea_Cheetah/EW03-2019-Protea_Cheetah.csv,5468f563541fdb70f401b29266ec7dee50fbc549
-training file differs from real-time submission,Protea-Cheetah_train,2019-01-26,model-forecasts/component-models/Protea_Cheetah/EW04-2019-Protea_Cheetah.csv,9ae8f8336b51bf14604f23f8c8f5ed0a5ba142c7
-training file differs from real-time submission,Protea-Cheetah_train,2019-02-02,model-forecasts/component-models/Protea_Cheetah/EW05-2019-Protea_Cheetah.csv,b9d8367574bc96b5f23a8e06282fcfe4d9afecb1
-training file differs from real-time submission,Protea-Cheetah_train,2019-02-09,model-forecasts/component-models/Protea_Cheetah/EW06-2019-Protea_Cheetah.csv,f3e7af2f7e19cf1eebdfc1e99b82887674ffcb40
-training file differs from real-time submission,Protea-Cheetah_train,2019-02-16,model-forecasts/component-models/Protea_Cheetah/EW07-2019-Protea_Cheetah.csv,e8cd1122d67217d16a4a14fcd455c16c28a35402
-training file differs from real-time submission,Protea-Cheetah_train,2019-02-23,model-forecasts/component-models/Protea_Cheetah/EW08-2019-Protea_Cheetah.csv,5812cb1ec5295e1f839b542befbb03fc6dc9f28e
-training file differs from real-time submission,Protea-Cheetah_train,2019-03-02,model-forecasts/component-models/Protea_Cheetah/EW09-2019-Protea_Cheetah.csv,f24adf6be05082a2b237cc756a9b3cf7be4ab6d1
-training file differs from real-time submission,Protea-Cheetah_train,2019-03-09,model-forecasts/component-models/Protea_Cheetah/EW10-2019-Protea_Cheetah.csv,b9dc366f6b8ac01400522f1da4f9940934a93245
-training file differs from real-time submission,Protea-Cheetah_train,2019-03-16,model-forecasts/component-models/Protea_Cheetah/EW11-2019-Protea_Cheetah.csv,481b8bf503fe6bc5d2e6c4c5740fd3fbc0bb8831
-training file differs from real-time submission,Protea-Cheetah_train,2019-03-23,model-forecasts/component-models/Protea_Cheetah/EW12-2019-Protea_Cheetah.csv,9016e8b49ff08363af981995d5037e4eec75e31e
-training file differs from real-time submission,Protea-Cheetah_train,2019-03-30,model-forecasts/component-models/Protea_Cheetah/EW13-2019-Protea_Cheetah.csv,2103601c1fdabae044b260de84f7df2ff9949c3a
-training file differs from real-time submission,Protea-Cheetah_train,2019-04-06,model-forecasts/component-models/Protea_Cheetah/EW14-2019-Protea_Cheetah.csv,d9ce811e81776037461fbc75e6b07aec5a03d844
-training file differs from real-time submission,Protea-Cheetah_train,2019-04-13,model-forecasts/component-models/Protea_Cheetah/EW15-2019-Protea_Cheetah.csv,9a95a9250ea5a9ffd924a9144733cbe080b7a794
-training file differs from real-time submission,Protea-Cheetah_train,2019-04-20,model-forecasts/component-models/Protea_Cheetah/EW16-2019-Protea_Cheetah.csv,906c30db5cb5b35ccd190dcedc31fbd02fcc86c8
-training file differs from real-time submission,Protea-Cheetah_train,2019-04-27,model-forecasts/component-models/Protea_Cheetah/EW17-2019-Protea_Cheetah.csv,09f6c26fdaa4cc9591c1e00151e0dabb27f7c60c
-training file differs from real-time submission,Protea-Cheetah_train,2019-05-04,model-forecasts/component-models/Protea_Cheetah/EW18-2019-Protea_Cheetah.csv,28fe82a8e671813db59d0ac6451ed0920b29c724
-training file differs from real-time submission,Protea-Kudu_train,2018-10-20,model-forecasts/component-models/Protea_Kudu/EW42-2018-Protea_Kudu.csv,4fd1a2aa88d7792bfd03f66166951ed0cf57e151
-training file differs from real-time submission,Protea-Kudu_train,2018-10-27,model-forecasts/component-models/Protea_Kudu/EW43-2018-Protea_Kudu.csv,31de1fa9eceb8d158d637959efc99c8bf05d2e60
-training file differs from real-time submission,Protea-Kudu_train,2018-11-03,model-forecasts/component-models/Protea_Kudu/EW44-2018-Protea_Kudu.csv,db24ffcf58f4d6317ecb8b8f98402fe22f878226
-training file differs from real-time submission,Protea-Kudu_train,2018-11-10,model-forecasts/component-models/Protea_Kudu/EW45-2018-Protea_Kudu.csv,54dfef23d108c288600a3a3583da69f57a29ff86
-training file differs from real-time submission,Protea-Kudu_train,2018-11-17,model-forecasts/component-models/Protea_Kudu/EW46-2018-Protea_Kudu.csv,5b3b5a8bcfc01ab1af477d9086507a090bdb6391
-training file differs from real-time submission,Protea-Kudu_train,2018-11-24,model-forecasts/component-models/Protea_Kudu/EW47-2018-Protea_Kudu.csv,c8010bd751db195af5d85723ab3b09f724784f81
-training file differs from real-time submission,Protea-Kudu_train,2018-12-01,model-forecasts/component-models/Protea_Kudu/EW48-2018-Protea_Kudu.csv,76a178e7ff7ec6ca077b78451ca19f97d0cc7272
-training file differs from real-time submission,Protea-Kudu_train,2018-12-08,model-forecasts/component-models/Protea_Kudu/EW49-2018-Protea_Kudu.csv,1daf47530fd660b21843b0c387c704edcefa92ff
-training file differs from real-time submission,Protea-Kudu_train,2018-12-15,model-forecasts/component-models/Protea_Kudu/EW50-2018-Protea_Kudu.csv,51161a31bd9e3a6c3de2d083d0ad1cd223236baf
-training file differs from real-time submission,Protea-Kudu_train,2018-12-22,model-forecasts/component-models/Protea_Kudu/EW51-2018-Protea_Kudu.csv,e8caf536a42633ab5a0afb6c0c47283a57227906
-training file differs from real-time submission,Protea-Kudu_train,2018-12-29,model-forecasts/component-models/Protea_Kudu/EW52-2018-Protea_Kudu.csv,a8b6dc6962bfb14d298b4bfe7fa063543e3a17c1
-training file differs from real-time submission,Protea-Kudu_train,2019-01-05,model-forecasts/component-models/Protea_Kudu/EW01-2019-Protea_Kudu.csv,8f7ed91f5f80e5a64000af538bb40d582db0554b
-training file differs from real-time submission,Protea-Kudu_train,2019-01-12,model-forecasts/component-models/Protea_Kudu/EW02-2019-Protea_Kudu.csv,8afd2a1b4b3c3ba9c8387b768e8a16779f9ea513
-training file differs from real-time submission,Protea-Kudu_train,2019-01-19,model-forecasts/component-models/Protea_Kudu/EW03-2019-Protea_Kudu.csv,6d17f273e4dd155969d043cdfda4f25597eca297
-training file differs from real-time submission,Protea-Kudu_train,2019-01-26,model-forecasts/component-models/Protea_Kudu/EW04-2019-Protea_Kudu.csv,e8bbfd992a86ebcf847fd6492a8406ba87fa0f09
-training file differs from real-time submission,Protea-Kudu_train,2019-02-02,model-forecasts/component-models/Protea_Kudu/EW05-2019-Protea_Kudu.csv,98bdcce85708cd389386494f0d84f8bd1c4a65b6
-training file differs from real-time submission,Protea-Kudu_train,2019-02-09,model-forecasts/component-models/Protea_Kudu/EW06-2019-Protea_Kudu.csv,450c9cf682a280a83188b5acddfe40e6e294c313
-training file differs from real-time submission,Protea-Kudu_train,2019-02-16,model-forecasts/component-models/Protea_Kudu/EW07-2019-Protea_Kudu.csv,518f758d1d80fa4fc3fe2ebe35ac29d4c8625285
-training file differs from real-time submission,Protea-Kudu_train,2019-02-23,model-forecasts/component-models/Protea_Kudu/EW08-2019-Protea_Kudu.csv,ad35d0be4db4b2d23e8a5634549cc07a828d2714
-training file differs from real-time submission,Protea-Kudu_train,2019-03-02,model-forecasts/component-models/Protea_Kudu/EW09-2019-Protea_Kudu.csv,e75eeec1afc45d22874cc145a7337c52d3d19776
-training file differs from real-time submission,Protea-Kudu_train,2019-03-09,model-forecasts/component-models/Protea_Kudu/EW10-2019-Protea_Kudu.csv,ac8bfe9ecbac5615cb2e3bf4416db0cec9758bbe
-training file differs from real-time submission,Protea-Kudu_train,2019-03-16,model-forecasts/component-models/Protea_Kudu/EW11-2019-Protea_Kudu.csv,8cbe7c15f94f34a4f219bd97c2f60538179f39dc
-training file differs from real-time submission,Protea-Kudu_train,2019-03-23,model-forecasts/component-models/Protea_Kudu/EW12-2019-Protea_Kudu.csv,a7145040fc9a90b252adc934044908d353cc6dd2
-training file differs from real-time submission,Protea-Kudu_train,2019-03-30,model-forecasts/component-models/Protea_Kudu/EW13-2019-Protea_Kudu.csv,4ce49a5798f70a8d3b0500949859ab341a4bf010
-training file differs from real-time submission,Protea-Kudu_train,2019-04-06,model-forecasts/component-models/Protea_Kudu/EW14-2019-Protea_Kudu.csv,d1754a24cea98c78aa63b84b53e3447cf90761da
-training file differs from real-time submission,Protea-Kudu_train,2019-04-13,model-forecasts/component-models/Protea_Kudu/EW15-2019-Protea_Kudu.csv,4883c4bb7ed0e58c801bc2c369f3bcb6bafb20e1
-training file differs from real-time submission,Protea-Kudu_train,2019-04-20,model-forecasts/component-models/Protea_Kudu/EW16-2019-Protea_Kudu.csv,fff8324b53ad43216b92921d010514a869efd47e
-training file differs from real-time submission,Protea-Kudu_train,2019-04-27,model-forecasts/component-models/Protea_Kudu/EW17-2019-Protea_Kudu.csv,b4ab56b3dab9213b695bf3b88f54970dea9e1249
-training file differs from real-time submission,Protea-Kudu_train,2019-05-04,model-forecasts/component-models/Protea_Kudu/EW18-2019-Protea_Kudu.csv,76284d29f58275346ace71f76ec7728ab6a6cf79
-training file differs from real-time submission,Protea-Springbok_train,2018-10-20,model-forecasts/component-models/Protea_Springbok/EW42-2018-Protea_Springbok.csv,e21dbbad2328fb479ab265df6763275fe07ff950
-training file differs from real-time submission,Protea-Springbok_train,2018-10-27,model-forecasts/component-models/Protea_Springbok/EW43-2018-Protea_Springbok.csv,578592882e5f62e410750019872fffd4cb950711
-training file differs from real-time submission,Protea-Springbok_train,2018-11-03,model-forecasts/component-models/Protea_Springbok/EW44-2018-Protea_Springbok.csv,72319b595f9acc078d53ca960444134b434145af
-training file differs from real-time submission,Protea-Springbok_train,2018-11-10,model-forecasts/component-models/Protea_Springbok/EW45-2018-Protea_Springbok.csv,1f4d4a82d2419474825591ea74d59ca85a8a86aa
-training file differs from real-time submission,Protea-Springbok_train,2018-11-17,model-forecasts/component-models/Protea_Springbok/EW46-2018-Protea_Springbok.csv,8e3d56eec4f24674b4a434240b4865e3ae1c074e
-training file differs from real-time submission,Protea-Springbok_train,2018-11-24,model-forecasts/component-models/Protea_Springbok/EW47-2018-Protea_Springbok.csv,867f61fa7b6f82d6e712a68d2a4da596aa1b3fbf
-training file differs from real-time submission,Protea-Springbok_train,2018-12-01,model-forecasts/component-models/Protea_Springbok/EW48-2018-Protea_Springbok.csv,d0a3243dbc45e5e5e7b0698040db965c7e70ff27
-training file differs from real-time submission,Protea-Springbok_train,2018-12-08,model-forecasts/component-models/Protea_Springbok/EW49-2018-Protea_Springbok.csv,aa00316b9998f376e7afece0871e8c32ed7ef80f
-training file differs from real-time submission,Protea-Springbok_train,2018-12-15,model-forecasts/component-models/Protea_Springbok/EW50-2018-Protea_Springbok.csv,be462f39bbfdfb6690adbbe039ad9fa7ce6ce8fe
-training file differs from real-time submission,Protea-Springbok_train,2018-12-22,model-forecasts/component-models/Protea_Springbok/EW51-2018-Protea_Springbok.csv,d7f54f8ade79812567691835786d025f34969fa2
-training file differs from real-time submission,Protea-Springbok_train,2018-12-29,model-forecasts/component-models/Protea_Springbok/EW52-2018-Protea_Springbok.csv,01433ddd21b3bf59589de9b6981d830b1483ba5b
-training file differs from real-time submission,Protea-Springbok_train,2019-01-05,model-forecasts/component-models/Protea_Springbok/EW01-2019-Protea_Springbok.csv,0982a83bdeface57c47bd8983eb6b95b9b2763e7
-training file differs from real-time submission,Protea-Springbok_train,2019-01-12,model-forecasts/component-models/Protea_Springbok/EW02-2019-Protea_Springbok.csv,819e4ab83b76f1612254fb80c703699536e7cc2f
-training file differs from real-time submission,Protea-Springbok_train,2019-01-19,model-forecasts/component-models/Protea_Springbok/EW03-2019-Protea_Springbok.csv,831f9e402df8adaeab7343368e5bdbcf5121a754
-training file differs from real-time submission,Protea-Springbok_train,2019-01-26,model-forecasts/component-models/Protea_Springbok/EW04-2019-Protea_Springbok.csv,767f872e0f0272ecbc80e9830100ebeec7ca887c
-training file differs from real-time submission,Protea-Springbok_train,2019-02-02,model-forecasts/component-models/Protea_Springbok/EW05-2019-Protea_Springbok.csv,b96ab91b430f0e37fcccf368b7ce39a22209117c
-training file differs from real-time submission,Protea-Springbok_train,2019-02-09,model-forecasts/component-models/Protea_Springbok/EW06-2019-Protea_Springbok.csv,649de180cc53251081345404024c9ae993c54feb
-training file differs from real-time submission,Protea-Springbok_train,2019-02-16,model-forecasts/component-models/Protea_Springbok/EW07-2019-Protea_Springbok.csv,a6417a2a2066bd914fbf8a7d6e74f973efdb5ef5
-training file differs from real-time submission,Protea-Springbok_train,2019-02-23,model-forecasts/component-models/Protea_Springbok/EW08-2019-Protea_Springbok.csv,0dc03387fcc1e68da4db1bef4128f60f237ef49c
-training file differs from real-time submission,Protea-Springbok_train,2019-03-02,model-forecasts/component-models/Protea_Springbok/EW09-2019-Protea_Springbok.csv,280bf2448562ab598b131e18833fc5b0301462d1
-training file differs from real-time submission,Protea-Springbok_train,2019-03-09,model-forecasts/component-models/Protea_Springbok/EW10-2019-Protea_Springbok.csv,be3945b6c54adfa839fdb941c3f7274d7da03ecb
-training file differs from real-time submission,Protea-Springbok_train,2019-03-16,model-forecasts/component-models/Protea_Springbok/EW11-2019-Protea_Springbok.csv,34938e56ca4c8627e3837d60776d00c513550338
-training file differs from real-time submission,Protea-Springbok_train,2019-03-23,model-forecasts/component-models/Protea_Springbok/EW12-2019-Protea_Springbok.csv,8441fd611abb77d3daa5d7c7f617fd1fbd205d29
-training file differs from real-time submission,Protea-Springbok_train,2019-03-30,model-forecasts/component-models/Protea_Springbok/EW13-2019-Protea_Springbok.csv,95a3750f9fdddc9140132dab621017688478a2f9
-training file differs from real-time submission,Protea-Springbok_train,2019-04-06,model-forecasts/component-models/Protea_Springbok/EW14-2019-Protea_Springbok.csv,558b5f0632dc3740d0430b137211f169764313de
-training file differs from real-time submission,Protea-Springbok_train,2019-04-13,model-forecasts/component-models/Protea_Springbok/EW15-2019-Protea_Springbok.csv,7790eb2fc29acc302b169a72a56c41a139c11d62
-training file differs from real-time submission,Protea-Springbok_train,2019-04-20,model-forecasts/component-models/Protea_Springbok/EW16-2019-Protea_Springbok.csv,e29c955bc22b16ef1bcfcae71d8312b79506f1e0
-training file differs from real-time submission,Protea-Springbok_train,2019-04-27,model-forecasts/component-models/Protea_Springbok/EW17-2019-Protea_Springbok.csv,c0cd415087c1fb7e78f8a15d57022985d9200796
-training file differs from real-time submission,Protea-Springbok_train,2019-05-04,model-forecasts/component-models/Protea_Springbok/EW18-2019-Protea_Springbok.csv,2de25f630da10a64f29ded759e150a16ae6c9536
-training file differs from real-time submission,ReichLab-KCDE_train,2019-03-02,model-forecasts/component-models/ReichLab_kcde/EW09-2019-ReichLab_kcde.csv,0dd62621bfdae192b511b0f0665c73ceaef4480a
+training file differs from real-time file (real-time used; training kept in auxiliary-data),CU-EAKFC_SIRS,2018-12-08,model-forecasts/component-models/CU_EAKFC_SIRS/EW49-2018-CU_EAKFC_SIRS.csv,115309d8a7a7a29e48b08afdd366788bee751910
+training file differs from real-time file (real-time used; training kept in auxiliary-data),ReichLab-KCDE,2019-03-02,model-forecasts/component-models/ReichLab_kcde/EW09-2019-ReichLab_kcde.csv,0dd62621bfdae192b511b0f0665c73ceaef4480a
 FSN real-time ensemble file differs from submitted file (submitted file used),FSNetwork-TTW,2017-11-04,model-forecasts/real-time-ensemble-models/target-type-based-weights/EW44-2017-target-type-based-weights.csv,b37cb945eb0405d9398e437c2a049864a07d1173
 FSN real-time ensemble file differs from submitted file (submitted file used),FSNetwork-TTW,2017-12-09,model-forecasts/real-time-ensemble-models/target-type-based-weights/EW49-2017-target-type-based-weights.csv,b834c8f6574052cd8a778e7ea8f74896242a022b
 FSN real-time ensemble file differs from submitted file (submitted file used),FSNetwork-TTW,2017-12-16,model-forecasts/real-time-ensemble-models/target-type-based-weights/EW50-2017-target-type-based-weights.csv,9ad0434bb7ceeec6d3da87731ec0c67e5e6a4f11

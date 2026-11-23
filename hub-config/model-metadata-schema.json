@@ -36,31 +36,45 @@
         ]
       }
     },
-    "forecast_mode": {
+    "real_time_seasons": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Seasons with forecasts made in real time (first committed no more than 3 days after the FluSight due date). A real-time season can still contain a few rounds that are not real-time; the exact flag per round is is_real_time in auxiliary-data/file-provenance.csv."
+    },
+    "fsn_ensemble_component_seasons": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Operational seasons in which this model was a component of the FluSight Network ensemble (listed in FSN's weights for that season's ensemble build). Component models only."
+    },
+    "version_of": {
       "type": "string",
-      "enum": [
-        "real-time",
-        "training",
-        "cross-validated"
-      ],
-      "description": "Which record this model ID belongs to (see README)."
+      "description": "For models retrained between seasons: the source model this ID is one version of. Each version holds that model's backcasts and its real-time forecasts."
+    },
+    "version_note": {
+      "type": "string",
+      "description": "What distinguishes this version (retraining commit, seasons, FSN ensemble use)."
     },
     "paired_model_id": {
       "type": ["string", "null"],
-      "description": "The corresponding ID in the other record, if any."
+      "description": "Ensembles only: the corresponding real-time, cross-validated or repaired ensemble ID."
     },
     "source_dirs": {
       "type": "array",
       "items": {
         "type": "string"
       },
-      "description": "Source directories in FluSightNetwork/cdc-flusight-ensemble."
+      "description": "Source directories (FluSightNetwork/cdc-flusight-ensemble unless prefixed with another repository)."
     },
     "seasons": {
       "type": "array",
       "items": {
         "type": "string"
-      }
+      },
+      "description": "Seasons with at least one forecast."
     },
     "this_model_is_an_ensemble": {
       "type": "boolean",
@@ -89,7 +103,7 @@
   "required": [
     "team_abbr",
     "model_abbr",
-    "forecast_mode",
+    "real_time_seasons",
     "designated_model"
   ],
   "additionalProperties": false

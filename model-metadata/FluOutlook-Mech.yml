@@ -8,13 +8,26 @@ model_contributors:
 - name: Xinyue Xiong
 - name: Mauricio Santillana
 - name: Fred Lu.
-forecast_mode: real-time
-paired_model_id: FluOutlook-Mech_train
+real_time_seasons:
+- 2019/2020
+fsn_ensemble_component_seasons:
+- 2019/2020
 source_dirs:
+- component-models/FluOutlook_Mech
 - real-time-component-models/FluOutlook_Mech
 seasons:
+- 2010/2011
+- 2011/2012
+- 2012/2013
+- 2013/2014
+- 2014/2015
+- 2015/2016
+- 2016/2017
+- 2017/2018
+- 2018/2019
 - 2019/2020
-this_model_is_an_ensemble: yes
+this_model_is_an_ensemble: true
+real_time_start_season: 2019-20
 methods: This forecasting method is a fully mechanistic model based on GLEAM, an epidemic
   stochastic generative model. At the begining of the flu season, GLEAM seeded by
   four different data sources (Athena, FluNearYou, Twitter, Population) generates
@@ -23,6 +36,7 @@ methods: This forecasting method is a fully mechanistic model based on GLEAM, an
   The four weekly forecasts are combined by Bayesian Model Averaging to form the final
   forecast.
 data_inputs: ILI Net, Athena Health
-designated_model: no
-notes: 'Real-time record: forecasts as submitted (last version committed by the due
-  date + 3 days). Do not combine with _train/_cv IDs.'
+designated_model: false
+notes: 'One model ID holding every round of this model: 21 real-time forecasts and
+  298 forecasts not made in real time (FSN training backcasts). The per-round flag
+  is is_real_time in auxiliary-data/file-provenance.csv.'
