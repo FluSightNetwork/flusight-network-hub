@@ -58,7 +58,8 @@ Issues found:
 | Scoring | No custom multi-bin log score (FluSight's version is improper). Archive data must work with the standard hubEvals log score. |
 | Medians in the open 13–100 bin | Store 13.0. With medians limited to the weekly targets, that's **337 cases** (the other 1,878 were peak %). Reported points are not used. Flagged in `validation/median-13plus.csv`. |
 | Badly named source files | If a file doesn't match a real round of the hub, it is not converted (logged in the file map as excluded). |
-| Tied peak weeks | Decided one case at a time with the user (Phase 4). The CDC hub's "ties are not scored" rule is one option. |
+| Tied peak weeks | **Unrounded maximum** (user decision 2026-11-23): for each of FSN's 14 tied location-seasons, the observed peak week is the week with the highest unrounded wILI in ILINet (Delphi Epidata). Recorded in `src/peak_week_ties.csv` by `src/resolve_peak_week_ties.R`. |
+| Target data coverage *(Phase 4)* | 2010/11–2018/19 from FSN's `scores/target-multivals.csv`. **2019/20 derived** (user decision 2026-11-23) by `src/compute_truths.R`: FSN's definitions applied to ILINet as of issue 202028 (FSN's eval-issue convention) with CDC 2019/20 baselines (FluSight R package `past_baselines`, saved as `src/baselines.csv`). The method reproduces all 297 seasonal and 3,575 weekly FSN truths for 2010/11–2018/19 exactly. ILINet snapshots are saved in `auxiliary-data/ilinet/`. **2019/20 season for onset/peak is cut at EW09-2020** (week ending 2020-02-29; user decision 2026-11-23) so COVID-19-affected spring weeks are not scored as onset/peak (HHS Region 2's peak moves from week 13 to week 6; HHS Region 3's from 12 to 6). Weekly `ili perc` truths are not cut. The 11 late-2018/19 target weeks FSN did not compute (week ending 2019-06-22) are derived the same way from issue 201928. Coverage: all 25,641 hub tasks have truth. Each row of `time-series.csv` records its `truth_source`. |
 | hubEvals issue (missing task values drop rows) | File it **after** the hub is live, using this hub as the real example. |
 | Real-time cutoff *(Phase 1)* | A file counts as real-time only if committed **no more than 3 days after the submission due date** (due = Monday, origin + 9 days; cutoff = origin + 12). The last version committed by the cutoff is used. Rounds with nothing by the cutoff are not real-time (45 rounds: UTAustin 18, ReichLab-KDE 7, CU 13, others 7). |
 | Submitted ensembles *(Phase 1)* | For the ensemble sent to CDC (TTW 2017/18 and 2019/20, TW 2018/19), the real-time record uses the **file in `submissions/`**. FSN's regenerated ensemble file is logged, not converted (15 weeks differ). |
@@ -238,6 +239,10 @@ The full git history across all branches and tags (`master`, `end-of-2018-2019-s
   - 18 are **real-time 2019/20 files changed after submission** (Protea_Kudu ×3, FluOutlook ×4, real-time ensembles ×9, CUBMA ×1, kcde ×1).
 
 ## Open items
+
+- **Downstream findings from the modelimportance smoke test** (`src/11_smoke_modelimportance.R`, passing):
+  - hubEvals/scoringutils drop rows with NA task IDs → drop all-NA `horizon`/`target_end_date` before scoring seasonal targets (file hubEvals issue once the hub is live).
+  - modelimportance renames `origin_date` → `reference_date` in forecasts but not in `oracle_output_data` → rename the oracle column too (worth reporting to modelimportance).
 
 - **Badly named files** (Phase 1 review):
   - `real-time-component-models/CUBMA/EW63-2019-CUBMA.csv`: week 63 doesn't exist. CUBMA already has every week 40–52 and 01–13, and this file differs from EW43. Find which week it matches, or exclude it.
