@@ -1,0 +1,37 @@
+team_abbr: ReichLab
+model_abbr: SARIMA2_train
+team_name: ReichLab
+model_name: SARIMA model with seasonal differencing
+model_contributors:
+- name: Evan L. Ray
+- name: Nicholas G. Reich
+forecast_mode: training
+paired_model_id: ReichLab-SARIMA2
+source_dirs:
+- component-models/ReichLab_sarima_seasonal_difference_TRUE
+seasons:
+- 2010/2011
+- 2011/2012
+- 2012/2013
+- 2013/2014
+- 2014/2015
+- 2015/2016
+- 2016/2017
+- 2017/2018
+- 2018/2019
+this_model_is_an_ensemble: no
+real_time_start_season: 2017-18
+methods: A seasonal ARIMA model is fit using the auto.arima function in the forecast
+  package for R.  The data are log-transformed, any infinite or missing values after
+  the transformation are linearly imputed, and a first-order seasonal difference (at
+  lag 52 weeks) is taken before fitting the model.  A separate model is fit for each
+  region.  Through iterating the one-step-ahead predictions, this model fit yields
+  a joint predictive distribution for incidence in all remaining weeks of the season.  Appropriate
+  integrals of this joint distribution are calculated via Monte Carlo integration
+  to obtain predictions for the seasonal quantities.  For making prospective predictions
+  for each season, only data before the start of that season were used in fitting
+  model parameters.  All code used in estimation and prediction is available at https://github.com/reichlab/2017-2018-cdc-flu-contest
+data_inputs: ilinet
+designated_model: no
+notes: 'Training record: the series held in component-models/ (training pin 2019-10-25
+  unless noted). Includes copies of real-time files; do not combine with plain IDs.'

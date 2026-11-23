@@ -1,0 +1,33 @@
+team_abbr: Delphi
+model_abbr: BasisRegression_PD
+team_name: Delphi
+model_name: Basis Regression (epiforecast package defaults)
+model_contributors:
+- name: Logan C. Brooks
+- name: David C. Farrow
+- name: Sangwon Hyun
+- name: Shannon Gallagher
+- name: Ryan J. Tibshirani
+- name: Roni Rosenfeld
+- name: Rob Tibshirani
+forecast_mode: real-time
+paired_model_id: Delphi-BasisRegression_PD_train
+source_dirs:
+- real-time-component-models/Delphi_BasisRegression_PackageDefaults
+seasons:
+- 2017/2018
+this_model_is_an_ensemble: no
+methods: Constructs a set of "pseudo-trajectories" by splicing together (a) the observed
+  part of the test season with (b) each training season's trajectory for later portions
+  of the season.  Estimates a mean curve for the pseudo-trajectories by regressing
+  onto a set of basis elements.  Forecasts the singleton distribution containing this
+  curve, plus a large, heuristic amount of smoothing for each of the targets.  All
+  training seasons precede the test season, and observations from the test season
+  use mimicPastEpidataDF to approximate what the ILINet report for the forecast week
+  looked like.  The code for generating these forecasts is available at https://github.com/cmu-delphi/epiforecast-R.
+data_inputs: ILINet
+designated_model: no
+notes: '2017/18 PackageDefaults version (real-time 2017/18; training series used by
+  the 2017/18 ensemble); separate IDs per user decision Real-time record: forecasts
+  as submitted (last version committed by the due date + 3 days). Do not combine with
+  _train/_cv IDs.'

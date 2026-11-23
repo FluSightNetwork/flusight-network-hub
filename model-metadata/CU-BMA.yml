@@ -1,0 +1,28 @@
+team_abbr: CU
+model_abbr: BMA
+team_name: CU
+model_name: Bayesian Model Averaging
+model_contributors:
+- name: J Shaman
+- name: T Yamana
+- name: S Kandula
+- name: S Pei
+- name: W Yang
+- name: H Morita
+forecast_mode: real-time
+paired_model_id: CU-BMA_train
+source_dirs:
+- real-time-component-models/CUBMA
+seasons:
+- 2017/2018
+- 2018/2019
+- 2019/2020
+this_model_is_an_ensemble: no
+methods: Bayesian Weighted Outbreaks.  Models outbreak in progress as a weighted average
+  of previously observed outbreaks.  Current ILI observations are compared to previous
+  years over a training window of 3-8 weeks.  See Yamana et al. 2016 (10.1098/rsif.2016.0410)
+  for further details.  Out-of-sample data using Ray & Reich?s flu_data_with_backfill.rds
+data_inputs: ILI Net
+designated_model: no
+notes: 'Real-time record: forecasts as submitted (last version committed by the due
+  date + 3 days). Do not combine with _train/_cv IDs.'

@@ -1,0 +1,28 @@
+team_abbr: Delphi
+model_abbr: Uniform
+team_name: Delphi
+model_name: Uniform Distribution
+model_contributors:
+- name: Logan C. Brooks
+- name: David C. Farrow
+- name: Sangwon Hyun
+- name: Shannon Gallagher
+- name: Ryan J. Tibshirani
+- name: Roni Rosenfeld
+- name: Rob Tibshirani
+forecast_mode: real-time
+paired_model_id: Delphi-Uniform_train
+source_dirs:
+- real-time-component-models/Delphi_Uniform
+seasons:
+- 2017/2018
+- 2018/2019
+- 2019/2020
+this_model_is_an_ensemble: no
+methods: Models the distribution of each target's value as a uniform distribution
+  over spreadsheet bin means.  Reports the median for point predictions.  The code
+  for generating these forecasts is available at https://github.com/cmu-delphi/epiforecast-R.
+data_inputs: ILINet
+designated_model: no
+notes: 'Real-time record: forecasts as submitted (last version committed by the due
+  date + 3 days). Do not combine with _train/_cv IDs.'

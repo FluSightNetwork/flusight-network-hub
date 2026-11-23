@@ -1,0 +1,28 @@
+team_abbr: FluOutlook
+model_abbr: Mech
+team_name: FluOutlook
+model_name: Mechanistic GLEAM Ensemble
+model_contributors:
+- name: Alessandro Vespignani
+- name: Qian Zhang
+- name: Xinyue Xiong
+- name: Mauricio Santillana
+- name: Fred Lu.
+forecast_mode: real-time
+paired_model_id: FluOutlook-Mech_train
+source_dirs:
+- real-time-component-models/FluOutlook_Mech
+seasons:
+- 2019/2020
+this_model_is_an_ensemble: yes
+methods: This forecasting method is a fully mechanistic model based on GLEAM, an epidemic
+  stochastic generative model. At the begining of the flu season, GLEAM seeded by
+  four different data sources (Athena, FluNearYou, Twitter, Population) generates
+  four different forecasts for the flu profile. At each week along the flu season,
+  the weekly ILI Net data is utilized in GLEAM to provide adaptive weekly forecast.
+  The four weekly forecasts are combined by Bayesian Model Averaging to form the final
+  forecast.
+data_inputs: ILI Net, Athena Health
+designated_model: no
+notes: 'Real-time record: forecasts as submitted (last version committed by the due
+  date + 3 days). Do not combine with _train/_cv IDs.'

@@ -1,0 +1,20 @@
+team_abbr: FluSight
+model_abbr: unweighted_avg
+team_name: FluSight
+model_name: FluSight unweighted average
+model_contributors:
+- name: FluSight all members
+forecast_mode: real-time
+source_dirs:
+- component-models/FluSight_unweighted_avg
+seasons:
+- 2015/2016
+- 2016/2017
+- 2017/2018
+this_model_is_an_ensemble: yes
+methods: Unweighted average of all models submitted to FluSight. https://github.com/cdcepi/FluSight-forecasts
+data_inputs: other forecasts
+designated_model: no
+notes: 'copy of CDC''s real-time FluSight ensemble; real-time record only (provenance
+  exception) Real-time record: forecasts as submitted (last version committed by the
+  due date + 3 days). Do not combine with _train/_cv IDs.'

@@ -1,0 +1,34 @@
+team_abbr: FSNetwork
+model_abbr: EW_cv_repaired
+team_name: FSNetwork
+model_name: equal-weights
+model_contributors:
+- name: Nutcha Wattanachit
+- name: Thomas McAndrew
+- name: Nicholas G. Reich
+forecast_mode: cross-validated
+paired_model_id: FSNetwork-EW_cv
+source_dirs:
+- cv-ensemble-models/equal-weights
+seasons:
+- 2010/2011
+- 2011/2012
+- 2012/2013
+- 2013/2014
+- 2014/2015
+- 2015/2016
+- 2016/2017
+- 2017/2018
+- 2018/2019
+this_model_is_an_ensemble: yes
+methods: This is an ensemble of stacked entries from all component models. We use
+  equal weights for each model.
+data_inputs: other models
+designated_model: no
+notes: 'REPAIRED copy of FSNetwork-EW_cv (user decision 2026-11-23: keep original
+  and revised). FSN''s stacking code dropped other models'' probability for the last
+  week of the year (week 52; week 53 in 2014/15) because CU-BMA labels that bin''s
+  end differently. Only that bin is recomputed, from FSN''s own components and weights;
+  all other values are identical to the original (see validation/cv-repair.csv). Leave-one-season-out
+  cross-validated ensemble built by FSN from the _train components. Do not combine
+  with plain IDs.'

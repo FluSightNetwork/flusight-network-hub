@@ -1,0 +1,34 @@
+team_abbr: CU
+model_abbr: EAKFC_SEIRS_train
+team_name: CU
+model_name: Ensemble Adjustment Kalman Filter SEIRS
+model_contributors:
+- name: J Shaman
+- name: T Yamana
+- name: S Kandula
+- name: S Pei
+- name: W Yang
+- name: H Morita
+forecast_mode: training
+paired_model_id: CU-EAKFC_SEIRS
+source_dirs:
+- component-models/CU_EAKFC_SEIRS
+seasons:
+- 2010/2011
+- 2011/2012
+- 2012/2013
+- 2013/2014
+- 2014/2015
+- 2015/2016
+- 2016/2017
+- 2017/2018
+- 2018/2019
+this_model_is_an_ensemble: no
+real_time_start_season: 2017-18
+methods: EAKFC.  Model-inference ensemble forecast using a SEIRS compartmental model
+  coupled with Ensemble Adjustment Kalman Filter state space estimation and dynamic
+  error growth correction.
+data_inputs: ILI Net, Google Health Trends API
+designated_model: no
+notes: 'Training record: the series held in component-models/ (training pin 2019-10-25
+  unless noted). Includes copies of real-time files; do not combine with plain IDs.'

@@ -1,0 +1,39 @@
+team_abbr: ReichLab
+model_abbr: KDE_train
+team_name: ReichLab
+model_name: Kernel Density Estimation
+model_contributors:
+- name: Evan L. Ray
+- name: Nicholas G. Reich
+forecast_mode: training
+paired_model_id: ReichLab-KDE
+source_dirs:
+- component-models/ReichLab_kde
+seasons:
+- 2010/2011
+- 2011/2012
+- 2012/2013
+- 2013/2014
+- 2014/2015
+- 2015/2016
+- 2016/2017
+- 2017/2018
+- 2018/2019
+this_model_is_an_ensemble: no
+real_time_start_season: 2017-18
+methods: This model uses kernel density estimation to estimate a distribution for
+  each seasonal target and a generalized additive model (GAM) with a cyclical seasonal
+  spline to estimate the x-week ahead incidence targets. Both models are based on
+  observed values of that target in previous seasons within the region of interest.
+  We used Gaussian kernels and the default KDE settings from the density function
+  in the stats package for R to estimate the bandwidth parameter for each KDE fit.
+  For the peak incidence target, we fit to log-transformed observations of historical
+  peak incidence. For the onset week prediction target, we estimated the probability
+  of no onset as the proportion of region-seasons in all regions in the training phase
+  where no week in the season met the criteria for being a season onset. We use the
+  mccv R package to fit the GAMs. All code used in estimation and prediction is available
+  at https://github.com/reichlab/2017-2018-cdc-flu-contest
+data_inputs: ilinet
+designated_model: no
+notes: 'Training record: the series held in component-models/ (training pin 2019-10-25
+  unless noted). Includes copies of real-time files; do not combine with plain IDs.'

@@ -1,0 +1,34 @@
+team_abbr: Delphi
+model_abbr: DeltaDensity1
+team_name: Delphi
+model_name: Delta Density (epiforecast package defaults)
+model_contributors:
+- name: Logan C. Brooks
+- name: Aaron Rumack
+- name: David C. Farrow
+- name: Sangwon Hyun
+- name: Shannon Gallagher
+- name: Ryan J. Tibshirani
+- name: Roni Rosenfeld
+- name: Rob Tibshirani
+forecast_mode: real-time
+paired_model_id: Delphi-DeltaDensity1_train
+source_dirs:
+- real-time-component-models/Delphi_ExtendedDeltaDensity
+seasons:
+- 2018/2019
+- 2019/2020
+this_model_is_an_ensemble: no
+real_time_start_season: 2018-19
+methods: Uses kernel conditional density estimation (using training seasons) to model
+  the week-on-week change in wILI, conditioned on features of recent observations.  Features
+  are heuristically selected; parameters values are manually chosen using data from
+  seasons before the test period.  A small amount of smoothing is applied when calculating
+  target distributions.  All training seasons precede the test season, and observations
+  from the test season use mimicPastEpidataDF to approximate what the ILINet report
+  for the forecast week looked like.  The code for generating these forecasts is available
+  at https://github.com/cmu-delphi/epiforecast-R.
+data_inputs: ILINet, ILI-Nearby
+designated_model: no
+notes: '2018 re-run Real-time record: forecasts as submitted (last version committed
+  by the due date + 3 days). Do not combine with _train/_cv IDs.'

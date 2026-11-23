@@ -1,0 +1,18 @@
+{
+  "schema_version": "https://raw.githubusercontent.com/hubverse-org/schemas/main/v6.0.0/admin-schema.json",
+  "name": "PLACEHOLDER FluSight Network Forecast Archive",
+  "maintainer": "PLACEHOLDER",
+  "contact": {
+    "name": "PLACEHOLDER",
+    "email": "placeholder@example.org"
+  },
+  "repository": {
+    "host": "github",
+    "owner": "PLACEHOLDER",
+    "name": "PLACEHOLDER"
+  },
+  "file_format": [
+    "parquet"
+  ],
+  "timezone": "US/Eastern"
+}

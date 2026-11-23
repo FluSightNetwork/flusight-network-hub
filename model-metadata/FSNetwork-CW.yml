@@ -1,0 +1,25 @@
+team_abbr: FSNetwork
+model_abbr: CW
+team_name: FSNetwork
+model_name: constant-weights
+model_contributors:
+- name: Logan Brooks
+- name: Evan L. Ray
+- name: Nicholas G. Reich
+- name: Abhinav Tushar
+- name: Teresa Yamana
+forecast_mode: real-time
+paired_model_id: FSNetwork-CW_cv
+source_dirs:
+- real-time-ensemble-models/constant-weights
+seasons:
+- 2017/2018
+- 2018/2019
+- 2019/2020
+this_model_is_an_ensemble: yes
+methods: This is an ensemble of stacked entries from all component models. We use
+  degenerate EM algorithm to estimate constant weights for each model.
+data_inputs: other models
+designated_model: no
+notes: 'Real-time record: forecasts as submitted (last version committed by the due
+  date + 3 days). Do not combine with _train/_cv IDs.'

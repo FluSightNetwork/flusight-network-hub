@@ -1,0 +1,95 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Schema for FluSight Network archive model metadata",
+  "type": "object",
+  "properties": {
+    "team_abbr": {
+      "type": "string",
+      "pattern": "^[a-zA-Z0-9_]+$",
+      "description": "Team abbreviation"
+    },
+    "model_abbr": {
+      "type": "string",
+      "pattern": "^[a-zA-Z0-9_]+$",
+      "description": "Model abbreviation"
+    },
+    "team_name": {
+      "type": "string",
+      "description": "Team name as given in the source repository"
+    },
+    "model_name": {
+      "type": "string",
+      "description": "Model name as given in the source repository"
+    },
+    "model_contributors": {
+      "type": "array",
+      "description": "Team members listed in the source metadata.txt",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "name"
+        ]
+      }
+    },
+    "forecast_mode": {
+      "type": "string",
+      "enum": [
+        "real-time",
+        "training",
+        "cross-validated"
+      ],
+      "description": "Which record this model ID belongs to (see README)."
+    },
+    "paired_model_id": {
+      "type": ["string", "null"],
+      "description": "The corresponding ID in the other record, if any."
+    },
+    "source_dirs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Source directories in FluSightNetwork/cdc-flusight-ensemble."
+    },
+    "seasons": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "this_model_is_an_ensemble": {
+      "type": "boolean"
+    },
+    "real_time_start_season": {
+      "type": ["string", "null"]
+    },
+    "methods": {
+      "type": "string",
+      "description": "Methods text from the source metadata.txt"
+    },
+    "data_inputs": {
+      "type": "string",
+      "description": "Data sources from the source metadata.txt"
+    },
+    "designated_model": {
+      "type": "boolean",
+      "description": "Not used in this archive; always false."
+    },
+    "notes": {
+      "type": "string",
+      "description": "Archive notes (provenance, exceptions)"
+    }
+  },
+  "required": [
+    "team_abbr",
+    "model_abbr",
+    "forecast_mode",
+    "designated_model"
+  ],
+  "additionalProperties": false
+}

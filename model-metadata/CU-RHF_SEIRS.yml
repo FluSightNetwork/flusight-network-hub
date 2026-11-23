@@ -1,0 +1,26 @@
+team_abbr: CU
+model_abbr: RHF_SEIRS
+team_name: CU
+model_name: Rank Histogram Filter SEIRS
+model_contributors:
+- name: J Shaman
+- name: T Yamana
+- name: S Kandula
+- name: S Pei
+- name: W Yang
+- name: H Morita
+forecast_mode: real-time
+paired_model_id: CU-RHF_SEIRS_train
+source_dirs:
+- real-time-component-models/CU_RHF_SEIRS
+seasons:
+- 2017/2018
+- 2018/2019
+- 2019/2020
+this_model_is_an_ensemble: no
+methods: Model-inference ensemble forecast using a SEIRS compartmental model coupled
+  with Rank Histogram Filter state space estimation.
+data_inputs: ILI Net, Google Health Trends API
+designated_model: no
+notes: 'Real-time record: forecasts as submitted (last version committed by the due
+  date + 3 days). Do not combine with _train/_cv IDs.'
