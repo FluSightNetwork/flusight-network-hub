@@ -116,11 +116,12 @@ Known tool limitations (see `src/11_smoke_modelimportance.R`):
 | `excluded_output/` | forecasts excluded by the quality rules *(with model output)* |
 | `src/` | the conversion pipeline (see `src/README.md`) |
 | `validation/` | manifests, file map, change logs and check results |
+| `.github/workflows/` | CI: hub config validation, model-output/metadata validation on PRs (submission-window check skipped), round-aware target-data validation |
 
 ## Source and licence
 
 Source: [FluSightNetwork/cdc-flusight-ensemble](https://github.com/FluSightNetwork/cdc-flusight-ensemble)
-(master `8c3100af`, 2020-05-04, plus earlier versions from its full git history). The forecast data are
-licensed [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/), as in the source.
+(master `8c3100af`, 2020-05-04, plus earlier versions from its full git history). This repository is
+licensed [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/), as is the source (see [`LICENSE`](LICENSE)).
 Related archive: [hubverse-org/flusight_hub_archive](https://github.com/hubverse-org/flusight_hub_archive)
 (CDC FluSight submissions, 2015/16–2019/20).
