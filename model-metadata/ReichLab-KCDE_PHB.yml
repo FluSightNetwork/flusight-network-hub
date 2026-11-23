@@ -6,13 +6,26 @@ model_contributors:
 - name: Evan L. Ray
 - name: Graham C. Gibson
 - name: Nicholas G. Reich
-forecast_mode: real-time
-paired_model_id: ReichLab-KCDE_PHB_train
+real_time_seasons:
+- 2019/2020
+fsn_ensemble_component_seasons:
+- 2019/2020
 source_dirs:
+- component-models/ReichLab_kcde_backfill_post_hoc
 - real-time-component-models/ReichLab_kcde_backfill_post_hoc
 seasons:
+- 2010/2011
+- 2011/2012
+- 2012/2013
+- 2013/2014
+- 2014/2015
+- 2015/2016
+- 2016/2017
+- 2017/2018
+- 2018/2019
 - 2019/2020
-this_model_is_an_ensemble: no
+this_model_is_an_ensemble: false
+real_time_start_season: 2019-20
 methods: Used leave-one-season-out cross-validation in the training phase to estimate
   1) parameters of kernel conditional density estimation (KCDE) models for incidence
   h steps ahead, for h = 1, ..., 35; and 2) parameters of a copula C^H modeling dependence
@@ -27,6 +40,7 @@ methods: Used leave-one-season-out cross-validation in the training phase to est
   used in estimation and prediction is available at https://github.com/reichlab/cdcfluutils
   and https://github.com/reichlab/cdcfluforecasts
 data_inputs: ilinet
-designated_model: no
-notes: 'Real-time record: forecasts as submitted (last version committed by the due
-  date + 3 days). Do not combine with _train/_cv IDs.'
+designated_model: false
+notes: 'One model ID holding every round of this model: 20 real-time forecasts and
+  298 forecasts not made in real time (FSN training backcasts). The per-round flag
+  is is_real_time in auxiliary-data/file-provenance.csv.'

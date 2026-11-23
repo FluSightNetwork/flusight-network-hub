@@ -1,7 +1,7 @@
 # Step 11: downstream smoke test - modelimportance on hub data (pmf -> log score, median -> abs. error).
 # Uses a project-local library (.cache/Rlib) for modelimportance and its deps.
-#   1. real-time 2018/19 components (plain IDs), weekly ili perc, pmf and median
-#   2. training-record components (_train), 2015/16, season peak week (pmf). Seasonal targets have
+#   1. 2018/19 components (real-time forecasts), weekly ili perc, pmf and median
+#   2. components' training backcasts, 2015/16, season peak week (pmf). Seasonal targets have
 #      empty horizon/target_end_date; those all-NA columns are dropped before scoring (known
 #      hubEvals/scoringutils limitation, to be filed as an issue once the hub is live).
 #   Workaround: modelimportance renames origin_date -> reference_date in forecasts only, so the oracle
@@ -36,13 +36,13 @@ run <- function(label, models, origins, tgt, otype, hz = NULL) {
   imp
 }
 
-rt_models <- c("CU-BMA", "Delphi-BasisRegression", "LANL-DBMplus", "Protea-Cheetah", "ReichLab-KDE", "ReichLab-SARIMA2")
+rt_models <- c("CU-BMA1", "Delphi-BasisRegression", "LANL-DBMplus", "Protea-Cheetah1", "ReichLab-KDE", "ReichLab-SARIMA2")
 o1819 <- as.Date(c("2018-11-17", "2018-12-15", "2019-01-19"))
 r1 <- run("real-time 2018/19, ili perc h=2, pmf", rt_models, o1819, "ili perc", "pmf", hz = 2L)
 r2 <- run("real-time 2018/19, ili perc h=2, median", rt_models, o1819, "ili perc", "median", hz = 2L)
-tr_models <- paste0(rt_models, "_train")
+tr_models <- c("CU-BMA2", "Delphi-BasisRegression", "LANL-DBMplus", "Protea-Cheetah2", "ReichLab-KDE", "ReichLab-SARIMA2")
 o1516 <- as.Date(c("2015-11-14", "2016-01-16", "2016-02-20"))
-r3 <- run("training 2015/16, season peak wk, pmf", tr_models, o1516, "season peak wk", "pmf")
+r3 <- run("backcasts 2015/16, season peak wk, pmf", tr_models, o1516, "season peak wk", "pmf")
 
 res <- rbind(r1, r2, r3, fill = TRUE)
 fwrite_csv(res, "smoke-modelimportance.csv")

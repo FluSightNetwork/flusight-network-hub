@@ -20,7 +20,7 @@ ILI_TARGETS <- c("1 wk ahead", "2 wk ahead", "3 wk ahead", "4 wk ahead", "Season
 NA_STRINGS <- c("NA", "NaN", "", "nan", "null", "NULL")
 
 read_blob <- function(blob) {
-  txt <- git("cat-file", "-p", blob)
+  txt <- git_blob(blob)
   raw <- fread(text = txt, colClasses = "character", na.strings = NULL, strip.white = FALSE)
   list(raw = raw, header = paste(names(raw), collapse = ","))
 }
@@ -77,7 +77,8 @@ profile <- function(d, blob, header) {
   )
 }
 
-blobs <- unique(fm$blob)
+sup <- fread(file.path(VALIDATION_DIR, "file-map-superseded.csv"))
+blobs <- unique(c(fm$blob, sup$blob))           # superseded versions are kept in auxiliary-data (step 07)
 done <- sub("\\.parquet$", "", list.files(STD_DIR))
 message(length(blobs), " distinct blobs; ", length(intersect(blobs, done)), " already standardised")
 t0 <- Sys.time()

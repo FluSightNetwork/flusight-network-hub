@@ -4,17 +4,31 @@ team_name: FluSight
 model_name: FluSight unweighted average
 model_contributors:
 - name: FluSight all members
-forecast_mode: real-time
+real_time_seasons:
+- 2015/2016
+- 2016/2017
+- 2017/2018
+- 2018/2019
+- 2019/2020
 source_dirs:
+- 'cdcepi/FluSight-forecasts: 2018-2019/UnwghtAvg'
+- 'cdcepi/FluSight-forecasts: 2019-2020/UnwghtAvg'
 - component-models/FluSight_unweighted_avg
 seasons:
 - 2015/2016
 - 2016/2017
 - 2017/2018
-this_model_is_an_ensemble: yes
+- 2018/2019
+- 2019/2020
+this_model_is_an_ensemble: true
 methods: Unweighted average of all models submitted to FluSight. https://github.com/cdcepi/FluSight-forecasts
 data_inputs: other forecasts
-designated_model: no
-notes: 'copy of CDC''s real-time FluSight ensemble; real-time record only (provenance
-  exception) Real-time record: forecasts as submitted (last version committed by the
-  due date + 3 days). Do not combine with _train/_cv IDs.'
+designated_model: false
+notes: 'FSN''s copies of CDC''s real-time FluSight ensemble were committed late; treated
+  as real-time (provenance exception to the cutoff rule) One model ID holding every
+  round of this model: 134 real-time forecasts and 0 forecasts not made in real time
+  (FSN training backcasts). The per-round flag is is_real_time in auxiliary-data/file-provenance.csv.
+  CDC''s unweighted average of FluSight submissions. 2015/16-2017/18 from FSN''s copies;
+  2018/19-2019/20 from CDC''s originals in cdcepi/FluSight-forecasts (CC BY 4.0).
+  FSN''s 2016/17-2017/18 copies are byte-identical to CDC''s; FSN''s 2015/16 copies
+  use the one-decimal bins, unlike CDC''s 2015/16 originals.'

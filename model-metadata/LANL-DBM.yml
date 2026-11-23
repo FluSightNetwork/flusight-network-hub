@@ -7,13 +7,23 @@ model_contributors:
 - name: Reid Priedhorsky
 - name: Jim Gattiker
 - name: Sara Del Valle
-forecast_mode: real-time
-paired_model_id: LANL-DBM_train
+real_time_seasons:
+- 2017/2018
+fsn_ensemble_component_seasons:
+- 2017/2018
 source_dirs:
+- component-models/LANL_DBM
 - real-time-component-models/LANL_DBM
 seasons:
+- 2010/2011
+- 2011/2012
+- 2012/2013
+- 2013/2014
+- 2014/2015
+- 2015/2016
+- 2016/2017
 - 2017/2018
-this_model_is_an_ensemble: no
+this_model_is_an_ensemble: false
 methods: 'The DBM combines an SIR model with a flexible discrepancy function in a
   Bayesian framework. Methodological details can be found here: https://arxiv.org/pdf/1708.09481.pdf.
   To produce forecasts, the DBM requires historical data, ideally from EW 40 of 1997
@@ -26,7 +36,8 @@ methods: 'The DBM combines an SIR model with a flexible discrepancy function in 
   EW 52 (i.e., NOT strictly obeying the backfill issue) while all other used data
   was pulled on or before the forecast date.'
 data_inputs: ILI Net
-designated_model: no
-notes: 'marked to-use FALSE for the 2017/18 ensemble Real-time record: forecasts as
-  submitted (last version committed by the due date + 3 days). Do not combine with
-  _train/_cv IDs.'
+designated_model: false
+notes: '2017/18 FSN ensemble component (in FSN''s 2017/18 weights; models-for-2017-2018.csv
+  of 2018-10-17 marks it FALSE) One model ID holding every round of this model: 28
+  real-time forecasts and 232 forecasts not made in real time (FSN training backcasts).
+  The per-round flag is is_real_time in auxiliary-data/file-provenance.csv.'

@@ -123,12 +123,21 @@ mms <- list(
     model_contributors = list(type = "array", description = "Team members listed in the source metadata.txt",
                               items = list(type = "object", properties = list(name = list(type = "string")),
                                            required = list("name"))),
-    forecast_mode = list(type = "string", enum = list("real-time", "training", "cross-validated"),
-                         description = "Which record this model ID belongs to (see README)."),
-    paired_model_id = list(type = c("string", "null"), description = "The corresponding ID in the other record, if any."),
+    real_time_seasons = list(type = "array", items = list(type = "string"), description = paste(
+      "Seasons with forecasts made in real time (first committed no more than 3 days after the FluSight due date).",
+      "A real-time season can still contain a few rounds that are not real-time; the exact flag per round is",
+      "is_real_time in auxiliary-data/file-provenance.csv.")),
+    fsn_ensemble_component_seasons = list(type = "array", items = list(type = "string"), description = paste(
+      "Operational seasons in which this model was a component of the FluSight Network ensemble",
+      "(listed in FSN's weights for that season's ensemble build). Component models only.")),
+    version_of = str_prop(paste("For models retrained between seasons: the source model this ID is one version of.",
+                                "Each version holds that model's backcasts and its real-time forecasts.")),
+    version_note = str_prop("What distinguishes this version (retraining commit, seasons, FSN ensemble use)."),
+    paired_model_id = list(type = c("string", "null"),
+                           description = "Ensembles only: the corresponding real-time, cross-validated or repaired ensemble ID."),
     source_dirs = list(type = "array", items = list(type = "string"),
-                       description = "Source directories in FluSightNetwork/cdc-flusight-ensemble."),
-    seasons = list(type = "array", items = list(type = "string")),
+                       description = "Source directories (FluSightNetwork/cdc-flusight-ensemble unless prefixed with another repository)."),
+    seasons = list(type = "array", items = list(type = "string"), description = "Seasons with at least one forecast."),
     this_model_is_an_ensemble = list(type = "boolean", description = paste(
       "From the source metadata.txt, self-reported by each team. FSN's guidelines (guidelines.md) define it only as",
       "\"whether or not the model itself is a type of ensemble model\" (template: this_model_is_an_ensemble: TRUE/FALSE).")),
@@ -137,7 +146,7 @@ mms <- list(
     data_inputs = str_prop("Data sources from the source metadata.txt"),
     designated_model = list(type = "boolean", description = "Not used in this archive; always false."),
     notes = str_prop("Archive notes (provenance, exceptions)")),
-  required = list("team_abbr", "model_abbr", "forecast_mode", "designated_model"),
+  required = list("team_abbr", "model_abbr", "real_time_seasons", "designated_model"),
   additionalProperties = FALSE)
 write_json(mms, file.path(CFG_DIR, "model-metadata-schema.json"), auto_unbox = TRUE, pretty = TRUE, null = "null")
 

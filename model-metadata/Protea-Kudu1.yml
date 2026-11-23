@@ -1,14 +1,21 @@
 team_abbr: Protea
-model_abbr: Kudu_train
+model_abbr: Kudu1
 team_name: Protea
 model_name: Subtype weighted historical average model
 model_contributors:
 - name: Craig J. McGowan (contact)
 - name: Alysse J. Kowalski
-forecast_mode: training
-paired_model_id: Protea-Kudu
+real_time_seasons:
+- 2018/2019
+fsn_ensemble_component_seasons:
+- 2018/2019
+version_of: Protea-Kudu
+version_note: 'Version 1: backcasts as held before Protea retrained the model on 2019-10-13,
+  plus the 2018/19 real-time forecasts. The Protea Kudu component of the 2018/19 FSN
+  ensemble.'
 source_dirs:
 - component-models/Protea_Kudu
+- real-time-component-models/Protea_Kudu
 seasons:
 - 2010/2011
 - 2011/2012
@@ -19,7 +26,7 @@ seasons:
 - 2016/2017
 - 2017/2018
 - 2018/2019
-this_model_is_an_ensemble: no
+this_model_is_an_ensemble: false
 real_time_start_season: 2018-19
 methods: This model is an influenza subtype-specific historical average model. Separate  Gaussian
   kernel densities for H1 and H3 behavior are calculated from prior ILINet data weighted  by
@@ -33,6 +40,7 @@ methods: This model is an influenza subtype-specific historical average model. S
   is less susceptible to backfill effects as the season goes on. All code used in  estimation
   and prediction is available at https://github.com/craigjmcgowan/FluForecast
 data_inputs: ilinet, who-nrevss lab data
-designated_model: no
-notes: 'Training record: the series held in component-models/ (training pin 2019-10-25
-  unless noted). Includes copies of real-time files; do not combine with plain IDs.'
+designated_model: false
+notes: 'One model ID holding every round of this model: 29 real-time forecasts and
+  265 forecasts not made in real time (FSN training backcasts). The per-round flag
+  is is_real_time in auxiliary-data/file-provenance.csv.'

@@ -10,13 +10,26 @@ model_contributors:
 - name: Jiangzhuo Chen
 - name: Anil Vullikanti
 - name: Madhav Marathe
-forecast_mode: real-time
-paired_model_id: FluX-LSTM_train
+real_time_seasons:
+- 2019/2020
+fsn_ensemble_component_seasons:
+- 2019/2020
 source_dirs:
+- component-models/FluX_LSTM
 - real-time-component-models/FluX_LSTM
 seasons:
+- 2010/2011
+- 2011/2012
+- 2012/2013
+- 2013/2014
+- 2014/2015
+- 2015/2016
+- 2016/2017
+- 2017/2018
+- 2018/2019
 - 2019/2020
-this_model_is_an_ensemble: no
+this_model_is_an_ensemble: false
+real_time_start_season: 2019-20
 methods: An LSTM based deep learning predictor which learns patterns from historical
   time series.  It models non-linear relationships between weekly data points and
   makes forecasts by  looking back to the time sequence of data points of previous
@@ -26,7 +39,7 @@ methods: An LSTM based deep learning predictor which learns patterns from histor
   in early seasons (e.g., EW20-40 for HHS regions before 2014) which were  retrospectively
   filled in 2013EW52, were treated as missing, and filled by forward fill.
 data_inputs: ILINet
-designated_model: no
-notes: 'FSN weights files call it FluX-FluX_LSTM Real-time record: forecasts as submitted
-  (last version committed by the due date + 3 days). Do not combine with _train/_cv
-  IDs.'
+designated_model: false
+notes: 'FSN weights files call it FluX-FluX_LSTM One model ID holding every round
+  of this model: 21 real-time forecasts and 298 forecasts not made in real time (FSN
+  training backcasts). The per-round flag is is_real_time in auxiliary-data/file-provenance.csv.'

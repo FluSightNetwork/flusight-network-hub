@@ -4,14 +4,28 @@ team_name: LANL
 model_name: Dynamic Bayesian Model plus
 model_contributors:
 - name: Dave Osthus (PI) and Reid Priedhorsky
-forecast_mode: real-time
-paired_model_id: LANL-DBMplus_train
-source_dirs:
-- real-time-component-models/LANL_DBMplus
-seasons:
+real_time_seasons:
 - 2018/2019
 - 2019/2020
-this_model_is_an_ensemble: no
+fsn_ensemble_component_seasons:
+- 2018/2019
+- 2019/2020
+source_dirs:
+- component-models/LANL_DBMplus
+- real-time-component-models/LANL_DBMplus
+seasons:
+- 2010/2011
+- 2011/2012
+- 2012/2013
+- 2013/2014
+- 2014/2015
+- 2015/2016
+- 2016/2017
+- 2017/2018
+- 2018/2019
+- 2019/2020
+this_model_is_an_ensemble: false
+real_time_start_season: 2017-18
 methods: 'DBMplus (DBM+) is partitioned into two parts: the DBM part and the ''+''
   part.  The dynamic Bayesian model (DBM) part is the probabilistic model It combines  an
   SIR model with a flexible discrepancy model in a Bayesian framework.  Methodological
@@ -31,6 +45,7 @@ methods: 'DBMplus (DBM+) is partitioned into two parts: the DBM part and the ''+
   from 1997, EW 40 through 2008, EW 25 was pulled on 2013,  EW 52 (i.e., NOT strictly
   obeying the backfill issue).'
 data_inputs: ILI Net, Google Trends
-designated_model: no
-notes: 'Real-time record: forecasts as submitted (last version committed by the due
-  date + 3 days). Do not combine with _train/_cv IDs.'
+designated_model: false
+notes: 'One model ID holding every round of this model: 49 real-time forecasts and
+  271 forecasts not made in real time (FSN training backcasts, and 2 real-time-folder
+  files committed after the cutoff). The per-round flag is is_real_time in auxiliary-data/file-provenance.csv.'

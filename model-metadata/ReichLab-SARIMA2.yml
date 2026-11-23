@@ -5,15 +5,30 @@ model_name: SARIMA model with seasonal differencing
 model_contributors:
 - name: Evan L. Ray
 - name: Nicholas G. Reich
-forecast_mode: real-time
-paired_model_id: ReichLab-SARIMA2_train
-source_dirs:
-- real-time-component-models/ReichLab_sarima_seasonal_difference_TRUE
-seasons:
+real_time_seasons:
 - 2017/2018
 - 2018/2019
 - 2019/2020
-this_model_is_an_ensemble: no
+fsn_ensemble_component_seasons:
+- 2017/2018
+- 2018/2019
+- 2019/2020
+source_dirs:
+- component-models/ReichLab_sarima_seasonal_difference_TRUE
+- real-time-component-models/ReichLab_sarima_seasonal_difference_TRUE
+seasons:
+- 2010/2011
+- 2011/2012
+- 2012/2013
+- 2013/2014
+- 2014/2015
+- 2015/2016
+- 2016/2017
+- 2017/2018
+- 2018/2019
+- 2019/2020
+this_model_is_an_ensemble: false
+real_time_start_season: 2017-18
 methods: A seasonal ARIMA model is fit using the auto.arima function in the forecast
   package for R.  The data are log-transformed, any infinite or missing values after
   the transformation are linearly imputed, and a first-order seasonal difference (at
@@ -25,6 +40,7 @@ methods: A seasonal ARIMA model is fit using the auto.arima function in the fore
   for each season, only data before the start of that season were used in fitting
   model parameters.  All code used in estimation and prediction is available at https://github.com/reichlab/2017-2018-cdc-flu-contest
 data_inputs: ilinet
-designated_model: no
-notes: 'Real-time record: forecasts as submitted (last version committed by the due
-  date + 3 days). Do not combine with _train/_cv IDs.'
+designated_model: false
+notes: 'One model ID holding every round of this model: 77 real-time forecasts and
+  232 forecasts not made in real time (FSN training backcasts). The per-round flag
+  is is_real_time in auxiliary-data/file-provenance.csv.'

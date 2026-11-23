@@ -103,7 +103,7 @@ write_parquet(values, file.path(VALIDATION_DIR, "cv-repair-values.parquet"))
 fmr <- merge(cv, report[repaired == TRUE, .(model_id, origin_date = as.IDate(origin_date))], by = c("model_id", "origin_date"))
 fmr[, `:=`(model_id = paste0(model_id, "_repaired"), blob = paste0("repaired-", blob),
            selection = paste(selection, "+ week-52 bin repaired (src/05_repair_cv.R)"),
-           duplicate_of = NA_character_, train_vs_realtime = "not applicable (cv ensemble)")]
+           duplicate_of = NA_character_)]
 fmr[, output_file := sprintf("model-output/%s/%s-%s.parquet", model_id, origin_date, model_id)]
 fwrite_csv(fmr, "file-map-repaired.csv")
 

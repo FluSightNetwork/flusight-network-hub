@@ -1,15 +1,25 @@
 # Step 02: decide which version of which source file becomes each hub model-output file.
 #
-# Two records (see PLAN.md, "Two records: real-time and training"):
-#   real-time record  -> plain model IDs: the submitted file if one exists, else FSN's real-time file;
-#                        last version committed by due date + 3 days; later-committed rounds are not real-time
-#   training record   -> *_train / *_cv model IDs, component-models/ and cv-ensemble-models/
-#                        as of the training pin (2019-10-25 cv rebuild); removed dirs at their last state
+# Component models (see PLAN.md, "Model structure"): ONE model ID per model, holding every round.
+#   For each round, in order of preference:
+#     1. real-time   the submitted file if one exists, else FSN's real-time file; last version committed
+#                    by due date + 3 days (is_real_time = TRUE)
+#     2. training    FSN's component-models/ series as of the training pin (2019-10-25 cv rebuild);
+#                    removed dirs at their last state (backcasts, and copies of real-time files)
+#     3. late        a real-time-folder file first committed after the cutoff, if nothing else exists
+#   A training file that differs from the real-time file chosen for the same round is "superseded":
+#   not in model-output, kept unchanged in auxiliary-data/superseded-forecasts.parquet.
+#   Models retrained between seasons (src/model_versions.csv) get one ID per version, so each ID
+#   holds one model's backcasts and its real-time forecasts.
+# FluSight-unweighted_avg: FSN's copies (2015/16-2017/18) plus CDC's originals (2018/19-2019/20,
+#   cdcepi/FluSight-forecasts), real-time by the same cutoff rule.
+# Ensembles (unchanged for now): real-time FSNetwork-<ABBR>; cross-validated FSNetwork-<ABBR>_cv.
 #
 # Outputs (committed):
 #   validation/file-map.csv              one row per (model_id, origin_date): the selected source version
 #   validation/file-map-excluded.csv     source files/rounds that are not converted, with a reason
 #   validation/file-map-nonselected.csv  every other version of a selected round, with a reason
+#   validation/file-map-superseded.csv   training versions replaced by a different real-time version
 #   validation/file-map-review.csv       items flagged for human review
 
 source("src/00_config.R")
@@ -205,42 +215,113 @@ tr_dupround <- tr[n_paths > 1]
 setorder(tr, model_id, origin_date, -date)
 tr_sel <- tr[, .SD[1], by = .(model_id, origin_date)]
 
-# ---- duplicates between records ---------------------------------------------------------
-# a duplicate = identical content AND the same forecast date (Delphi-Uniform repeats identical
-# content across different weeks, which is not a duplicate forecast)
+# ---- ensembles: cv files that duplicate a real-time ensemble file ----------------------------
+# a duplicate = identical content AND the same forecast date
+cv_sel <- tr_sel[record == "cross-validated"]
 rt_blobs <- rt_sel[, .(blob, origin_date, duplicate_of_model = model_id, duplicate_of_origin = origin_date)]
-tr_sel <- merge(tr_sel, rt_blobs[!duplicated(rt_blobs[, .(blob, origin_date)])], by = c("blob", "origin_date"), all.x = TRUE)
-tr_sel[, duplicate_of := fifelse(is.na(duplicate_of_model), NA_character_,
+cv_sel <- merge(cv_sel, rt_blobs[!duplicated(rt_blobs[, .(blob, origin_date)])], by = c("blob", "origin_date"), all.x = TRUE)
+cv_sel[, duplicate_of := fifelse(is.na(duplicate_of_model), NA_character_,
                                  paste0(duplicate_of_model, " ", duplicate_of_origin))]
-# same model & round exists in the real-time record but content differs
-base_rt_id <- function(train_model) sub("_(train|train2017|cv)$", "", train_model)
-tr_sel[, rt_counterpart := fifelse(record == "cross-validated", NA_character_, base_rt_id(model_id))]
-tr_sel <- merge(tr_sel, rt_sel[, .(rt_counterpart = model_id, origin_date, rt_blob = blob)],
-                by = c("rt_counterpart", "origin_date"), all.x = TRUE)
-tr_sel[, train_vs_realtime := fcase(
-  record == "cross-validated" & !is.na(duplicate_of), "identical to a real-time file",
-  record == "cross-validated", "not applicable (cv ensemble)",
-  is.na(rt_blob), "no real-time file for this round",
-  rt_blob == blob, "identical to real-time submission",
-  !is.na(duplicate_of), "identical to a different real-time file",
-  default = "differs from real-time submission")]
+
+# ---- COMPONENT MODELS: one model ID per model (or per version) ---------------------------------
+comp_dirs <- ids[kind == "component", dir]
+vers <- fread(file.path(SRC_DIR, "model_versions.csv"))
+v_rt <- vers[, .(season = strsplit(real_time_seasons, ";", fixed = TRUE)[[1]]), by = .(dir, version_id)]
+
+# version-1 backcasts: each retrained model's component-models/ folder just before the retraining commit
+pre <- rbindlist(lapply(which(vers$backcasts == "before_retrain"), function(i) {
+  st <- ls_tree(paste0(vers$retrain_commit[i], "^"), paste0("model-forecasts/component-models/", vers$dir[i]))
+  st[, `:=`(src = paste0("state before retraining commit ", substr(vers$retrain_commit[i], 1, 7)), version_id = vers$version_id[i])]
+}))
+pre <- pre[grepl("EW0*[0-9]{1,2}[-_][0-9]{4}", basename(path))]
+pre <- merge(pre, unique(v[, .(path, blob, collection, dir, dir_key, tier, ew, ew_year, origin_date, season, year_corrected,
+                               week_rolled_over, first_date, lag_days, realtime_id)]), by = c("path", "blob"))
+pre <- merge(pre, first_commit, by = c("path", "blob"), all.x = TRUE)
+pre[, `:=`(model_id = version_id, record = "training", selection = src, from_unmerged_pr = FALSE)]
+setorder(pre, model_id, origin_date, -date)
+pre <- pre[, .SD[1], by = .(model_id, origin_date)]
+
+# late real-time files (first committed after the cutoff): last version, best tier
+late <- rt[paste(model_id, origin_date) %in% rt_late[, paste(model_id, origin_date)] & dir_key %in% comp_dirs]
+setorder(late, model_id, origin_date, tier_rank, -ts)
+late <- late[, .SD[1], by = .(model_id, origin_date)]
+late[, `:=`(record = "late", selection = "not real-time: first committed after cutoff (due date + 3 days); used only where no other version exists")]
+
+# assign model IDs: real-time and late rows by season; pinned training rows to the latest version
+assign_id <- function(d, by_season) {
+  d[, model_id := realtime_id]
+  if (by_season) {
+    d[v_rt, on = .(dir_key = dir, season), model_id := i.version_id]
+  } else {
+    d[vers[backcasts == "training_pin"], on = .(dir_key = dir), model_id := i.version_id]
+  }
+  stopifnot(!d[dir_key %in% vers$dir, any(model_id == realtime_id)])
+  d
+}
+c_rt <- assign_id(rt_sel[dir_key %in% comp_dirs], TRUE)
+c_tr <- tr_sel[record == "training" & dir_key %in% comp_dirs]
+c_tr[, realtime_id := ids[match(c_tr$dir_key, dir), realtime_id]]
+c_tr <- assign_id(c_tr, FALSE)
+c_late <- assign_id(late, TRUE)
+
+cand <- rbind(c_rt[, pref := 1L], c_tr[, pref := 2L], pre[, pref := 2L], c_late[, pref := 3L], fill = TRUE)
+setorder(cand, model_id, origin_date, pref)
+comp_sel <- cand[, .SD[1], by = .(model_id, origin_date)]
+rest <- cand[, .SD[-1], by = .(model_id, origin_date)]
+rest <- merge(rest, comp_sel[, .(model_id, origin_date, sel_blob = blob, sel_record = record)], by = c("model_id", "origin_date"))
+superseded <- rest[record == "training" & blob != sel_blob & sel_record == "real-time"]
+comp_ns <- rest[!(record == "training" & blob != sel_blob & sel_record == "real-time")]
+comp_ns[, reason := fcase(blob == sel_blob, paste("identical copy of the selected", sel_record, "file"),
+                          record == "late", paste("late real-time file not used: a", sel_record, "version exists"),
+                          default = paste("not used: a", sel_record, "version exists"))]
+
+# ---- FluSight-unweighted_avg 2018/19-2019/20 from CDC's repository ---------------------------------
+CDC_DIRS <- c("2018-2019/UnwghtAvg", "2019-2020/UnwghtAvg")
+lg <- git_cdc("log", CDC_MASTER_SHA, "--format=C %H %aI", "--raw", "--no-abbrev", "--", CDC_DIRS)
+cdc_hist <- rbindlist(lapply(split(lg, cumsum(startsWith(lg, "C "))), function(x) {
+  h <- strsplit(x[1], " ", fixed = TRUE)[[1]]; r <- x[startsWith(x, ":")]
+  if (!length(r)) return(NULL)
+  data.table(commit = h[2], author_date = h[3], status = sub("^:\\S+ \\S+ \\S+ (\\S+) (\\S+)\t.*$", "\\2", r),
+             blob = sub("^:\\S+ \\S+ \\S+ (\\S+) .*$", "\\1", r), path = sub("^[^\t]*\t", "", r))
+}))
+cdc_hist <- cdc_hist[status %in% c("A", "M") & grepl("\\.csv$", path)]
+cdc_hist[, `:=`(ew = as.integer(sub("^EW([0-9]+)[-_].*$", "\\1", basename(path))), y0 = as.integer(substr(path, 1, 4)))]
+cdc_hist[, origin_date := mmwr_week_end(ifelse(ew >= 30L, y0, y0 + 1L), ew)]
+cdc_hist[, `:=`(date = as.Date(substr(author_date, 1, 10)), cutoff = origin_date + DUE_DAYS + GRACE_DAYS)]
+cdc_hist[, first_date := min(date), by = path]
+setorder(cdc_hist, origin_date, -author_date)
+cdc_sel <- cdc_hist[date <= cutoff, .SD[1], by = origin_date]
+stopifnot(nrow(cdc_sel) == uniqueN(cdc_hist$origin_date))      # every CDC file was committed in time
+cdc_sel[, `:=`(model_id = "FluSight-unweighted_avg", record = "real-time", season = season_of(origin_date),
+               week_rolled_over = FALSE, from_unmerged_pr = FALSE, tier = "cdc_flusight_forecasts", dir_key = "UnwghtAvg",
+               selection = "CDC original (cdcepi/FluSight-forecasts): last version by cutoff", year_corrected = FALSE,
+               lag_days = as.integer(first_date - origin_date))]
+stopifnot(!any(cdc_sel$origin_date %in% comp_sel[model_id == "FluSight-unweighted_avg", origin_date]))
 
 # ---- assemble file map ------------------------------------------------------------------
 cols <- c("model_id", "record", "origin_date", "season", "path", "blob", "commit", "author_date", "week_rolled_over", "from_unmerged_pr",
           "tier", "dir_key", "selection", "year_corrected", "first_date", "lag_days")
 fm <- rbind(
-  rt_sel[, c(cols, "cutoff"), with = FALSE][, `:=`(duplicate_of = NA_character_, train_vs_realtime = NA_character_)],
-  tr_sel[, from_unmerged_pr := FALSE][, c(cols, "duplicate_of", "train_vs_realtime"), with = FALSE], fill = TRUE)
+  rt_sel[!dir_key %in% comp_dirs, c(cols, "cutoff"), with = FALSE],
+  comp_sel[, c(cols, "cutoff"), with = FALSE],
+  cdc_sel[, c(cols, "cutoff"), with = FALSE],
+  cv_sel[, from_unmerged_pr := FALSE][, c(cols, "duplicate_of"), with = FALSE], fill = TRUE)
+fm[, is_real_time := record == "real-time"]
+fm[, source_repo := fifelse(tier == "cdc_flusight_forecasts", CDC_URL, SOURCE_URL)]
 fm[, output_file := sprintf("model-output/%s/%s-%s.parquet", model_id, origin_date, model_id)]
-setorder(fm, record, model_id, origin_date)
+setorder(fm, model_id, origin_date)
 stopifnot(!anyDuplicated(fm[, .(model_id, origin_date)]))
 fwrite_csv(fm, "file-map.csv")
+fwrite_csv(superseded[, .(model_id, origin_date, season, path, blob, commit, author_date, selection,
+                          replaced_by_blob = sel_blob)], "file-map-superseded.csv")
 
 # ---- non-selected and excluded -----------------------------------------------------------
-fwrite_csv(rt_ns[, .(model_id, origin_date, path, blob, author_date, tier, reason)], "file-map-nonselected.csv")
+fwrite_csv(rbind(rt_ns[, .(model_id, origin_date, path, blob, author_date, tier, reason)],
+                 comp_ns[, .(model_id, origin_date, path, blob, author_date, tier, reason)]), "file-map-nonselected.csv")
+late_unused <- rt_late[!path %in% c(fm$path, comp_ns$path)]
 excl_all <- rbind(
   excl,
-  rt_late[, .(path, blob, tier, dir_key, reason = "not real-time: first committed after cutoff (due date + 3 days)")],
+  late_unused[, .(path, blob, tier, dir_key, reason = "not real-time: first committed after cutoff (due date + 3 days)")],
   tr_unmatched[, .(path, blob, tier = NA_character_, dir_key = basename(dirname(path)),
                    reason = "training file not mapped (excluded dir or invalid week)")],
   tr_dupround[!paste(path, blob) %in% tr_sel[, paste(path, blob)],
@@ -271,9 +352,10 @@ review <- rbind(
                                  origin_date, path, detail = "")],
   rt_late[, .(item = "not real-time: first committed after cutoff (due date + 3 days)", model_id, origin_date, path,
               detail = paste0("first commit ", first_commit, ", ", as.integer(first_commit - origin_date), " d after origin"))],
+  fm[record == "late", .(item = "late real-time file used (no other version; is_real_time = FALSE)", model_id, origin_date, path, detail = "")],
   fm[from_unmerged_pr == TRUE, .(item = "real-time file from an unmerged pull request (included)", model_id, origin_date, path, detail = "")],
-  fm[record != "real-time" & train_vs_realtime == "differs from real-time submission",
-     .(item = "training file differs from real-time submission", model_id, origin_date, path, detail = blob)],
+  superseded[, .(item = "training file differs from real-time file (real-time used; training kept in auxiliary-data)",
+                 model_id, origin_date, path, detail = blob)],
   rt_ns[reason == "FSN real-time ensemble file differs from submitted file",
         .(item = "FSN real-time ensemble file differs from submitted file (submitted file used)", model_id, origin_date, path, detail = blob)],
   rt_ns[reason == "committed after cutoff (due date + 3 days)",
@@ -288,8 +370,11 @@ fwrite_csv(review, "file-map-review.csv")
 # ---- summary ------------------------------------------------------------------------------
 cat("\n=== file map ===\n")
 print(fm[, .(models = uniqueN(model_id), files = .N, seasons = paste(range(season), collapse = "–")), by = record])
-cat("\ntraining files that duplicate a real-time file:", fm[!is.na(duplicate_of), .N], "\n")
-print(fm[record != "real-time", .N, by = train_vs_realtime])
+cat("\nmodel IDs:", uniqueN(fm$model_id), "  files:", nrow(fm), "\n")
+cat("cv files that duplicate a real-time ensemble file:", fm[!is.na(duplicate_of), .N], "\n")
+cat("superseded training files (kept in auxiliary-data):", nrow(superseded), "\n"); print(superseded[, .N, by = .(model_id, season)])
+cat("\ncomponent rounds by model and record:\n")
+print(dcast(fm[dir_key %in% c(comp_dirs, "UnwghtAvg")], model_id ~ record, fun.aggregate = length))
 cat("\nreal-time selection:\n"); print(fm[record == "real-time", .N, by = selection])
 cat("\nnon-selected real-time versions:\n"); print(rt_ns[, .N, by = reason])
 cat("\nexcluded source files:\n"); print(unique(excl_all)[, .N, by = reason])

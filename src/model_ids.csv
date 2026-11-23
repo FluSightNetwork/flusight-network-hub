@@ -8,26 +8,26 @@ CU_RHF_SEIRS,component,CU-RHF_SEIRS,CU-RHF_SEIRS_train,TRUE,
 CU_RHF_SIRS,component,CU-RHF_SIRS,CU-RHF_SIRS_train,TRUE,
 CUEAKFC,component,,,FALSE,early name (2017-10-07..15) replaced within a week by the 6 CU models
 Delphi_BasisRegression,component,Delphi-BasisRegression,Delphi-BasisRegression_train,TRUE,2018 re-run; real-time 2018/19-2019/20
-Delphi_BasisRegression_PackageDefaults,component,Delphi-BasisRegression_PD,Delphi-BasisRegression_PD_train,TRUE,2017/18 PackageDefaults version (real-time 2017/18; training series used by the 2017/18 ensemble); separate IDs per user decision
+Delphi_BasisRegression_PackageDefaults,component,Delphi-BasisRegression_PD,Delphi-BasisRegression_PD_train,TRUE,2017/18 PackageDefaults version (backcasts + 2017/18 real-time; the 2017/18 ensemble component); separate ID per user decision
 Delphi_DeltaDensity,component,,,FALSE,17 files all identical to files elsewhere in master
 Delphi_DeltaDensity_PackageDefaults,component,Delphi-DeltaDensity1_PD,Delphi-DeltaDensity1_PD_train,TRUE,2017/18 version of Delphi_ExtendedDeltaDensity (abbr DeltaDensity1)
 Delphi_ExtendedDeltaDensity,component,Delphi-DeltaDensity1,Delphi-DeltaDensity1_train,TRUE,2018 re-run
-Delphi_EmpiricalBayes_Cond4,component,Delphi-EmpiricalBayes1,Delphi-EmpiricalBayes1_train,TRUE,not in the 2017/18 ensemble
-Delphi_EmpiricalBayes_PackageDefaults,component,Delphi-EmpiricalBayes2,Delphi-EmpiricalBayes2_train,TRUE,not in the 2017/18 ensemble
+Delphi_EmpiricalBayes_Cond4,component,Delphi-EmpiricalBayes1,Delphi-EmpiricalBayes1_train,TRUE,2017/18 FSN ensemble component (in FSN's 2017/18 weights); removed from master later
+Delphi_EmpiricalBayes_PackageDefaults,component,Delphi-EmpiricalBayes2,Delphi-EmpiricalBayes2_train,TRUE,2017/18 FSN ensemble component (in FSN's 2017/18 weights); removed from master later
 Delphi_EmpiricalFutures,component,Delphi-EmpiricalFuture,Delphi-EmpiricalFuture_train,TRUE,2018 re-run
 Delphi_EmpiricalFutures_PackageDefaults,component,Delphi-EmpiricalFuture_PD,Delphi-EmpiricalFuture_PD_train,TRUE,2017/18 version
 Delphi_EmpiricalTrajectories,component,Delphi-EmpiricalTraj,Delphi-EmpiricalTraj_train,TRUE,2018 re-run
 Delphi_EmpiricalTrajectories_PackageDefaults,component,Delphi-EmpiricalTraj_PD,Delphi-EmpiricalTraj_PD_train,TRUE,2017/18 version
 Delphi_MarkovianDeltaDensity,component,Delphi-DeltaDensity2,Delphi-DeltaDensity2_train,TRUE,2018 re-run
 Delphi_MarkovianDeltaDensity_PackageDefaults,component,Delphi-DeltaDensity2_PD,Delphi-DeltaDensity2_PD_train,TRUE,2017/18 version
-Delphi_Stat_FewerComponentsNoBackcastNoNowcast,component,Delphi-Stat,Delphi-Stat_train,TRUE,not in the 2017/18 ensemble
+Delphi_Stat_FewerComponentsNoBackcastNoNowcast,component,Delphi-Stat,Delphi-Stat_train,TRUE,2017/18 FSN ensemble component (in FSN's 2017/18 weights); removed from master later
 Delphi_Uniform,component,Delphi-Uniform,Delphi-Uniform_train,TRUE,
 FluOutlook_Mech,component,FluOutlook-Mech,FluOutlook-Mech_train,TRUE,
 FluOutlook_MechAug,component,FluOutlook-MechAug,FluOutlook-MechAug_train,TRUE,
-FluSight_unweighted_avg,component,FluSight-unweighted_avg,,TRUE,copy of CDC's real-time FluSight ensemble; real-time record only (provenance exception)
+FluSight_unweighted_avg,component,FluSight-unweighted_avg,,TRUE,FSN's copies of CDC's real-time FluSight ensemble were committed late; treated as real-time (provenance exception to the cutoff rule)
 FluX_ARLR,component,FluX-ARLR,FluX-ARLR_train,TRUE,
 FluX_LSTM,component,FluX-LSTM,FluX-LSTM_train,TRUE,FSN weights files call it FluX-FluX_LSTM
-LANL_DBM,component,LANL-DBM,LANL-DBM_train,TRUE,marked to-use FALSE for the 2017/18 ensemble
+LANL_DBM,component,LANL-DBM,LANL-DBM_train,TRUE,2017/18 FSN ensemble component (in FSN's 2017/18 weights; models-for-2017-2018.csv of 2018-10-17 marks it FALSE)
 LANL_DBMplus,component,LANL-DBMplus,LANL-DBMplus_train,TRUE,
 Protea_Cheetah,component,Protea-Cheetah,Protea-Cheetah_train,TRUE,
 Protea_Kudu,component,Protea-Kudu,Protea-Kudu_train,TRUE,
@@ -40,7 +40,7 @@ ReichLab_kde,component,ReichLab-KDE,ReichLab-KDE_train,TRUE,
 ReichLab_sarima_seasonal_difference_FALSE,component,ReichLab-SARIMA1,ReichLab-SARIMA1_train,TRUE,
 ReichLab_sarima_seasonal_difference_TRUE,component,ReichLab-SARIMA2,ReichLab-SARIMA2_train,TRUE,
 UA_EpiCos,component,UA-EpiCos,UA-EpiCos_train,TRUE,
-UTAustin_edm,component,UTAustin-edm,UTAustin-edm_train,TRUE,marked to-use FALSE for the 2017/18 ensemble
+UTAustin_edm,component,UTAustin-edm,UTAustin-edm_train,TRUE,not an FSN ensemble component (absent from FSN's 2017/18 weights; marked FALSE in models-for-2017-2018.csv)
 .ipynb_checkpoints,component,,,FALSE,notebook checkpoint junk
 constant-weights,ensemble,FSNetwork-CW,FSNetwork-CW_cv,TRUE,
 equal-weights,ensemble,FSNetwork-EW,FSNetwork-EW_cv,TRUE,

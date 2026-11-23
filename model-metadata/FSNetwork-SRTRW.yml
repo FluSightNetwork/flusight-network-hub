@@ -6,17 +6,18 @@ model_contributors:
 - name: Nutcha Wattanachit
 - name: Thomas McAndrew
 - name: Nicholas G. Reich
-forecast_mode: real-time
+real_time_seasons:
+- 2019/2020
 paired_model_id: FSNetwork-SRTRW_cv
 source_dirs:
 - real-time-ensemble-models/static-regularized-target-region-weights
 seasons:
 - 2019/2020
-this_model_is_an_ensemble: yes
+this_model_is_an_ensemble: true
 methods: This is an ensemble of stacked entries from all component models. We use
   a variational inference algorithm to shrink target-and-region specific weights towards
   an equal weighted average.
 data_inputs: other models
-designated_model: no
-notes: 'Real-time record: forecasts as submitted (last version committed by the due
-  date + 3 days). Do not combine with _train/_cv IDs.'
+designated_model: false
+notes: FSN real-time ensemble forecasts (for the ensemble FSN submitted to CDC, the
+  submitted file).

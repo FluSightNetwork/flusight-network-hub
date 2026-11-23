@@ -51,7 +51,7 @@ Issues found:
 | Onset and peak week labels | Saturday ending the MMWR week (`YYYY-MM-DD`), matching the current CDC FluSight hub; plus `"none"` for onset. |
 | Point forecasts | Replaced by **medians computed from each pmf** (rule below), **for the weekly `ili perc` targets (1–4 wk ahead) only**. Seasonal targets (onset, peak week, peak %) get no median, as in the current CDC FluSight hub. All original points are kept untouched in `auxiliary-data/`. |
 | Renormalisation | Renormalise pmfs that miss 1 by 0.1 or less (the CDC 2015/16 rule used by the reference archive). Bigger problems go to a review queue and are decided as they come up. |
-| Real-time vs training | Separated **by model ID suffix**, mirroring FSN's two records (see "Two records" below). Plain ID = real-time submissions as submitted; `_train` = the full training series from `component-models/`, pinned to the 2019-10-25 cv build, including flagged duplicates of real-time files; `_cv` = leave-one-season-out ensembles. |
+| Real-time vs training | **Revised 2026-11-23:** one model ID per component model holding every round, real-time version preferred; `real_time_seasons` in metadata and a per-round `is_real_time` flag (see "Model structure"). Replaces the earlier plain/`_train` suffix design. |
 | Ensemble model IDs | Real-time: `FSNetwork-<ABBR>`. Cross-validated: `FSNetwork-<ABBR>_cv`. |
 | Models removed from master | Included, using each file's last version from git history: Delphi `*_PackageDefaults`, `Delphi_EmpiricalBayes_*`, `Delphi_Stat_*`, `LANL_DBM`, `UTAustin_edm`, `ReichLab_kcde`, `FluSight_unweighted_avg`, and the old `cv-ensemble-models/target-and-region-based-weights` (→ `FSNetwork-TRW_cv`). |
 | Real-time files edited after submission | Keep the version present at submission (the copy in `real-time-component-models/` during the season). Later edits are logged in the provenance table. |
@@ -64,9 +64,11 @@ Issues found:
 | Real-time cutoff *(Phase 1)* | A file counts as real-time only if committed **no more than 3 days after the submission due date** (due = Monday, origin + 9 days; cutoff = origin + 12). The last version committed by the cutoff is used. Rounds with nothing by the cutoff are not real-time (45 rounds: UTAustin 18, ReichLab-KDE 7, CU 13, others 7). |
 | Submitted ensembles *(Phase 1)* | For the ensemble sent to CDC (TTW 2017/18 and 2019/20, TW 2018/19), the real-time record uses the **file in `submissions/`**. FSN's regenerated ensemble file is logged, not converted (15 weeks differ). |
 | Unmerged pull requests *(Phase 1)* | CU's EW14–16-2020 real-time files (21), found only in unmerged PRs, are **included and flagged** (`from_unmerged_pr`). |
-| Delphi PackageDefaults *(Phase 1)* | **Separate IDs**: `Delphi-<model>_PD` (real-time 2017/18) and `Delphi-<model>_PD_train`. |
-| kcde_backfill re-run *(Phase 1)* | `ReichLab-KCDE_NB_train` / `_PHB_train` use the **final (re-run) version** committed 2019-10-26, not the pinned one, even though FSN's scores, weights and cv ensembles were built from the pinned files. Logged as an exception to the pin. |
+| Delphi PackageDefaults *(Phase 1)* | **Separate IDs**: `Delphi-<model>_PD` (2017/18 version: backcasts + 2017/18 real-time). |
+| kcde_backfill re-run *(Phase 1)* | `ReichLab-KCDE_NB` / `_PHB` backcasts use the **final (re-run) version** committed 2019-10-26, not the pinned one, even though FSN's scores, weights and cv ensembles were built from the pinned files. Logged as an exception to the pin. |
 | Week numbers past 52 *(Phase 1)* | CU's `EW53-2017` … `EW65-2019` names roll over into the next year (EW53-2017 = EW01-2018). Every rolled-over file is identical to its correctly named copy where one exists. |
+| Model structure *(revised 2026-11-23)* | One ID per component model; retrained models split into versions (`CU-BMA1/2`, `Protea-<model>1/2`); the 2 remaining one-file conflicts keep the real-time file, training version in `auxiliary-data/superseded-forecasts.parquet`; late real-time files fill rounds with no other version (`is_real_time = FALSE`). |
+| FluSight-unweighted_avg 2018/19–2019/20 *(2026-11-23)* | Added from CDC's originals (`cdcepi/FluSight-forecasts`). |
 | Hub identity *(Phase 1)* | Set 2026-11-23 in `admin.json`: "FluSight Network Forecast Archive", maintained by the Reich Lab, repository `FluSightNetwork/flusight-network-hub`. No S3/cloud. |
 | cv-ensemble sums *(Phase 1)* | Diagnosed (`src/diag_cv_ensembles.R`): FSN's `stack_forecasts()` joined components on bin start **and** end; CU-BMA (first component) writes the week-52 bin as [52, 1) while most models write [52, 53), so other models' week-52 probability was dropped from every cv ensemble. Explains all 6,291 cv forecasts off by more than 0.1 (all week targets). **Repair (option c): decision pending.** Until then these forecasts are excluded by the 0.1 rule. |
 
@@ -105,45 +107,31 @@ Issues found:
 - The highest season peak observed in 2010/11–2018/19 was 12.7.
 - Per-row detail is in `validation/median-13plus.csv`, which also still lists the 1,878 peak % cases for reference.
 
-## Two records: real-time and training
+## Model structure (revised 2026-11-23)
 
-The archive mirrors the two records FSN itself kept. A forecast that belongs to both appears in both, as a flagged byte-identical duplicate.
+*Replaces the earlier "two records" design (plain real-time IDs plus `_train` duplicates), which the user judged too heavy.*
 
-**Why we duplicate.** FSN's training data was never purely retrospective:
-- All cv-ensemble files for 2010/11–2018/19 were rebuilt in one commit on **2019-10-25**, from `component-models/` as it stood then.
-- The 2019/20 real-time weights (`weights/`, the "prospective season" in `scripts/calculate-weights.R`) came from scores of those same files.
-- At that point `component-models/` held backcasts for 2010/11–2016/17. For 2017/18 and 2018/19 it held the real-time files moved in at season end (`move-last-years-files.R`), and a backcast only where a model hadn't run in real time.
+**Component models: one model ID per model, holding every round.** For each round the hub file is, in order of preference:
+1. **real-time**: the submitted file if one exists, else FSN's real-time file; the last version committed by the cutoff (due date + 3 days). `is_real_time = TRUE`.
+2. **training**: FSN's `component-models/` series at the 2019-10-25 training pin (removed models at their last state; kcde_backfill re-run exception). Backcasts, plus copies of real-time files.
+3. **late**: a real-time-folder file first committed after the cutoff, used only where no other version exists (19 rounds). `is_real_time = FALSE`.
 
-A backcast-only series would therefore have holes exactly where the ensembles used real-time files.
+- 1,169 training files are byte-identical copies of the chosen real-time file and are simply not repeated.
+- **Superseded:** where a training file differs from the real-time file for the same round, the real-time file is used and the training version is kept unchanged in `auxiliary-data/superseded-forecasts.parquet` (2 files: CU-EAKFC_SIRS and ReichLab-KCDE, 2018/19).
+- **Models retrained between seasons get one ID per version** (`src/model_versions.csv`; user decision 2026-11-23). Only CU-BMA and the three Protea models were retrained (every target changed, up to ~0.99 probability):
+  | Version ID | Contents |
+  |---|---|
+  | `CU-BMA1` | backcasts as held before retraining (commit 33b2916^) + 2017/18 and 2018/19 real-time |
+  | `CU-BMA2` | retrained backcasts 2010/11–2018/19 (training pin) + 2019/20 real-time |
+  | `Protea-{Cheetah,Kudu,Springbok}1` | backcasts as held before retraining + 2018/19 real-time |
+  | `Protea-{Cheetah,Kudu,Springbok}2` | retrained backcasts 2010/11–2018/19 + 2019/20 real-time |
+  Each version is exactly the component used in the corresponding seasons' FSN ensembles. All of CU-BMA1's 2017/18 real-time files are byte-identical to the copies in its backcast tree. ReichLab SARIMA/KCDE changed only by a 2018-03-16 onset rounding-bug fix (onset target only), so they are not split; the fixed version is used.
+- **Metadata:** `real_time_seasons` (every model), optional `fsn_ensemble_component_seasons` (from FSN's weights at each pre-season build: 21 / 21 / 27 components for 2017/18 / 2018/19 / 2019/20; `validation/ensemble-components.csv`), and `version_of` / `version_note` for split models.
+- **Per-round flag:** `is_real_time` in `auxiliary-data/file-provenance.csv`. A few real-time seasons contain backcast-only edge rounds.
 
-**Model IDs:**
+**FluSight-unweighted_avg:** FSN's copies for 2015/16–2017/18 (2016/17–2017/18 byte-identical to CDC's; FSN's 2015/16 copies use one-decimal bins, unlike CDC's 2015/16 originals), plus CDC's originals from `cdcepi/FluSight-forecasts` (`UnwghtAvg/`, CC BY 4.0) for 2018/19 (29 files) and 2019/20 (20 files, through EW09-2020), all committed by the real-time cutoff.
 
-| Model ID | Record | Contents |
-|---|---|---|
-| `<team>-<model>` | Real-time | Every forecast submitted in real time, **exactly as submitted** (2017/18–2019/20) |
-| `<team>-<model>_train` | Training | The model's full 2010/11–2018/19 series as held in `component-models/`: backcasts plus the real-time files FSN moved in |
-| `FSNetwork-<ABBR>` | Real-time | Real-time ensembles (including the 2017/18 and 2018/19 archives) |
-| `FSNetwork-<ABBR>_cv` | Training | Leave-one-season-out ensembles; their components are exactly the `_train` IDs |
-
-- **Which version `_train` holds:** the version in `component-models/` at the 2019-10-25 cv-build commit, i.e. the data the cv ensembles and 2019/20 weights were built from. Some files were edited afterwards (latest 2019-11-12). Those edits are logged and listed for review in Phase 1, and you decide there whether to use the final versions instead.
-- **Models removed from master** (Delphi `PackageDefaults`/EmpiricalBayes/Stat, LANL_DBM, UTAustin_edm, ReichLab_kcde): `_train` holds their `component-models/` record as last present before removal. That is the training data for the 2017/18 and 2018/19 ensembles.
-- **Models whose real-time participation started in 2019/20** (FluOutlook, FluX, UA_EpiCos, kcde_backfill_*): `_train` holds pure backcasts. Their real-time record is 2019/20 only.
-- **Different model versions keep separate IDs.** For example, Delphi `PackageDefaults` (2017/18 real-time) vs the Delphi 2018 re-runs; ReichLab `kcde` vs `kcde_backfill_{none,post_hoc}`. Exact names are reviewed in Phase 1.
-- **Exception — `FluSight_unweighted_avg`.** This is a copy of CDC's real-time FluSight ensemble, committed late (median 273 days). It is not an FSN component, so it gets only a plain real-time ID. Its metadata explains why.
-
-**How each file is placed:**
-- **Real-time record:** files that appeared in `real-time-component-models/`, `real-time-ensemble-models/` or `submissions/` during their season, at the version present at submission. Commit timing confirms the split independently: real-time files arrived within about 14 days of their forecast date, backcasts 61+ days later (mostly over a year).
-- **Training record:** the pinned state of `component-models/` (and `cv-ensemble-models/`), plus removed models at their last state.
-- **Duplicates:** a training file is matched by content against the real-time record. About 1,160 files (~9M rows) are expected to match. Matches are recorded in `duplicate_of` and verified byte-identical. Some matches cross model names: master's `Delphi_BasisRegression/EW05-2018` is the real-time `Delphi_BasisRegression_PackageDefaults` submission (367 such cases).
-- **Training files that differ from the real-time submission** for the same model and round, because the copy was overwritten after moving, are kept as they are in `_train`. The difference is logged.
-
-**Rule for users** (written into the README and every model's metadata): **never combine plain and `_train`/`_cv` IDs in one analysis.** Doing so counts the same forecasts twice. Use plain IDs for real-time evaluation, and `_train` + `_cv` for training and cross-validation work.
-
-**Supporting records:**
-- **Model metadata** for each ID records `forecast_mode` (`real-time` / `training` / `cross-validated`), the seasons covered, the paired ID (e.g. `ReichLab-KDE` ↔ `ReichLab-KDE_train`), the source directories and the pinned commit.
-- **`auxiliary-data/file-provenance.csv`**: one row per converted file, with the source path, git commit, first-commit date, delay in days, record, `duplicate_of`, and edits made after the pin or after submission.
-- **`auxiliary-data/ensemble-training-sets.csv`**: which `_train` IDs and seasons trained each real-time ensemble season.
-  - **Known limitation:** the 2017/18 and 2018/19 ensembles were trained on earlier states of `component-models/`, and some backcasts were revised later (Protea, CU, Delphi). The table notes each place where the archived `_train` version differs from what an ensemble saw. Those exact earlier versions remain in git history (`validation/source-history.csv`) and could be converted later as separate IDs if needed.
+**Ensembles (step 2, pending):** one ID per method per pre-season build, `FSNetwork-<ABBR>_<YYYY_YY>` (user decision 2026-11-23), holding that build's leave-one-season-out forecasts plus its season's real-time forecasts; `_repaired` copies kept alongside originals where the stacking bug applies. FSN's builds: 2017-11-04 (`76d9a33`), 2018-10-23 (`7b8ec6b`), 2019-10-25 (`58bd222`). Until step 2 the hub keeps `FSNetwork-<ABBR>` (real-time), `_cv` and `_cv_repaired` (2019/20 build).
 
 ## Hub layout
 
@@ -232,7 +220,7 @@ The full git history across all branches and tags (`master`, `end-of-2018-2019-s
   - Delphi `*_PackageDefaults` ×5, `Delphi_EmpiricalBayes_{PackageDefaults,Cond4}`, `Delphi_Stat_FewerComponentsNoBackcastNoNowcast`;
   - `LANL_DBM`, `UTAustin_edm`, `ReichLab_kcde`.
   - Each has retrospective forecasts for 2010/11–2017/18, plus 2017/18 real-time ones (and 2018/19 for `ReichLab_kcde`).
-  - The 2017/18 real-time ensemble was built from the PackageDefaults versions and `ReichLab_kcde`; `models-for-2017-2018.csv` marks LANL_DBM and UTAustin_edm FALSE.
+  - The 2017/18 real-time ensemble was built from the PackageDefaults versions and `ReichLab_kcde`; `models-for-2017-2018.csv` (2018-10-17) marks LANL_DBM and UTAustin_edm FALSE, but FSN's 2017/18 weights (commit 76d9a33) include LANL-DBM (and Delphi EmpiricalBayes1/2 and Stat), so they were components; UTAustin_edm was not (corrected 2026-11-23, `validation/ensemble-components.csv`).
 - **Removed and not worth keeping:** `.ipynb_checkpoints`; `ReichLab_kcde_backfill_post-hoc` (replaced the next day by `_post_hoc`); `CUEAKFC` (an early name, replaced by the 6 CU models within a week); `Delphi_DeltaDensity` (17 files, all identical to files still in master).
 - **Removed, but included by decision:** `FluSight_unweighted_avg` (85 files, 2015/16–2017/18, CDC's own unweighted-average ensemble); `cv-ensemble-models/target-and-region-based-weights` (239 files, removed 2019-10-25 as "old").
 - **Superseded versions:** 16,468 older versions of files that are still in master. Mostly retrospective re-runs (cv ensembles recomputed in 2017–18, Protea, CU, FluX, kcde).

@@ -1,12 +1,13 @@
 team_abbr: UTAustin
-model_abbr: edm_train
+model_abbr: edm
 team_name: UTAustin
 model_name: UTA - Empirical dynamic model
 model_contributors:
 - name: Spencer J Fox
-forecast_mode: training
+real_time_seasons: []
 source_dirs:
 - component-models/UTAustin_edm
+- real-time-component-models/UTAustin_edm
 seasons:
 - 2010/2011
 - 2011/2012
@@ -16,7 +17,7 @@ seasons:
 - 2015/2016
 - 2016/2017
 - 2017/2018
-this_model_is_an_ensemble: no
+this_model_is_an_ensemble: false
 methods: The forecasting method uses basic empirical dynamic modeling to make predictions.
   This method uses a topological transformation of time series data to identify previous
   states of the time series that are similar to the current state. To make predictions
@@ -30,7 +31,9 @@ methods: The forecasting method uses basic empirical dynamic modeling to make pr
   harnesses the rEDM package for running the forecasts and the epiforecast R package
   to ensure proper historical data use.
 data_inputs: ILI
-designated_model: no
-notes: 'marked to-use FALSE for the 2017/18 ensemble Training record: the series held
-  in component-models/ (training pin 2019-10-25 unless noted). Includes copies of
-  real-time files; do not combine with plain IDs.'
+designated_model: false
+notes: 'not an FSN ensemble component (absent from FSN''s 2017/18 weights; marked
+  FALSE in models-for-2017-2018.csv) One model ID holding every round of this model:
+  0 real-time forecasts and 250 forecasts not made in real time (FSN training backcasts,
+  and 3 real-time-folder files committed after the cutoff). The per-round flag is
+  is_real_time in auxiliary-data/file-provenance.csv.'

@@ -1,14 +1,21 @@
 team_abbr: Protea
-model_abbr: Springbok_train
+model_abbr: Springbok1
 team_name: Protea
 model_name: Dynamic Harmonic Model with ARIMA errors
 model_contributors:
 - name: Craig J. McGowan (contact)
 - name: Alysse J. Kowalski
-forecast_mode: training
-paired_model_id: Protea-Springbok
+real_time_seasons:
+- 2018/2019
+fsn_ensemble_component_seasons:
+- 2018/2019
+version_of: Protea-Springbok
+version_note: 'Version 1: backcasts as held before Protea retrained the model on 2019-10-16,
+  plus the 2018/19 real-time forecasts. The Protea Springbok component of the 2018/19
+  FSN ensemble.'
 source_dirs:
 - component-models/Protea_Springbok
+- real-time-component-models/Protea_Springbok
 seasons:
 - 2010/2011
 - 2011/2012
@@ -19,7 +26,7 @@ seasons:
 - 2016/2017
 - 2017/2018
 - 2018/2019
-this_model_is_an_ensemble: no
+this_model_is_an_ensemble: false
 real_time_start_season: 2018-19
 methods: A dynamic harmonic regression model is fit separately for each region in  sequential
   steps, with Fourier terms to capture seasonality and multiple possible covariates.
@@ -46,6 +53,7 @@ methods: A dynamic harmonic regression model is fit separately for each region i
   up to a given week in  the season, which is less susceptible to backfill effects
   than weekly measures.  All code used in estimation and prediction is available at  https://github.com/craigjmcgowan/FluForecast
 data_inputs: ilinet, google trends
-designated_model: no
-notes: 'Training record: the series held in component-models/ (training pin 2019-10-25
-  unless noted). Includes copies of real-time files; do not combine with plain IDs.'
+designated_model: false
+notes: 'One model ID holding every round of this model: 29 real-time forecasts and
+  265 forecasts not made in real time (FSN training backcasts). The per-round flag
+  is is_real_time in auxiliary-data/file-provenance.csv.'
