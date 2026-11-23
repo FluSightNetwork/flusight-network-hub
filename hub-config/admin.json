@@ -1,15 +1,15 @@
 {
   "schema_version": "https://raw.githubusercontent.com/hubverse-org/schemas/main/v6.0.0/admin-schema.json",
-  "name": "PLACEHOLDER FluSight Network Forecast Archive",
-  "maintainer": "PLACEHOLDER",
+  "name": "FluSight Network Forecast Archive",
+  "maintainer": "Reich Lab",
   "contact": {
-    "name": "PLACEHOLDER",
-    "email": "placeholder@example.org"
+    "name": "Nick Reich",
+    "email": "nick@umass.edu"
   },
   "repository": {
     "host": "github",
-    "owner": "PLACEHOLDER",
-    "name": "PLACEHOLDER"
+    "owner": "FluSightNetwork",
+    "name": "flusight-network-hub"
   },
   "file_format": [
     "parquet"

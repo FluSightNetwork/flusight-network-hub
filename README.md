@@ -9,7 +9,7 @@ series used to fit ensemble weights.
 > **Status:** under construction. This repository is being filled in a sequence of pull requests:
 > (1) hub setup, pipeline and validation; (2) target data and auxiliary data; (3) model output, in
 > batches (real-time, training, cross-validated ensembles). See [`PLAN.md`](PLAN.md) for the full
-> design and decision log. Hub identity fields in `hub-config/admin.json` are placeholders.
+> design and decision log.
 
 ## What is forecast
 

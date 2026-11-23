@@ -67,7 +67,7 @@ Issues found:
 | Delphi PackageDefaults *(Phase 1)* | **Separate IDs**: `Delphi-<model>_PD` (real-time 2017/18) and `Delphi-<model>_PD_train`. |
 | kcde_backfill re-run *(Phase 1)* | `ReichLab-KCDE_NB_train` / `_PHB_train` use the **final (re-run) version** committed 2019-10-26, not the pinned one, even though FSN's scores, weights and cv ensembles were built from the pinned files. Logged as an exception to the pin. |
 | Week numbers past 52 *(Phase 1)* | CU's `EW53-2017` … `EW65-2019` names roll over into the next year (EW53-2017 = EW01-2018). Every rolled-over file is identical to its correctly named copy where one exists. |
-| Hub identity *(Phase 1)* | Not decided yet: `admin.json` holds PLACEHOLDER values; no S3/cloud. |
+| Hub identity *(Phase 1)* | Set 2026-11-23 in `admin.json`: "FluSight Network Forecast Archive", maintained by the Reich Lab, repository `FluSightNetwork/flusight-network-hub`. No S3/cloud. |
 | cv-ensemble sums *(Phase 1)* | Diagnosed (`src/diag_cv_ensembles.R`): FSN's `stack_forecasts()` joined components on bin start **and** end; CU-BMA (first component) writes the week-52 bin as [52, 1) while most models write [52, 53), so other models' week-52 probability was dropped from every cv ensemble. Explains all 6,291 cv forecasts off by more than 0.1 (all week targets). **Repair (option c): decision pending.** Until then these forecasts are excluded by the 0.1 rule. |
 
 ### Proposed here (my calls; flag any you disagree with)
