@@ -129,7 +129,9 @@ mms <- list(
     source_dirs = list(type = "array", items = list(type = "string"),
                        description = "Source directories in FluSightNetwork/cdc-flusight-ensemble."),
     seasons = list(type = "array", items = list(type = "string")),
-    this_model_is_an_ensemble = list(type = "boolean"),
+    this_model_is_an_ensemble = list(type = "boolean", description = paste(
+      "From the source metadata.txt, self-reported by each team. FSN's guidelines (guidelines.md) define it only as",
+      "\"whether or not the model itself is a type of ensemble model\" (template: this_model_is_an_ensemble: TRUE/FALSE).")),
     real_time_start_season = list(type = c("string", "null")),
     methods = str_prop("Methods text from the source metadata.txt"),
     data_inputs = str_prop("Data sources from the source metadata.txt"),
