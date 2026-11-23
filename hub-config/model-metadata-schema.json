@@ -63,7 +63,8 @@
       }
     },
     "this_model_is_an_ensemble": {
-      "type": "boolean"
+      "type": "boolean",
+      "description": "From the source metadata.txt, self-reported by each team. FSN's guidelines (guidelines.md) define it only as \"whether or not the model itself is a type of ensemble model\" (template: this_model_is_an_ensemble: TRUE/FALSE)."
     },
     "real_time_start_season": {
       "type": ["string", "null"]
