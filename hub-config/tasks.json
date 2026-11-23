@@ -283,7 +283,7 @@
                 "target": "ili perc"
               },
               "description": "Weighted influenza-like illness (wILI) percentage reported through ILINet for the week ending target_end_date, rounded to one decimal. pmf bins are labelled by their left edge; \"13.0\" is the open bin [13, 100]. median is computed from the pmf (see README).",
-              "target_type": "ordinal",
+              "target_type": "discrete",
               "is_step_ahead": true,
               "time_unit": "week"
             }
@@ -1073,7 +1073,7 @@
                 "target": "ili perc"
               },
               "description": "Weighted influenza-like illness (wILI) percentage reported through ILINet for the week ending target_end_date, rounded to one decimal. pmf bins are labelled by their left edge; \"13.0\" is the open bin [13, 100]. median is computed from the pmf (see README).",
-              "target_type": "ordinal",
+              "target_type": "discrete",
               "is_step_ahead": true,
               "time_unit": "week"
             }
@@ -1863,7 +1863,7 @@
                 "target": "ili perc"
               },
               "description": "Weighted influenza-like illness (wILI) percentage reported through ILINet for the week ending target_end_date, rounded to one decimal. pmf bins are labelled by their left edge; \"13.0\" is the open bin [13, 100]. median is computed from the pmf (see README).",
-              "target_type": "ordinal",
+              "target_type": "discrete",
               "is_step_ahead": true,
               "time_unit": "week"
             }
@@ -2653,7 +2653,7 @@
                 "target": "ili perc"
               },
               "description": "Weighted influenza-like illness (wILI) percentage reported through ILINet for the week ending target_end_date, rounded to one decimal. pmf bins are labelled by their left edge; \"13.0\" is the open bin [13, 100]. median is computed from the pmf (see README).",
-              "target_type": "ordinal",
+              "target_type": "discrete",
               "is_step_ahead": true,
               "time_unit": "week"
             }
@@ -3445,7 +3445,7 @@
                 "target": "ili perc"
               },
               "description": "Weighted influenza-like illness (wILI) percentage reported through ILINet for the week ending target_end_date, rounded to one decimal. pmf bins are labelled by their left edge; \"13.0\" is the open bin [13, 100]. median is computed from the pmf (see README).",
-              "target_type": "ordinal",
+              "target_type": "discrete",
               "is_step_ahead": true,
               "time_unit": "week"
             }
@@ -4240,7 +4240,7 @@
                 "target": "ili perc"
               },
               "description": "Weighted influenza-like illness (wILI) percentage reported through ILINet for the week ending target_end_date, rounded to one decimal. pmf bins are labelled by their left edge; \"13.0\" is the open bin [13, 100]. median is computed from the pmf (see README).",
-              "target_type": "ordinal",
+              "target_type": "discrete",
               "is_step_ahead": true,
               "time_unit": "week"
             }
@@ -5030,7 +5030,7 @@
                 "target": "ili perc"
               },
               "description": "Weighted influenza-like illness (wILI) percentage reported through ILINet for the week ending target_end_date, rounded to one decimal. pmf bins are labelled by their left edge; \"13.0\" is the open bin [13, 100]. median is computed from the pmf (see README).",
-              "target_type": "ordinal",
+              "target_type": "discrete",
               "is_step_ahead": true,
               "time_unit": "week"
             }
@@ -5820,7 +5820,7 @@
                 "target": "ili perc"
               },
               "description": "Weighted influenza-like illness (wILI) percentage reported through ILINet for the week ending target_end_date, rounded to one decimal. pmf bins are labelled by their left edge; \"13.0\" is the open bin [13, 100]. median is computed from the pmf (see README).",
-              "target_type": "ordinal",
+              "target_type": "discrete",
               "is_step_ahead": true,
               "time_unit": "week"
             }
@@ -6612,7 +6612,7 @@
                 "target": "ili perc"
               },
               "description": "Weighted influenza-like illness (wILI) percentage reported through ILINet for the week ending target_end_date, rounded to one decimal. pmf bins are labelled by their left edge; \"13.0\" is the open bin [13, 100]. median is computed from the pmf (see README).",
-              "target_type": "ordinal",
+              "target_type": "discrete",
               "is_step_ahead": true,
               "time_unit": "week"
             }
@@ -7407,7 +7407,7 @@
                 "target": "ili perc"
               },
               "description": "Weighted influenza-like illness (wILI) percentage reported through ILINet for the week ending target_end_date, rounded to one decimal. pmf bins are labelled by their left edge; \"13.0\" is the open bin [13, 100]. median is computed from the pmf (see README).",
-              "target_type": "ordinal",
+              "target_type": "discrete",
               "is_step_ahead": true,
               "time_unit": "week"
             }
