@@ -2,7 +2,7 @@
 #
 # tasks.json is generated from the converted model-output (round IDs, week-bin dates per season),
 # using hubAdmin's builders so the structure is schema-valid by construction.
-# admin.json carries PLACEHOLDER values: hub identity is not decided yet (user decision 2026-11-22).
+# admin.json: hub identity as set by the maintainer (2026-11-23).
 
 source("src/00_config.R")
 suppressPackageStartupMessages({ library(arrow); library(dplyr); library(hubAdmin); library(jsonlite) })
@@ -97,13 +97,13 @@ tasks <- list(
   derived_task_ids = list("target_end_date"))
 write_json(tasks, file.path(CFG_DIR, "tasks.json"), auto_unbox = TRUE, pretty = TRUE, null = "null", digits = NA)
 
-# ---- admin.json (placeholders) -------------------------------------------------------------------
+# ---- admin.json ----------------------------------------------------------------------------------
 admin <- list(
   schema_version = sprintf("https://raw.githubusercontent.com/hubverse-org/schemas/main/%s/admin-schema.json", SCHEMA),
-  name = "PLACEHOLDER FluSight Network Forecast Archive",
-  maintainer = "PLACEHOLDER",
-  contact = list(name = "PLACEHOLDER", email = "placeholder@example.org"),
-  repository = list(host = "github", owner = "PLACEHOLDER", name = "PLACEHOLDER"),
+  name = "FluSight Network Forecast Archive",
+  maintainer = "Reich Lab",
+  contact = list(name = "Nick Reich", email = "nick@umass.edu"),
+  repository = list(host = "github", owner = "FluSightNetwork", name = "flusight-network-hub"),
   file_format = list("parquet"),
   timezone = "US/Eastern")
 write_json(admin, file.path(CFG_DIR, "admin.json"), auto_unbox = TRUE, pretty = TRUE)
