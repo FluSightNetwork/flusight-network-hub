@@ -37,15 +37,16 @@ tid <- function(optional) list(required = NULL, optional = as.list(optional))
 tid_null <- list(required = NULL, optional = NULL)
 pmf_ot <- function(ids) list(output_type_id = list(required = as.list(ids)), is_required = FALSE,
                              value = list(type = "double", minimum = 0, maximum = 1))
-median_ot <- list(output_type_id = list(required = NULL), is_required = FALSE, value = list(type = "double", minimum = 0))
+median_ot <- list(output_type_id = list(required = NULL), is_required = FALSE, value = list(type = "double", minimum = 0, maximum = 100))
 tmeta <- function(id, name, units, type, step, desc, time_unit = NULL) {
   x <- list(target_id = id, target_name = name, target_units = units, target_keys = list(target = id),
             description = desc, target_type = type, is_step_ahead = step)
   if (!is.null(time_unit)) x$time_unit <- time_unit
   x
 }
+# target first, for readability (hubValidations matches columns by name, not position)
 task_ids <- function(origins, target, horizon = NULL, ted = NULL) list(
-  origin_date = tid(origins), location = tid(LOCATIONS), target = tid(target),
+  target = tid(target), origin_date = tid(origins), location = tid(LOCATIONS),
   horizon = if (is.null(horizon)) tid_null else tid(horizon),
   target_end_date = if (is.null(ted)) tid_null else tid(ted))
 

@@ -8,6 +8,12 @@
       "model_tasks": [
         {
           "task_ids": {
+            "target": {
+              "required": null,
+              "optional": [
+                "ili perc"
+              ]
+            },
             "origin_date": {
               "required": null,
               "optional": [
@@ -60,12 +66,6 @@
                 "HHS Region 8",
                 "HHS Region 9",
                 "HHS Region 10"
-              ]
-            },
-            "target": {
-              "required": null,
-              "optional": [
-                "ili perc"
               ]
             },
             "horizon": {
@@ -270,7 +270,8 @@
               "is_required": false,
               "value": {
                 "type": "double",
-                "minimum": 0
+                "minimum": 0,
+                "maximum": 100
               }
             }
           },
@@ -291,6 +292,12 @@
         },
         {
           "task_ids": {
+            "target": {
+              "required": null,
+              "optional": [
+                "season peak perc"
+              ]
+            },
             "origin_date": {
               "required": null,
               "optional": [
@@ -343,12 +350,6 @@
                 "HHS Region 8",
                 "HHS Region 9",
                 "HHS Region 10"
-              ]
-            },
-            "target": {
-              "required": null,
-              "optional": [
-                "season peak perc"
               ]
             },
             "horizon": {
@@ -521,6 +522,12 @@
         },
         {
           "task_ids": {
+            "target": {
+              "required": null,
+              "optional": [
+                "season onset wk"
+              ]
+            },
             "origin_date": {
               "required": null,
               "optional": [
@@ -573,12 +580,6 @@
                 "HHS Region 8",
                 "HHS Region 9",
                 "HHS Region 10"
-              ]
-            },
-            "target": {
-              "required": null,
-              "optional": [
-                "season onset wk"
               ]
             },
             "horizon": {
@@ -654,6 +655,12 @@
         },
         {
           "task_ids": {
+            "target": {
+              "required": null,
+              "optional": [
+                "season peak wk"
+              ]
+            },
             "origin_date": {
               "required": null,
               "optional": [
@@ -706,12 +713,6 @@
                 "HHS Region 8",
                 "HHS Region 9",
                 "HHS Region 10"
-              ]
-            },
-            "target": {
-              "required": null,
-              "optional": [
-                "season peak wk"
               ]
             },
             "horizon": {
@@ -798,6 +799,12 @@
       "model_tasks": [
         {
           "task_ids": {
+            "target": {
+              "required": null,
+              "optional": [
+                "ili perc"
+              ]
+            },
             "origin_date": {
               "required": null,
               "optional": [
@@ -850,12 +857,6 @@
                 "HHS Region 8",
                 "HHS Region 9",
                 "HHS Region 10"
-              ]
-            },
-            "target": {
-              "required": null,
-              "optional": [
-                "ili perc"
               ]
             },
             "horizon": {
@@ -1060,7 +1061,8 @@
               "is_required": false,
               "value": {
                 "type": "double",
-                "minimum": 0
+                "minimum": 0,
+                "maximum": 100
               }
             }
           },
@@ -1081,6 +1083,12 @@
         },
         {
           "task_ids": {
+            "target": {
+              "required": null,
+              "optional": [
+                "season peak perc"
+              ]
+            },
             "origin_date": {
               "required": null,
               "optional": [
@@ -1133,12 +1141,6 @@
                 "HHS Region 8",
                 "HHS Region 9",
                 "HHS Region 10"
-              ]
-            },
-            "target": {
-              "required": null,
-              "optional": [
-                "season peak perc"
               ]
             },
             "horizon": {
@@ -1311,6 +1313,12 @@
         },
         {
           "task_ids": {
+            "target": {
+              "required": null,
+              "optional": [
+                "season onset wk"
+              ]
+            },
             "origin_date": {
               "required": null,
               "optional": [
@@ -1363,12 +1371,6 @@
                 "HHS Region 8",
                 "HHS Region 9",
                 "HHS Region 10"
-              ]
-            },
-            "target": {
-              "required": null,
-              "optional": [
-                "season onset wk"
               ]
             },
             "horizon": {
@@ -1444,6 +1446,12 @@
         },
         {
           "task_ids": {
+            "target": {
+              "required": null,
+              "optional": [
+                "season peak wk"
+              ]
+            },
             "origin_date": {
               "required": null,
               "optional": [
@@ -1496,12 +1504,6 @@
                 "HHS Region 8",
                 "HHS Region 9",
                 "HHS Region 10"
-              ]
-            },
-            "target": {
-              "required": null,
-              "optional": [
-                "season peak wk"
               ]
             },
             "horizon": {
@@ -1588,6 +1590,12 @@
       "model_tasks": [
         {
           "task_ids": {
+            "target": {
+              "required": null,
+              "optional": [
+                "ili perc"
+              ]
+            },
             "origin_date": {
               "required": null,
               "optional": [
@@ -1640,12 +1648,6 @@
                 "HHS Region 8",
                 "HHS Region 9",
                 "HHS Region 10"
-              ]
-            },
-            "target": {
-              "required": null,
-              "optional": [
-                "ili perc"
               ]
             },
             "horizon": {
@@ -1850,7 +1852,8 @@
               "is_required": false,
               "value": {
                 "type": "double",
-                "minimum": 0
+                "minimum": 0,
+                "maximum": 100
               }
             }
           },
@@ -1871,6 +1874,12 @@
         },
         {
           "task_ids": {
+            "target": {
+              "required": null,
+              "optional": [
+                "season peak perc"
+              ]
+            },
             "origin_date": {
               "required": null,
               "optional": [
@@ -1923,12 +1932,6 @@
                 "HHS Region 8",
                 "HHS Region 9",
                 "HHS Region 10"
-              ]
-            },
-            "target": {
-              "required": null,
-              "optional": [
-                "season peak perc"
               ]
             },
             "horizon": {
@@ -2101,6 +2104,12 @@
         },
         {
           "task_ids": {
+            "target": {
+              "required": null,
+              "optional": [
+                "season onset wk"
+              ]
+            },
             "origin_date": {
               "required": null,
               "optional": [
@@ -2153,12 +2162,6 @@
                 "HHS Region 8",
                 "HHS Region 9",
                 "HHS Region 10"
-              ]
-            },
-            "target": {
-              "required": null,
-              "optional": [
-                "season onset wk"
               ]
             },
             "horizon": {
@@ -2234,6 +2237,12 @@
         },
         {
           "task_ids": {
+            "target": {
+              "required": null,
+              "optional": [
+                "season peak wk"
+              ]
+            },
             "origin_date": {
               "required": null,
               "optional": [
@@ -2286,12 +2295,6 @@
                 "HHS Region 8",
                 "HHS Region 9",
                 "HHS Region 10"
-              ]
-            },
-            "target": {
-              "required": null,
-              "optional": [
-                "season peak wk"
               ]
             },
             "horizon": {
@@ -2378,6 +2381,12 @@
       "model_tasks": [
         {
           "task_ids": {
+            "target": {
+              "required": null,
+              "optional": [
+                "ili perc"
+              ]
+            },
             "origin_date": {
               "required": null,
               "optional": [
@@ -2430,12 +2439,6 @@
                 "HHS Region 8",
                 "HHS Region 9",
                 "HHS Region 10"
-              ]
-            },
-            "target": {
-              "required": null,
-              "optional": [
-                "ili perc"
               ]
             },
             "horizon": {
@@ -2640,7 +2643,8 @@
               "is_required": false,
               "value": {
                 "type": "double",
-                "minimum": 0
+                "minimum": 0,
+                "maximum": 100
               }
             }
           },
@@ -2661,6 +2665,12 @@
         },
         {
           "task_ids": {
+            "target": {
+              "required": null,
+              "optional": [
+                "season peak perc"
+              ]
+            },
             "origin_date": {
               "required": null,
               "optional": [
@@ -2713,12 +2723,6 @@
                 "HHS Region 8",
                 "HHS Region 9",
                 "HHS Region 10"
-              ]
-            },
-            "target": {
-              "required": null,
-              "optional": [
-                "season peak perc"
               ]
             },
             "horizon": {
@@ -2891,6 +2895,12 @@
         },
         {
           "task_ids": {
+            "target": {
+              "required": null,
+              "optional": [
+                "season onset wk"
+              ]
+            },
             "origin_date": {
               "required": null,
               "optional": [
@@ -2943,12 +2953,6 @@
                 "HHS Region 8",
                 "HHS Region 9",
                 "HHS Region 10"
-              ]
-            },
-            "target": {
-              "required": null,
-              "optional": [
-                "season onset wk"
               ]
             },
             "horizon": {
@@ -3024,6 +3028,12 @@
         },
         {
           "task_ids": {
+            "target": {
+              "required": null,
+              "optional": [
+                "season peak wk"
+              ]
+            },
             "origin_date": {
               "required": null,
               "optional": [
@@ -3076,12 +3086,6 @@
                 "HHS Region 8",
                 "HHS Region 9",
                 "HHS Region 10"
-              ]
-            },
-            "target": {
-              "required": null,
-              "optional": [
-                "season peak wk"
               ]
             },
             "horizon": {
@@ -3168,6 +3172,12 @@
       "model_tasks": [
         {
           "task_ids": {
+            "target": {
+              "required": null,
+              "optional": [
+                "ili perc"
+              ]
+            },
             "origin_date": {
               "required": null,
               "optional": [
@@ -3221,12 +3231,6 @@
                 "HHS Region 8",
                 "HHS Region 9",
                 "HHS Region 10"
-              ]
-            },
-            "target": {
-              "required": null,
-              "optional": [
-                "ili perc"
               ]
             },
             "horizon": {
@@ -3432,7 +3436,8 @@
               "is_required": false,
               "value": {
                 "type": "double",
-                "minimum": 0
+                "minimum": 0,
+                "maximum": 100
               }
             }
           },
@@ -3453,6 +3458,12 @@
         },
         {
           "task_ids": {
+            "target": {
+              "required": null,
+              "optional": [
+                "season peak perc"
+              ]
+            },
             "origin_date": {
               "required": null,
               "optional": [
@@ -3506,12 +3517,6 @@
                 "HHS Region 8",
                 "HHS Region 9",
                 "HHS Region 10"
-              ]
-            },
-            "target": {
-              "required": null,
-              "optional": [
-                "season peak perc"
               ]
             },
             "horizon": {
@@ -3684,6 +3689,12 @@
         },
         {
           "task_ids": {
+            "target": {
+              "required": null,
+              "optional": [
+                "season onset wk"
+              ]
+            },
             "origin_date": {
               "required": null,
               "optional": [
@@ -3737,12 +3748,6 @@
                 "HHS Region 8",
                 "HHS Region 9",
                 "HHS Region 10"
-              ]
-            },
-            "target": {
-              "required": null,
-              "optional": [
-                "season onset wk"
               ]
             },
             "horizon": {
@@ -3819,6 +3824,12 @@
         },
         {
           "task_ids": {
+            "target": {
+              "required": null,
+              "optional": [
+                "season peak wk"
+              ]
+            },
             "origin_date": {
               "required": null,
               "optional": [
@@ -3872,12 +3883,6 @@
                 "HHS Region 8",
                 "HHS Region 9",
                 "HHS Region 10"
-              ]
-            },
-            "target": {
-              "required": null,
-              "optional": [
-                "season peak wk"
               ]
             },
             "horizon": {
@@ -3965,6 +3970,12 @@
       "model_tasks": [
         {
           "task_ids": {
+            "target": {
+              "required": null,
+              "optional": [
+                "ili perc"
+              ]
+            },
             "origin_date": {
               "required": null,
               "optional": [
@@ -4017,12 +4028,6 @@
                 "HHS Region 8",
                 "HHS Region 9",
                 "HHS Region 10"
-              ]
-            },
-            "target": {
-              "required": null,
-              "optional": [
-                "ili perc"
               ]
             },
             "horizon": {
@@ -4227,7 +4232,8 @@
               "is_required": false,
               "value": {
                 "type": "double",
-                "minimum": 0
+                "minimum": 0,
+                "maximum": 100
               }
             }
           },
@@ -4248,6 +4254,12 @@
         },
         {
           "task_ids": {
+            "target": {
+              "required": null,
+              "optional": [
+                "season peak perc"
+              ]
+            },
             "origin_date": {
               "required": null,
               "optional": [
@@ -4300,12 +4312,6 @@
                 "HHS Region 8",
                 "HHS Region 9",
                 "HHS Region 10"
-              ]
-            },
-            "target": {
-              "required": null,
-              "optional": [
-                "season peak perc"
               ]
             },
             "horizon": {
@@ -4478,6 +4484,12 @@
         },
         {
           "task_ids": {
+            "target": {
+              "required": null,
+              "optional": [
+                "season onset wk"
+              ]
+            },
             "origin_date": {
               "required": null,
               "optional": [
@@ -4530,12 +4542,6 @@
                 "HHS Region 8",
                 "HHS Region 9",
                 "HHS Region 10"
-              ]
-            },
-            "target": {
-              "required": null,
-              "optional": [
-                "season onset wk"
               ]
             },
             "horizon": {
@@ -4611,6 +4617,12 @@
         },
         {
           "task_ids": {
+            "target": {
+              "required": null,
+              "optional": [
+                "season peak wk"
+              ]
+            },
             "origin_date": {
               "required": null,
               "optional": [
@@ -4663,12 +4675,6 @@
                 "HHS Region 8",
                 "HHS Region 9",
                 "HHS Region 10"
-              ]
-            },
-            "target": {
-              "required": null,
-              "optional": [
-                "season peak wk"
               ]
             },
             "horizon": {
@@ -4755,6 +4761,12 @@
       "model_tasks": [
         {
           "task_ids": {
+            "target": {
+              "required": null,
+              "optional": [
+                "ili perc"
+              ]
+            },
             "origin_date": {
               "required": null,
               "optional": [
@@ -4807,12 +4819,6 @@
                 "HHS Region 8",
                 "HHS Region 9",
                 "HHS Region 10"
-              ]
-            },
-            "target": {
-              "required": null,
-              "optional": [
-                "ili perc"
               ]
             },
             "horizon": {
@@ -5017,7 +5023,8 @@
               "is_required": false,
               "value": {
                 "type": "double",
-                "minimum": 0
+                "minimum": 0,
+                "maximum": 100
               }
             }
           },
@@ -5038,6 +5045,12 @@
         },
         {
           "task_ids": {
+            "target": {
+              "required": null,
+              "optional": [
+                "season peak perc"
+              ]
+            },
             "origin_date": {
               "required": null,
               "optional": [
@@ -5090,12 +5103,6 @@
                 "HHS Region 8",
                 "HHS Region 9",
                 "HHS Region 10"
-              ]
-            },
-            "target": {
-              "required": null,
-              "optional": [
-                "season peak perc"
               ]
             },
             "horizon": {
@@ -5268,6 +5275,12 @@
         },
         {
           "task_ids": {
+            "target": {
+              "required": null,
+              "optional": [
+                "season onset wk"
+              ]
+            },
             "origin_date": {
               "required": null,
               "optional": [
@@ -5320,12 +5333,6 @@
                 "HHS Region 8",
                 "HHS Region 9",
                 "HHS Region 10"
-              ]
-            },
-            "target": {
-              "required": null,
-              "optional": [
-                "season onset wk"
               ]
             },
             "horizon": {
@@ -5401,6 +5408,12 @@
         },
         {
           "task_ids": {
+            "target": {
+              "required": null,
+              "optional": [
+                "season peak wk"
+              ]
+            },
             "origin_date": {
               "required": null,
               "optional": [
@@ -5453,12 +5466,6 @@
                 "HHS Region 8",
                 "HHS Region 9",
                 "HHS Region 10"
-              ]
-            },
-            "target": {
-              "required": null,
-              "optional": [
-                "season peak wk"
               ]
             },
             "horizon": {
@@ -5545,6 +5552,12 @@
       "model_tasks": [
         {
           "task_ids": {
+            "target": {
+              "required": null,
+              "optional": [
+                "ili perc"
+              ]
+            },
             "origin_date": {
               "required": null,
               "optional": [
@@ -5597,12 +5610,6 @@
                 "HHS Region 8",
                 "HHS Region 9",
                 "HHS Region 10"
-              ]
-            },
-            "target": {
-              "required": null,
-              "optional": [
-                "ili perc"
               ]
             },
             "horizon": {
@@ -5807,7 +5814,8 @@
               "is_required": false,
               "value": {
                 "type": "double",
-                "minimum": 0
+                "minimum": 0,
+                "maximum": 100
               }
             }
           },
@@ -5828,6 +5836,12 @@
         },
         {
           "task_ids": {
+            "target": {
+              "required": null,
+              "optional": [
+                "season peak perc"
+              ]
+            },
             "origin_date": {
               "required": null,
               "optional": [
@@ -5880,12 +5894,6 @@
                 "HHS Region 8",
                 "HHS Region 9",
                 "HHS Region 10"
-              ]
-            },
-            "target": {
-              "required": null,
-              "optional": [
-                "season peak perc"
               ]
             },
             "horizon": {
@@ -6058,6 +6066,12 @@
         },
         {
           "task_ids": {
+            "target": {
+              "required": null,
+              "optional": [
+                "season onset wk"
+              ]
+            },
             "origin_date": {
               "required": null,
               "optional": [
@@ -6110,12 +6124,6 @@
                 "HHS Region 8",
                 "HHS Region 9",
                 "HHS Region 10"
-              ]
-            },
-            "target": {
-              "required": null,
-              "optional": [
-                "season onset wk"
               ]
             },
             "horizon": {
@@ -6191,6 +6199,12 @@
         },
         {
           "task_ids": {
+            "target": {
+              "required": null,
+              "optional": [
+                "season peak wk"
+              ]
+            },
             "origin_date": {
               "required": null,
               "optional": [
@@ -6243,12 +6257,6 @@
                 "HHS Region 8",
                 "HHS Region 9",
                 "HHS Region 10"
-              ]
-            },
-            "target": {
-              "required": null,
-              "optional": [
-                "season peak wk"
               ]
             },
             "horizon": {
@@ -6335,6 +6343,12 @@
       "model_tasks": [
         {
           "task_ids": {
+            "target": {
+              "required": null,
+              "optional": [
+                "ili perc"
+              ]
+            },
             "origin_date": {
               "required": null,
               "optional": [
@@ -6388,12 +6402,6 @@
                 "HHS Region 8",
                 "HHS Region 9",
                 "HHS Region 10"
-              ]
-            },
-            "target": {
-              "required": null,
-              "optional": [
-                "ili perc"
               ]
             },
             "horizon": {
@@ -6599,7 +6607,8 @@
               "is_required": false,
               "value": {
                 "type": "double",
-                "minimum": 0
+                "minimum": 0,
+                "maximum": 100
               }
             }
           },
@@ -6620,6 +6629,12 @@
         },
         {
           "task_ids": {
+            "target": {
+              "required": null,
+              "optional": [
+                "season peak perc"
+              ]
+            },
             "origin_date": {
               "required": null,
               "optional": [
@@ -6673,12 +6688,6 @@
                 "HHS Region 8",
                 "HHS Region 9",
                 "HHS Region 10"
-              ]
-            },
-            "target": {
-              "required": null,
-              "optional": [
-                "season peak perc"
               ]
             },
             "horizon": {
@@ -6851,6 +6860,12 @@
         },
         {
           "task_ids": {
+            "target": {
+              "required": null,
+              "optional": [
+                "season onset wk"
+              ]
+            },
             "origin_date": {
               "required": null,
               "optional": [
@@ -6904,12 +6919,6 @@
                 "HHS Region 8",
                 "HHS Region 9",
                 "HHS Region 10"
-              ]
-            },
-            "target": {
-              "required": null,
-              "optional": [
-                "season onset wk"
               ]
             },
             "horizon": {
@@ -6985,6 +6994,12 @@
         },
         {
           "task_ids": {
+            "target": {
+              "required": null,
+              "optional": [
+                "season peak wk"
+              ]
+            },
             "origin_date": {
               "required": null,
               "optional": [
@@ -7038,12 +7053,6 @@
                 "HHS Region 8",
                 "HHS Region 9",
                 "HHS Region 10"
-              ]
-            },
-            "target": {
-              "required": null,
-              "optional": [
-                "season peak wk"
               ]
             },
             "horizon": {
@@ -7130,6 +7139,12 @@
       "model_tasks": [
         {
           "task_ids": {
+            "target": {
+              "required": null,
+              "optional": [
+                "ili perc"
+              ]
+            },
             "origin_date": {
               "required": null,
               "optional": [
@@ -7183,12 +7198,6 @@
                 "HHS Region 8",
                 "HHS Region 9",
                 "HHS Region 10"
-              ]
-            },
-            "target": {
-              "required": null,
-              "optional": [
-                "ili perc"
               ]
             },
             "horizon": {
@@ -7394,7 +7403,8 @@
               "is_required": false,
               "value": {
                 "type": "double",
-                "minimum": 0
+                "minimum": 0,
+                "maximum": 100
               }
             }
           },
@@ -7415,6 +7425,12 @@
         },
         {
           "task_ids": {
+            "target": {
+              "required": null,
+              "optional": [
+                "season peak perc"
+              ]
+            },
             "origin_date": {
               "required": null,
               "optional": [
@@ -7468,12 +7484,6 @@
                 "HHS Region 8",
                 "HHS Region 9",
                 "HHS Region 10"
-              ]
-            },
-            "target": {
-              "required": null,
-              "optional": [
-                "season peak perc"
               ]
             },
             "horizon": {
@@ -7646,6 +7656,12 @@
         },
         {
           "task_ids": {
+            "target": {
+              "required": null,
+              "optional": [
+                "season onset wk"
+              ]
+            },
             "origin_date": {
               "required": null,
               "optional": [
@@ -7699,12 +7715,6 @@
                 "HHS Region 8",
                 "HHS Region 9",
                 "HHS Region 10"
-              ]
-            },
-            "target": {
-              "required": null,
-              "optional": [
-                "season onset wk"
               ]
             },
             "horizon": {
@@ -7780,6 +7790,12 @@
         },
         {
           "task_ids": {
+            "target": {
+              "required": null,
+              "optional": [
+                "season peak wk"
+              ]
+            },
             "origin_date": {
               "required": null,
               "optional": [
@@ -7833,12 +7849,6 @@
                 "HHS Region 8",
                 "HHS Region 9",
                 "HHS Region 10"
-              ]
-            },
-            "target": {
-              "required": null,
-              "optional": [
-                "season peak wk"
               ]
             },
             "horizon": {
