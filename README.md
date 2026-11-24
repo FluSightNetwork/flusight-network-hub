@@ -42,9 +42,19 @@ file names).
 | `<team>-<model>` | every round of a component model: real-time forecasts where they exist, FSN's training backcasts otherwise |
 | `<team>-<model>1`, `…2` | one ID per version, for models retrained between seasons (`CU-BMA`, `Protea-Cheetah/Kudu/Springbok`) |
 | `FluSight-unweighted_avg` | CDC's unweighted average of FluSight submissions, 2015/16–2019/20 (real-time) |
-| `FSNetwork-<ABBR>` | FSN real-time ensembles; for the ensemble sent to CDC, the file actually submitted |
-| `FSNetwork-<ABBR>_cv` | leave-one-season-out ensembles from FSN's 2019/20 build, exactly as FSN built them |
-| `FSNetwork-<ABBR>_cv_repaired` | the same, with FSN's week-52 stacking bug repaired (see below) |
+| `FSNetwork-<ABBR>_<YYYY_YY>` | one FSN ensemble build: the leave-one-season-out forecasts FSN made before season YYYY/YY to choose its ensemble, plus that season's real-time forecasts (for the ensemble sent to CDC, the file actually submitted) |
+| `FSNetwork-<ABBR>_<YYYY_YY>_repaired` | the same build with FSN's last-week stacking bug repaired (see below) |
+
+FSN rebuilt its ensembles before each season it ran in real time (`src/ensemble_builds.csv`):
+
+| Build | Methods (`ABBR`) | Leave-one-season-out seasons | Real-time season | Sent to CDC |
+|---|---|---|---|---|
+| `_2017_18` (2017-11-04) | CW, EW, TRW, TTW, TW | 2010/11–2016/17 | 2017/18 | TTW |
+| `_2018_19` (2018-10-23) | CW, EW, TRW, TTW, TW | 2010/11–2017/18 | 2018/19 | TW |
+| `_2019_20` (2019-10-25) | CW, EW, SRTRW, TTW, TW | 2010/11–2018/19 | 2019/20 | TTW |
+
+CW constant weights, EW equal weights, TW target-based, TTW target-type-based, TRW target-and-region-based,
+SRTRW static regularized target-region weights. Each build covers weeks EW43–EW18 of the earlier seasons.
 
 **Which forecasts were made in real time?** Each model's metadata lists its `real_time_seasons`, and
 `auxiliary-data/file-provenance.csv` has an exact `is_real_time` flag for every file. For real-time
@@ -65,8 +75,9 @@ evaluation, filter on `is_real_time`; for ensemble training, use all rounds.
   holds the original backcasts plus the 2017/18–2018/19 (CU) or 2018/19 (Protea) real-time forecasts;
   version 2 holds the retrained backcasts plus 2019/20. Metadata `fsn_ensemble_component_seasons`
   records which seasons' FSN ensembles each model (version) was a component of.
-- **Do not combine `FSNetwork-<ABBR>` with `_cv` IDs** for the same season: the cv files are FSN's later
-  re-creation of forecasts the real-time ensembles had already made.
+- **Ensemble builds overlap.** The same season appears in several builds (e.g. 2015/16 is a
+  leave-one-season-out season in all three; 2017/18 is real-time in `_2017_18` and leave-one-season-out
+  in `_2018_19` and `_2019_20`). Pick one build per analysis; the builds differ in components and weights.
 
 ## Changes made to the source data
 
@@ -76,11 +87,15 @@ source bin values, `validation/roundtrip.csv`).
 - **Bin labels** standardised (`1` vs `1.0`, week numbers → dates; CU's week numbers past 52 rolled over).
 - **Renormalisation**: pmfs whose probabilities summed to within 0.1 of 1 were divided by their sum
   (CDC's 2015/16 rule); larger deviations were excluded (`excluded_output/`). Log: `validation/changes.parquet`.
-- **Repaired cv ensembles** (`…_cv_repaired`): FSN's stacking code joined bins on start *and* end; CU-BMA
-  writes the week-52 bin as [52, 1) while most models write [52, 53), so other models' week-52
-  probability (week 53 in 2014/15) was dropped from every cv ensemble's onset/peak-week forecasts.
-  The repair recomputes only that bin from FSN's own components and weights; all other values are
-  identical to FSN's (`validation/cv-repair.csv`). The originals are kept as `…_cv`.
+- **Repaired ensemble builds** (`…_repaired`): FSN's stacking code joined bins on start *and* end.
+  Components label the last week of the year differently ([52, 1) vs [52, 53); week 53 in 2014/15), so
+  some components' probability for that bin was dropped from leave-one-season-out onset/peak-week
+  forecasts. The repair recomputes only that bin from FSN's own components and weights; all other values,
+  and all real-time files, are identical to FSN's (`validation/cv-repair.csv`). The originals are kept
+  under the unrepaired IDs.
+- **Stale files not converted.** The 2017/18 and 2018/19 build trees still held EW19/EW20
+  leave-one-season-out files from an interim build of 2017-10-24 that FSN never rebuilt; they are listed
+  in `validation/file-map-excluded.csv`.
 
 ## Target data
 
@@ -102,7 +117,7 @@ output: 1 for the observed bin, 0 otherwise; observed value for medians), keyed 
 library(hubData)
 hub <- connect_hub("path/to/flusight-network-hub", file_format = "parquet")
 hub |> dplyr::filter(target == "ili perc", output_type == "pmf",
-                     !grepl("_cv", model_id)) |>
+                     !startsWith(model_id, "FSNetwork-")) |>
   hubData::collect_hub()
 prov <- read.csv("path/to/flusight-network-hub/auxiliary-data/file-provenance.csv")
 # keep real-time forecasts only: semi-join on model_id + origin_date where prov$is_real_time

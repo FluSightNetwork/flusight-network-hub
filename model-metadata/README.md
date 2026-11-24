@@ -8,4 +8,4 @@ source repository (schema: `hub-config/model-metadata-schema.json`). Archive fie
 - `fsn_ensemble_component_seasons` (component models): seasons whose FSN ensemble used this model,
   from FSN's weights at each pre-season build (`validation/ensemble-components.csv`).
 - `version_of`, `version_note`: for models retrained between seasons (`CU-BMA1/2`, `Protea-<model>1/2`).
-- `paired_model_id` (ensembles): the matching real-time, cross-validated or repaired ensemble ID.
+- `paired_model_id` (ensembles): the repaired copy of the build, or for a repaired copy the original.

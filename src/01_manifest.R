@@ -76,7 +76,7 @@ pin <- data.table(
   name = c("master_head", "training_pin"),
   commit = c(SOURCE_MASTER_SHA, pin_commit),
   description = c("source master HEAD (2020-05-04)",
-                  "commit that rebuilt all cv-ensemble files; defines the training record (_train, _cv)")
+                  "commit that rebuilt all cv-ensemble files; defines the training backcasts of component models")
 )
 pin[, date := vapply(commit, function(c) git("show", "-s", "--format=%aI", c), "")]
 fwrite_csv(pin, "source-pin.csv")

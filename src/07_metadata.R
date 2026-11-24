@@ -55,9 +55,8 @@ message("wrote auxiliary-data/superseded-forecasts.parquet (", nrow(sup), " file
 # ---- FSN ensemble components per operational season (from FSN's weights at each build) -----------------
 vers <- fread(file.path(SRC_DIR, "model_versions.csv"))
 v_rt <- vers[, .(season = strsplit(real_time_seasons, ";", fixed = TRUE)[[1]]), by = .(dir, version_id)]
-WEIGHT_BUILDS <- c("2017/2018" = "76d9a33f62036fb9ac7ffc8a5fb03cc490409660",   # 2017-11-04
-                   "2018/2019" = "c1d19274",                                     # 2018-10-23
-                   "2019/2020" = "3b73e337")                                     # 2019-10-25
+builds <- fread(file.path(SRC_DIR, "ensemble_builds.csv"))
+WEIGHT_BUILDS <- setNames(builds$weights_commit, builds$season)
 ens_comp <- rbindlist(lapply(names(WEIGHT_BUILDS), function(s) {
   c0 <- WEIGHT_BUILDS[[s]]
   w <- fread(text = git("show", paste0(c0, ":weights/constant-weights.csv")))
@@ -88,17 +87,20 @@ src_dirs[fsn == FALSE, `:=`(collection = NA_character_, dir = paste0(sub("^https
 src_dirs[, label := fifelse(fsn, paste0(collection, "/", dir), dir)]
 
 pair_of <- function(id) {
-  if (endsWith(id, "_cv_repaired")) return(sub("_repaired$", "", id))
-  if (endsWith(id, "_cv")) return(intersect(c(paste0(id, "_repaired"), sub("_cv$", "", id)), unique(fm$model_id))[1])
-  if (startsWith(id, "FSNetwork-") && paste0(id, "_cv") %in% fm$model_id) return(paste0(id, "_cv"))
+  if (endsWith(id, "_repaired")) return(sub("_repaired$", "", id))
+  if (startsWith(id, "FSNetwork-") && paste0(id, "_repaired") %in% fm$model_id) return(paste0(id, "_repaired"))
   NULL
 }
+# ensemble FSN submitted to CDC as "FluSight-Network" each season
+SUBMITTED <- c("2017_18" = "TTW", "2018_19" = "TW", "2019_20" = "TTW")
 seasons_of <- function(x) as.list(sort(unique(x)))
 
 write_meta <- function(id) {
   x <- src_dirs[model_id == id]
   f <- fm[model_id == id]
-  is_rep <- endsWith(id, "_cv_repaired"); is_cv <- grepl("_cv(_repaired)?$", id); is_ens <- startsWith(id, "FSNetwork-")
+  is_rep <- endsWith(id, "_repaired"); is_ens <- startsWith(id, "FSNetwork-")
+  tag <- if (is_ens) sub("^FSNetwork-[A-Z]+_([0-9]{4}_[0-9]{2}).*$", "\\1", id) else NA
+  b <- if (is_ens) builds[match(tag, builds$tag)] else NULL
   vv <- vers[version_id == id]
   m <- NULL
   for (k in which(x$fsn)) { m <- meta_txt(x$collection[k], x$dir[k]); if (!is.null(m)) break }
@@ -108,8 +110,11 @@ write_meta <- function(id) {
   note <- ids[dir %in% x$dir_key, paste(unique(na.omit(note)), collapse = "; ")]
   members <- if (!is.null(m$team_members)) trimws(strsplit(gsub("'", "", m$team_members), ",")[[1]]) else character()
   n_late <- f[record == "late", .N]; n_rt <- f[is_real_time == TRUE, .N]
-  kind_note <- if (is_cv) "Leave-one-season-out cross-validated ensemble built by FSN before the 2019/20 season; not real-time."
-    else if (is_ens) "FSN real-time ensemble forecasts (for the ensemble FSN submitted to CDC, the submitted file)."
+  kind_note <- if (is_ens) paste0(b$note, " This model ID holds that build: the leave-one-season-out forecasts (not real-time) and FSN's ",
+                                  b$season, " real-time forecasts made with the same method",
+                                  if (SUBMITTED[[tag]] == sub("^FSNetwork-([A-Z]+)_.*$", "\\1", id))
+                                    paste0(" (FSN's ", b$season, " submission to CDC as FluSight-Network; where they differ, the submitted file is used)") else "",
+                                  ". Components and weights: validation/ensemble-components.csv and FSN's weights/ at the build commit.")
     else paste0("One model ID holding every round of this model: ", n_rt, " real-time forecasts and ",
                 nrow(f) - n_rt, " forecasts not made in real time (FSN training backcasts",
                 if (n_late) paste0(", and ", n_late, " real-time-folder files committed after the cutoff") else "",
@@ -132,9 +137,10 @@ write_meta <- function(id) {
     designated_model = FALSE,
     notes = paste(c(if (nzchar(note)) note,
                     if (is_rep) paste("REPAIRED copy of", sub("_repaired$", "", id), "(user decision 2026-11-23: keep original and revised).",
-                                      "FSN's stacking code dropped other models' probability for the last week of the year (week 52; week 53 in 2014/15)",
-                                      "because CU-BMA labels that bin's end differently. Only that bin is recomputed, from FSN's own components and weights;",
-                                      "all other values are identical to the original (see validation/cv-repair.csv)."),
+                                      "FSN's stacking code joined component bins on start AND end, so where components label the last week of the year",
+                                      "differently (week 52, or 53 in 2014/15: [52, 1) vs [52, 53)) some components' probability for that bin was dropped.",
+                                      "In the affected leave-one-season-out files only that bin is recomputed, from FSN's own components and weights;",
+                                      "every other value, and every real-time file, is identical to the original (see validation/cv-repair.csv)."),
                     kind_note,
                     if (id == "FluSight-unweighted_avg") paste("CDC's unweighted average of FluSight submissions. 2015/16-2017/18 from FSN's copies;",
                       "2018/19-2019/20 from CDC's originals in cdcepi/FluSight-forecasts (CC BY 4.0). FSN's 2016/17-2017/18 copies are",
