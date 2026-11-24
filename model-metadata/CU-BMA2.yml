@@ -1,0 +1,44 @@
+team_abbr: CU
+model_abbr: BMA2
+team_name: CU
+model_name: Bayesian Model Averaging
+model_contributors:
+- name: J Shaman
+- name: T Yamana
+- name: S Kandula
+- name: S Pei
+- name: W Yang
+- name: H Morita
+real_time_seasons:
+- 2019/2020
+fsn_ensemble_component_seasons:
+- 2019/2020
+version_of: CU-BMA
+version_note: 'Version 2: retrained backcasts for 2010/11-2018/19 (commits 33b2916
+  ''CUBMA update'', 2019-10-15, and 790f23d, 2019-10-16) plus the 2019/20 real-time
+  forecasts. The CU-BMA component of the 2019/20 FSN ensemble.'
+source_dirs:
+- component-models/CUBMA
+- real-time-component-models/CUBMA
+seasons:
+- 2010/2011
+- 2011/2012
+- 2012/2013
+- 2013/2014
+- 2014/2015
+- 2015/2016
+- 2016/2017
+- 2017/2018
+- 2018/2019
+- 2019/2020
+this_model_is_an_ensemble: false
+real_time_start_season: 2017-18
+methods: Bayesian Weighted Outbreaks.  Models outbreak in progress as a weighted average
+  of previously observed outbreaks.  Current ILI observations are compared to previous
+  years over a training window of 3-8 weeks.  See Yamana et al. 2016 (10.1098/rsif.2016.0410)
+  for further details.  Out-of-sample data using Ray & Reich?s flu_data_with_backfill.rds
+data_inputs: ILI Net
+designated_model: false
+notes: 'One model ID holding every round of this model: 28 real-time forecasts and
+  299 forecasts not made in real time (FSN training backcasts, and 1 real-time-folder
+  files committed after the cutoff). The per-round flag is is_real_time in auxiliary-data/file-provenance.csv.'

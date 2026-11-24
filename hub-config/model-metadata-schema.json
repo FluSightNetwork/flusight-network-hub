@@ -1,0 +1,110 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Schema for FluSight Network archive model metadata",
+  "type": "object",
+  "properties": {
+    "team_abbr": {
+      "type": "string",
+      "pattern": "^[a-zA-Z0-9_]+$",
+      "description": "Team abbreviation"
+    },
+    "model_abbr": {
+      "type": "string",
+      "pattern": "^[a-zA-Z0-9_]+$",
+      "description": "Model abbreviation"
+    },
+    "team_name": {
+      "type": "string",
+      "description": "Team name as given in the source repository"
+    },
+    "model_name": {
+      "type": "string",
+      "description": "Model name as given in the source repository"
+    },
+    "model_contributors": {
+      "type": "array",
+      "description": "Team members listed in the source metadata.txt",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "name"
+        ]
+      }
+    },
+    "real_time_seasons": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Seasons with forecasts made in real time (first committed no more than 3 days after the FluSight due date). A real-time season can still contain a few rounds that are not real-time; the exact flag per round is is_real_time in auxiliary-data/file-provenance.csv."
+    },
+    "fsn_ensemble_component_seasons": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Operational seasons in which this model was a component of the FluSight Network ensemble (listed in FSN's weights for that season's ensemble build). Component models only."
+    },
+    "version_of": {
+      "type": "string",
+      "description": "For models retrained between seasons: the source model this ID is one version of. Each version holds that model's backcasts and its real-time forecasts."
+    },
+    "version_note": {
+      "type": "string",
+      "description": "What distinguishes this version (retraining commit, seasons, FSN ensemble use)."
+    },
+    "paired_model_id": {
+      "type": ["string", "null"],
+      "description": "Ensembles only: the repaired copy of this ensemble build (FSNetwork-<ABBR>_<YYYY_YY>_repaired), or for a repaired copy the original."
+    },
+    "source_dirs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Source directories (FluSightNetwork/cdc-flusight-ensemble unless prefixed with another repository)."
+    },
+    "seasons": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Seasons with at least one forecast."
+    },
+    "this_model_is_an_ensemble": {
+      "type": "boolean",
+      "description": "From the source metadata.txt, self-reported by each team. FSN's guidelines (guidelines.md) define it only as \"whether or not the model itself is a type of ensemble model\" (template: this_model_is_an_ensemble: TRUE/FALSE)."
+    },
+    "real_time_start_season": {
+      "type": ["string", "null"]
+    },
+    "methods": {
+      "type": "string",
+      "description": "Methods text from the source metadata.txt"
+    },
+    "data_inputs": {
+      "type": "string",
+      "description": "Data sources from the source metadata.txt"
+    },
+    "designated_model": {
+      "type": "boolean",
+      "description": "Not used in this archive; always false."
+    },
+    "notes": {
+      "type": "string",
+      "description": "Archive notes (provenance, exceptions)"
+    }
+  },
+  "required": [
+    "team_abbr",
+    "model_abbr",
+    "real_time_seasons",
+    "designated_model"
+  ],
+  "additionalProperties": false
+}

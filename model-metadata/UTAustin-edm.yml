@@ -1,0 +1,39 @@
+team_abbr: UTAustin
+model_abbr: edm
+team_name: UTAustin
+model_name: UTA - Empirical dynamic model
+model_contributors:
+- name: Spencer J Fox
+real_time_seasons: []
+source_dirs:
+- component-models/UTAustin_edm
+- real-time-component-models/UTAustin_edm
+seasons:
+- 2010/2011
+- 2011/2012
+- 2012/2013
+- 2013/2014
+- 2014/2015
+- 2015/2016
+- 2016/2017
+- 2017/2018
+this_model_is_an_ensemble: false
+methods: The forecasting method uses basic empirical dynamic modeling to make predictions.
+  This method uses a topological transformation of time series data to identify previous
+  states of the time series that are similar to the current state. To make predictions
+  it chooses a neighborhood of nearest neighbors of the current state, and projects
+  those forward. Predictions are then made by the resultant location of the neighborhood
+  (Sugihara And May 1990). In essence it's similar to a topological method of analogues
+  approach. The model output is a mean and variance for future states of the time
+  series. We simulate from a normal distribution with those parameters to generate
+  potential time courses for the epidemic, and use those potential trajectories to
+  obtain our target probability distributions. The model is implemented using R, and
+  harnesses the rEDM package for running the forecasts and the epiforecast R package
+  to ensure proper historical data use.
+data_inputs: ILI
+designated_model: false
+notes: 'not an FSN ensemble component (absent from FSN''s 2017/18 weights; marked
+  FALSE in models-for-2017-2018.csv) One model ID holding every round of this model:
+  0 real-time forecasts and 250 forecasts not made in real time (FSN training backcasts,
+  and 3 real-time-folder files committed after the cutoff). The per-round flag is
+  is_real_time in auxiliary-data/file-provenance.csv.'

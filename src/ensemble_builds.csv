@@ -1,0 +1,4 @@
+season,tag,cv_commit,weights_commit,note
+2017/2018,2017_18,76d9a33f62036fb9ac7ffc8a5fb03cc490409660,76d9a33f62036fb9ac7ffc8a5fb03cc490409660,"FSN's pre-season build for 2017/18 (commit 76d9a33, 2017-11-04: 'updated cv ensemble entries and weights, based on latest delphi update'). Leave-one-season-out forecasts for 2010/11-2016/17."
+2018/2019,2018_19,7b8ec6b236aa35959702f2767543f7d19a2856c8,c1d19274b4177129e09a222b246935ab909fbaa2,"FSN's pre-season build for 2018/19 (commit 7b8ec6b, 2018-10-23: 'updated ensemble files after protea model updates'; weights committed a minute later in c1d1927). Leave-one-season-out forecasts for 2010/11-2017/18."
+2019/2020,2019_20,58bd22206953531861775b6dc6bc75277f4c9a07,3b73e337d708dff03eba93f63e3e0c92ef352818,"FSN's pre-season build for 2019/20 (commit 58bd222, 2019-10-25: 'major file overhaul for cv-ensemble files'; weights in 3b73e33). Leave-one-season-out forecasts for 2010/11-2018/19."

@@ -1,0 +1,42 @@
+team_abbr: CU
+model_abbr: EKF_SIRS
+team_name: CU
+model_name: Ensemble Kalman Filter SIRS
+model_contributors:
+- name: J Shaman
+- name: T Yamana
+- name: S Kandula
+- name: S Pei
+- name: W Yang
+- name: H Morita
+real_time_seasons:
+- 2017/2018
+- 2018/2019
+- 2019/2020
+fsn_ensemble_component_seasons:
+- 2017/2018
+- 2018/2019
+- 2019/2020
+source_dirs:
+- component-models/CU_EKF_SIRS
+- real-time-component-models/CU_EKF_SIRS
+seasons:
+- 2010/2011
+- 2011/2012
+- 2012/2013
+- 2013/2014
+- 2014/2015
+- 2015/2016
+- 2016/2017
+- 2017/2018
+- 2018/2019
+- 2019/2020
+this_model_is_an_ensemble: false
+real_time_start_season: 2017-18
+methods: Model-inference ensemble forecast using a SIRS compartmental model coupled
+  with Ensemble Kalman Filter state space estimation.
+data_inputs: ILI Net, Google Health Trends API
+designated_model: false
+notes: 'One model ID holding every round of this model: 85 real-time forecasts and
+  234 forecasts not made in real time (FSN training backcasts, and 1 real-time-folder
+  files committed after the cutoff). The per-round flag is is_real_time in auxiliary-data/file-provenance.csv.'

@@ -1,0 +1,298 @@
+season,location,target,fsn,recomputed,match
+2010/2011,HHS Region 1,Season onset,4,4,TRUE
+2010/2011,HHS Region 1,Season peak percentage,2.3,2.3,TRUE
+2010/2011,HHS Region 1,Season peak week,"7,8","7,8",TRUE
+2010/2011,HHS Region 10,Season onset,5,5,TRUE
+2010/2011,HHS Region 10,Season peak percentage,3.9,3.9,TRUE
+2010/2011,HHS Region 10,Season peak week,7,7,TRUE
+2010/2011,HHS Region 2,Season onset,49,49,TRUE
+2010/2011,HHS Region 2,Season peak percentage,4.5,4.5,TRUE
+2010/2011,HHS Region 2,Season peak week,52,52,TRUE
+2010/2011,HHS Region 3,Season onset,3,3,TRUE
+2010/2011,HHS Region 3,Season peak percentage,4.4,4.4,TRUE
+2010/2011,HHS Region 3,Season peak week,5,5,TRUE
+2010/2011,HHS Region 4,Season onset,50,50,TRUE
+2010/2011,HHS Region 4,Season peak percentage,5.5,5.5,TRUE
+2010/2011,HHS Region 4,Season peak week,5,5,TRUE
+2010/2011,HHS Region 5,Season onset,3,3,TRUE
+2010/2011,HHS Region 5,Season peak percentage,3.8,3.8,TRUE
+2010/2011,HHS Region 5,Season peak week,5,5,TRUE
+2010/2011,HHS Region 6,Season onset,3,3,TRUE
+2010/2011,HHS Region 6,Season peak percentage,7.9,7.9,TRUE
+2010/2011,HHS Region 6,Season peak week,7,7,TRUE
+2010/2011,HHS Region 7,Season onset,4,4,TRUE
+2010/2011,HHS Region 7,Season peak percentage,4.7,4.7,TRUE
+2010/2011,HHS Region 7,Season peak week,8,8,TRUE
+2010/2011,HHS Region 8,Season onset,5,5,TRUE
+2010/2011,HHS Region 8,Season peak percentage,2.7,2.7,TRUE
+2010/2011,HHS Region 8,Season peak week,7,7,TRUE
+2010/2011,HHS Region 9,Season onset,6,6,TRUE
+2010/2011,HHS Region 9,Season peak percentage,4.7,4.7,TRUE
+2010/2011,HHS Region 9,Season peak week,"7,8","7,8",TRUE
+2010/2011,US National,Season onset,51,51,TRUE
+2010/2011,US National,Season peak percentage,4.5,4.5,TRUE
+2010/2011,US National,Season peak week,"5,6,7","5,6,7",TRUE
+2011/2012,HHS Region 1,Season onset,none,none,TRUE
+2011/2012,HHS Region 1,Season peak percentage,1,1,TRUE
+2011/2012,HHS Region 1,Season peak week,52,52,TRUE
+2011/2012,HHS Region 10,Season onset,none,none,TRUE
+2011/2012,HHS Region 10,Season peak percentage,2.2,2.2,TRUE
+2011/2012,HHS Region 10,Season peak week,12,12,TRUE
+2011/2012,HHS Region 2,Season onset,none,none,TRUE
+2011/2012,HHS Region 2,Season peak percentage,1.4,1.4,TRUE
+2011/2012,HHS Region 2,Season peak week,49,49,TRUE
+2011/2012,HHS Region 3,Season onset,none,none,TRUE
+2011/2012,HHS Region 3,Season peak percentage,2.1,2.1,TRUE
+2011/2012,HHS Region 3,Season peak week,52,52,TRUE
+2011/2012,HHS Region 4,Season onset,none,none,TRUE
+2011/2012,HHS Region 4,Season peak percentage,2.3,2.3,TRUE
+2011/2012,HHS Region 4,Season peak week,"10,52","10,52",TRUE
+2011/2012,HHS Region 5,Season onset,7,7,TRUE
+2011/2012,HHS Region 5,Season peak percentage,2.4,2.4,TRUE
+2011/2012,HHS Region 5,Season peak week,11,11,TRUE
+2011/2012,HHS Region 6,Season onset,none,none,TRUE
+2011/2012,HHS Region 6,Season peak percentage,4.1,4.1,TRUE
+2011/2012,HHS Region 6,Season peak week,11,11,TRUE
+2011/2012,HHS Region 7,Season onset,5,5,TRUE
+2011/2012,HHS Region 7,Season peak percentage,3.4,3.4,TRUE
+2011/2012,HHS Region 7,Season peak week,9,9,TRUE
+2011/2012,HHS Region 8,Season onset,none,none,TRUE
+2011/2012,HHS Region 8,Season peak percentage,2.2,2.2,TRUE
+2011/2012,HHS Region 8,Season peak week,11,11,TRUE
+2011/2012,HHS Region 9,Season onset,none,none,TRUE
+2011/2012,HHS Region 9,Season peak percentage,3.7,3.7,TRUE
+2011/2012,HHS Region 9,Season peak week,"52,8","52,8",TRUE
+2011/2012,US National,Season onset,none,none,TRUE
+2011/2012,US National,Season peak percentage,2.4,2.4,TRUE
+2011/2012,US National,Season peak week,11,11,TRUE
+2012/2013,HHS Region 1,Season onset,49,49,TRUE
+2012/2013,HHS Region 1,Season peak percentage,3.9,3.9,TRUE
+2012/2013,HHS Region 1,Season peak week,52,52,TRUE
+2012/2013,HHS Region 10,Season onset,50,50,TRUE
+2012/2013,HHS Region 10,Season peak percentage,3.7,3.7,TRUE
+2012/2013,HHS Region 10,Season peak week,4,4,TRUE
+2012/2013,HHS Region 2,Season onset,48,48,TRUE
+2012/2013,HHS Region 2,Season peak percentage,5.5,5.5,TRUE
+2012/2013,HHS Region 2,Season peak week,52,52,TRUE
+2012/2013,HHS Region 3,Season onset,49,49,TRUE
+2012/2013,HHS Region 3,Season peak percentage,7.1,7.1,TRUE
+2012/2013,HHS Region 3,Season peak week,52,52,TRUE
+2012/2013,HHS Region 4,Season onset,47,47,TRUE
+2012/2013,HHS Region 4,Season peak percentage,6.3,6.3,TRUE
+2012/2013,HHS Region 4,Season peak week,52,52,TRUE
+2012/2013,HHS Region 5,Season onset,47,47,TRUE
+2012/2013,HHS Region 5,Season peak percentage,5.7,5.7,TRUE
+2012/2013,HHS Region 5,Season peak week,52,52,TRUE
+2012/2013,HHS Region 6,Season onset,47,47,TRUE
+2012/2013,HHS Region 6,Season peak percentage,9.3,9.3,TRUE
+2012/2013,HHS Region 6,Season peak week,52,52,TRUE
+2012/2013,HHS Region 7,Season onset,47,47,TRUE
+2012/2013,HHS Region 7,Season peak percentage,6.7,6.7,TRUE
+2012/2013,HHS Region 7,Season peak week,52,52,TRUE
+2012/2013,HHS Region 8,Season onset,50,50,TRUE
+2012/2013,HHS Region 8,Season peak percentage,4.1,4.1,TRUE
+2012/2013,HHS Region 8,Season peak week,"3,52","3,52",TRUE
+2012/2013,HHS Region 9,Season onset,2,2,TRUE
+2012/2013,HHS Region 9,Season peak percentage,5.6,5.6,TRUE
+2012/2013,HHS Region 9,Season peak week,4,4,TRUE
+2012/2013,US National,Season onset,47,47,TRUE
+2012/2013,US National,Season peak percentage,6.1,6.1,TRUE
+2012/2013,US National,Season peak week,52,52,TRUE
+2013/2014,HHS Region 1,Season onset,51,51,TRUE
+2013/2014,HHS Region 1,Season peak percentage,2.2,2.2,TRUE
+2013/2014,HHS Region 1,Season peak week,6,6,TRUE
+2013/2014,HHS Region 10,Season onset,51,51,TRUE
+2013/2014,HHS Region 10,Season peak percentage,4,4,TRUE
+2013/2014,HHS Region 10,Season peak week,1,1,TRUE
+2013/2014,HHS Region 2,Season onset,51,51,TRUE
+2013/2014,HHS Region 2,Season peak percentage,3.4,3.4,TRUE
+2013/2014,HHS Region 2,Season peak week,"13,6","13,6",TRUE
+2013/2014,HHS Region 3,Season onset,51,51,TRUE
+2013/2014,HHS Region 3,Season peak percentage,3.6,3.6,TRUE
+2013/2014,HHS Region 3,Season peak week,1,1,TRUE
+2013/2014,HHS Region 4,Season onset,48,48,TRUE
+2013/2014,HHS Region 4,Season peak percentage,4.6,4.6,TRUE
+2013/2014,HHS Region 4,Season peak week,52,52,TRUE
+2013/2014,HHS Region 5,Season onset,48,48,TRUE
+2013/2014,HHS Region 5,Season peak percentage,3.6,3.6,TRUE
+2013/2014,HHS Region 5,Season peak week,52,52,TRUE
+2013/2014,HHS Region 6,Season onset,45,45,TRUE
+2013/2014,HHS Region 6,Season peak percentage,9.9,9.9,TRUE
+2013/2014,HHS Region 6,Season peak week,52,52,TRUE
+2013/2014,HHS Region 7,Season onset,51,51,TRUE
+2013/2014,HHS Region 7,Season peak percentage,4.5,4.5,TRUE
+2013/2014,HHS Region 7,Season peak week,52,52,TRUE
+2013/2014,HHS Region 8,Season onset,49,49,TRUE
+2013/2014,HHS Region 8,Season peak percentage,3.7,3.7,TRUE
+2013/2014,HHS Region 8,Season peak week,52,52,TRUE
+2013/2014,HHS Region 9,Season onset,51,51,TRUE
+2013/2014,HHS Region 9,Season peak percentage,4.7,4.7,TRUE
+2013/2014,HHS Region 9,Season peak week,4,4,TRUE
+2013/2014,US National,Season onset,48,48,TRUE
+2013/2014,US National,Season peak percentage,4.6,4.6,TRUE
+2013/2014,US National,Season peak week,52,52,TRUE
+2014/2015,HHS Region 1,Season onset,50,50,TRUE
+2014/2015,HHS Region 1,Season peak percentage,3.9,3.9,TRUE
+2014/2015,HHS Region 1,Season peak week,3,3,TRUE
+2014/2015,HHS Region 10,Season onset,48,48,TRUE
+2014/2015,HHS Region 10,Season peak percentage,3.6,3.6,TRUE
+2014/2015,HHS Region 10,Season peak week,2,2,TRUE
+2014/2015,HHS Region 2,Season onset,45,45,TRUE
+2014/2015,HHS Region 2,Season peak percentage,5.2,5.2,TRUE
+2014/2015,HHS Region 2,Season peak week,"4,5,52","4,5,52",TRUE
+2014/2015,HHS Region 3,Season onset,48,48,TRUE
+2014/2015,HHS Region 3,Season peak percentage,7.2,7.2,TRUE
+2014/2015,HHS Region 3,Season peak week,52,52,TRUE
+2014/2015,HHS Region 4,Season onset,47,47,TRUE
+2014/2015,HHS Region 4,Season peak percentage,7.5,7.5,TRUE
+2014/2015,HHS Region 4,Season peak week,52,52,TRUE
+2014/2015,HHS Region 5,Season onset,48,48,TRUE
+2014/2015,HHS Region 5,Season peak percentage,6.6,6.6,TRUE
+2014/2015,HHS Region 5,Season peak week,52,52,TRUE
+2014/2015,HHS Region 6,Season onset,47,47,TRUE
+2014/2015,HHS Region 6,Season peak percentage,11.1,11.1,TRUE
+2014/2015,HHS Region 6,Season peak week,51,51,TRUE
+2014/2015,HHS Region 7,Season onset,48,48,TRUE
+2014/2015,HHS Region 7,Season peak percentage,6.4,6.4,TRUE
+2014/2015,HHS Region 7,Season peak week,52,52,TRUE
+2014/2015,HHS Region 8,Season onset,49,49,TRUE
+2014/2015,HHS Region 8,Season peak percentage,4.4,4.4,TRUE
+2014/2015,HHS Region 8,Season peak week,53,53,TRUE
+2014/2015,HHS Region 9,Season onset,51,51,TRUE
+2014/2015,HHS Region 9,Season peak percentage,5,5,TRUE
+2014/2015,HHS Region 9,Season peak week,"3,4","3,4",TRUE
+2014/2015,US National,Season onset,47,47,TRUE
+2014/2015,US National,Season peak percentage,6,6,TRUE
+2014/2015,US National,Season peak week,52,52,TRUE
+2015/2016,HHS Region 1,Season onset,51,51,TRUE
+2015/2016,HHS Region 1,Season peak percentage,2.5,2.5,TRUE
+2015/2016,HHS Region 1,Season peak week,10,10,TRUE
+2015/2016,HHS Region 10,Season onset,2,2,TRUE
+2015/2016,HHS Region 10,Season peak percentage,2.4,2.4,TRUE
+2015/2016,HHS Region 10,Season peak week,7,7,TRUE
+2015/2016,HHS Region 2,Season onset,4,4,TRUE
+2015/2016,HHS Region 2,Season peak percentage,4.1,4.1,TRUE
+2015/2016,HHS Region 2,Season peak week,11,11,TRUE
+2015/2016,HHS Region 3,Season onset,47,47,TRUE
+2015/2016,HHS Region 3,Season peak percentage,4,4,TRUE
+2015/2016,HHS Region 3,Season peak week,10,10,TRUE
+2015/2016,HHS Region 4,Season onset,3,3,TRUE
+2015/2016,HHS Region 4,Season peak percentage,3.6,3.6,TRUE
+2015/2016,HHS Region 4,Season peak week,10,10,TRUE
+2015/2016,HHS Region 5,Season onset,7,7,TRUE
+2015/2016,HHS Region 5,Season peak percentage,3.3,3.3,TRUE
+2015/2016,HHS Region 5,Season peak week,10,10,TRUE
+2015/2016,HHS Region 6,Season onset,47,47,TRUE
+2015/2016,HHS Region 6,Season peak percentage,5.6,5.6,TRUE
+2015/2016,HHS Region 6,Season peak week,7,7,TRUE
+2015/2016,HHS Region 7,Season onset,7,7,TRUE
+2015/2016,HHS Region 7,Season peak percentage,2.5,2.5,TRUE
+2015/2016,HHS Region 7,Season peak week,10,10,TRUE
+2015/2016,HHS Region 8,Season onset,5,5,TRUE
+2015/2016,HHS Region 8,Season peak percentage,2.2,2.2,TRUE
+2015/2016,HHS Region 8,Season peak week,"11,8","11,8",TRUE
+2015/2016,HHS Region 9,Season onset,3,3,TRUE
+2015/2016,HHS Region 9,Season peak percentage,4.4,4.4,TRUE
+2015/2016,HHS Region 9,Season peak week,7,7,TRUE
+2015/2016,US National,Season onset,3,3,TRUE
+2015/2016,US National,Season peak percentage,3.6,3.6,TRUE
+2015/2016,US National,Season peak week,10,10,TRUE
+2016/2017,HHS Region 1,Season onset,52,52,TRUE
+2016/2017,HHS Region 1,Season peak percentage,3.2,3.2,TRUE
+2016/2017,HHS Region 1,Season peak week,6,6,TRUE
+2016/2017,HHS Region 10,Season onset,50,50,TRUE
+2016/2017,HHS Region 10,Season peak percentage,3.7,3.7,TRUE
+2016/2017,HHS Region 10,Season peak week,52,52,TRUE
+2016/2017,HHS Region 2,Season onset,47,47,TRUE
+2016/2017,HHS Region 2,Season peak percentage,6.9,6.9,TRUE
+2016/2017,HHS Region 2,Season peak week,6,6,TRUE
+2016/2017,HHS Region 3,Season onset,51,51,TRUE
+2016/2017,HHS Region 3,Season peak percentage,5.2,5.2,TRUE
+2016/2017,HHS Region 3,Season peak week,7,7,TRUE
+2016/2017,HHS Region 4,Season onset,45,45,TRUE
+2016/2017,HHS Region 4,Season peak percentage,5.5,5.5,TRUE
+2016/2017,HHS Region 4,Season peak week,"7,8","7,8",TRUE
+2016/2017,HHS Region 5,Season onset,52,52,TRUE
+2016/2017,HHS Region 5,Season peak percentage,4.3,4.3,TRUE
+2016/2017,HHS Region 5,Season peak week,"7,8","7,8",TRUE
+2016/2017,HHS Region 6,Season onset,52,52,TRUE
+2016/2017,HHS Region 6,Season peak percentage,9.9,9.9,TRUE
+2016/2017,HHS Region 6,Season peak week,6,6,TRUE
+2016/2017,HHS Region 7,Season onset,51,51,TRUE
+2016/2017,HHS Region 7,Season peak percentage,6.4,6.4,TRUE
+2016/2017,HHS Region 7,Season peak week,6,6,TRUE
+2016/2017,HHS Region 8,Season onset,51,51,TRUE
+2016/2017,HHS Region 8,Season peak percentage,2.7,2.7,TRUE
+2016/2017,HHS Region 8,Season peak week,7,7,TRUE
+2016/2017,HHS Region 9,Season onset,51,51,TRUE
+2016/2017,HHS Region 9,Season peak percentage,3.3,3.3,TRUE
+2016/2017,HHS Region 9,Season peak week,52,52,TRUE
+2016/2017,US National,Season onset,50,50,TRUE
+2016/2017,US National,Season peak percentage,5.1,5.1,TRUE
+2016/2017,US National,Season peak week,6,6,TRUE
+2017/2018,HHS Region 1,Season onset,47,47,TRUE
+2017/2018,HHS Region 1,Season peak percentage,5.8,5.8,TRUE
+2017/2018,HHS Region 1,Season peak week,6,6,TRUE
+2017/2018,HHS Region 10,Season onset,51,51,TRUE
+2017/2018,HHS Region 10,Season peak percentage,4.8,4.8,TRUE
+2017/2018,HHS Region 10,Season peak week,1,1,TRUE
+2017/2018,HHS Region 2,Season onset,49,49,TRUE
+2017/2018,HHS Region 2,Season peak percentage,10.4,10.4,TRUE
+2017/2018,HHS Region 2,Season peak week,6,6,TRUE
+2017/2018,HHS Region 3,Season onset,51,51,TRUE
+2017/2018,HHS Region 3,Season peak percentage,7.5,7.5,TRUE
+2017/2018,HHS Region 3,Season peak week,6,6,TRUE
+2017/2018,HHS Region 4,Season onset,45,45,TRUE
+2017/2018,HHS Region 4,Season peak percentage,9.3,9.3,TRUE
+2017/2018,HHS Region 4,Season peak week,5,5,TRUE
+2017/2018,HHS Region 5,Season onset,49,49,TRUE
+2017/2018,HHS Region 5,Season peak percentage,5.8,5.8,TRUE
+2017/2018,HHS Region 5,Season peak week,6,6,TRUE
+2017/2018,HHS Region 6,Season onset,48,48,TRUE
+2017/2018,HHS Region 6,Season peak percentage,12.7,12.7,TRUE
+2017/2018,HHS Region 6,Season peak week,4,4,TRUE
+2017/2018,HHS Region 7,Season onset,49,49,TRUE
+2017/2018,HHS Region 7,Season peak percentage,8.9,8.9,TRUE
+2017/2018,HHS Region 7,Season peak week,4,4,TRUE
+2017/2018,HHS Region 8,Season onset,50,50,TRUE
+2017/2018,HHS Region 8,Season peak percentage,3.3,3.3,TRUE
+2017/2018,HHS Region 8,Season peak week,5,5,TRUE
+2017/2018,HHS Region 9,Season onset,49,49,TRUE
+2017/2018,HHS Region 9,Season peak percentage,7,7,TRUE
+2017/2018,HHS Region 9,Season peak week,52,52,TRUE
+2017/2018,US National,Season onset,47,47,TRUE
+2017/2018,US National,Season peak percentage,7.5,7.5,TRUE
+2017/2018,US National,Season peak week,5,5,TRUE
+2018/2019,HHS Region 1,Season onset,49,49,TRUE
+2018/2019,HHS Region 1,Season peak percentage,3.9,3.9,TRUE
+2018/2019,HHS Region 1,Season peak week,6,6,TRUE
+2018/2019,HHS Region 10,Season onset,50,50,TRUE
+2018/2019,HHS Region 10,Season peak percentage,4.3,4.3,TRUE
+2018/2019,HHS Region 10,Season peak week,11,11,TRUE
+2018/2019,HHS Region 2,Season onset,49,49,TRUE
+2018/2019,HHS Region 2,Season peak percentage,5.2,5.2,TRUE
+2018/2019,HHS Region 2,Season peak week,7,7,TRUE
+2018/2019,HHS Region 3,Season onset,50,50,TRUE
+2018/2019,HHS Region 3,Season peak percentage,4.6,4.6,TRUE
+2018/2019,HHS Region 3,Season peak week,8,8,TRUE
+2018/2019,HHS Region 4,Season onset,47,47,TRUE
+2018/2019,HHS Region 4,Season peak percentage,5.9,5.9,TRUE
+2018/2019,HHS Region 4,Season peak week,"6,7","6,7",TRUE
+2018/2019,HHS Region 5,Season onset,51,51,TRUE
+2018/2019,HHS Region 5,Season peak percentage,3.6,3.6,TRUE
+2018/2019,HHS Region 5,Season peak week,11,11,TRUE
+2018/2019,HHS Region 6,Season onset,51,51,TRUE
+2018/2019,HHS Region 6,Season peak percentage,10.1,10.1,TRUE
+2018/2019,HHS Region 6,Season peak week,7,7,TRUE
+2018/2019,HHS Region 7,Season onset,50,50,TRUE
+2018/2019,HHS Region 7,Season peak percentage,5.7,5.7,TRUE
+2018/2019,HHS Region 7,Season peak week,11,11,TRUE
+2018/2019,HHS Region 8,Season onset,46,46,TRUE
+2018/2019,HHS Region 8,Season peak percentage,5.9,5.9,TRUE
+2018/2019,HHS Region 8,Season peak week,8,8,TRUE
+2018/2019,HHS Region 9,Season onset,48,48,TRUE
+2018/2019,HHS Region 9,Season peak percentage,3.7,3.7,TRUE
+2018/2019,HHS Region 9,Season peak week,"7,9","7,9",TRUE
+2018/2019,US National,Season onset,49,49,TRUE
+2018/2019,US National,Season peak percentage,5.1,5.1,TRUE
+2018/2019,US National,Season peak week,7,7,TRUE

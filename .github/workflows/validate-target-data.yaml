@@ -1,0 +1,56 @@
+name: Target Data Validation (round-aware)
+
+# Runs src/10_validate_target_data.R: hubValidations::validate_target_submission() on both target-data
+# files, with its oracle output_type_id completeness check replaced by a round-aware one (each season is
+# a round with its own week-date bins; the stock check expects every round's ids for every task).
+# Used instead of hubverse-actions/validate-target-data for that reason.
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: main
+    paths:
+      - 'target-data/**'
+      - 'hub-config/**'
+      - 'src/10_validate_target_data.R'
+      - '!**README**'
+
+permissions:
+  contents: read
+
+jobs:
+  validate-target-data:
+    if: github.event.repository.fork != true
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      # Branches without target data (e.g. config-only PRs) have nothing to validate.
+      - name: Check for target data
+        id: check
+        run: |
+          if [ -d target-data ] && [ -f src/10_validate_target_data.R ]; then
+            echo "run=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "::notice::No target data or validation script in this branch; skipping."
+            echo "run=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: r-lib/actions/setup-r@v2
+        if: steps.check.outputs.run == 'true'
+        with:
+          use-public-rspm: true
+          extra-repositories: "https://hubverse-org.r-universe.dev"
+
+      - uses: r-lib/actions/setup-r-dependencies@v2
+        if: steps.check.outputs.run == 'true'
+        with:
+          packages: |
+            any::hubValidations
+            any::arrow
+            any::jsonlite
+            any::data.table
+
+      - name: Validate target data
+        if: steps.check.outputs.run == 'true'
+        run: Rscript src/10_validate_target_data.R

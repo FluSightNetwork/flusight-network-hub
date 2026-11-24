@@ -1,0 +1,18 @@
+{
+  "schema_version": "https://raw.githubusercontent.com/hubverse-org/schemas/main/v6.0.0/admin-schema.json",
+  "name": "FluSight Network Forecast Archive",
+  "maintainer": "Reich Lab",
+  "contact": {
+    "name": "Nick Reich",
+    "email": "nick@umass.edu"
+  },
+  "repository": {
+    "host": "github",
+    "owner": "FluSightNetwork",
+    "name": "flusight-network-hub"
+  },
+  "file_format": [
+    "parquet"
+  ],
+  "timezone": "US/Eastern"
+}
