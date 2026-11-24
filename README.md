@@ -18,6 +18,8 @@ The FluSight Network and its forecasts are described in two papers:
   and their real-time performance in 2017/18, when the ensemble FSN submitted to CDC placed second in
   the FluSight challenge.
 
+FSN's interactive visualization of these forecasts is at [flusightnetwork.io](http://flusightnetwork.io/).
+
 ## What was forecasted
 
 Weighted influenza-like illness (wILI) from CDC's ILINet, for the US and the 10 HHS regions
