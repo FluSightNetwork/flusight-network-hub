@@ -62,7 +62,7 @@ make_round <- function(s) {
   if ("ili perc" %in% tgts) mts[[length(mts) + 1]] <- list(
     task_ids = task_ids(r_orig, "ili perc", 1:4, r_ted),
     output_type = list(pmf = pmf_ot(ILI_BINS), median = median_ot),
-    target_metadata = list(tmeta("ili perc", "Weekly weighted ILI percentage", "percent", "ordinal", TRUE,
+    target_metadata = list(tmeta("ili perc", "Weekly weighted ILI percentage", "percent", "discrete", TRUE,
       paste("Weighted influenza-like illness (wILI) percentage reported through ILINet for the week ending target_end_date,",
             "rounded to one decimal. pmf bins are labelled by their left edge; \"13.0\" is the open bin [13, 100].",
             "median is computed from the pmf (see README)."), time_unit = "week")))
@@ -108,6 +108,17 @@ admin <- list(
   file_format = list("parquet"),
   timezone = "US/Eastern")
 write_json(admin, file.path(CFG_DIR, "admin.json"), auto_unbox = TRUE, pretty = TRUE)
+
+# ---- target-data.json -------------------------------------------------------------------------------
+tdj <- list(
+  schema_version = sprintf("https://raw.githubusercontent.com/hubverse-org/schemas/main/%s/target-data-schema.json", SCHEMA),
+  observable_unit = list("target_end_date", "location", "target"),
+  date_col = "target_end_date",
+  versioned = FALSE,
+  `time-series` = list(non_task_id_schema = list(truth_source = "character")),
+  `oracle-output` = list(has_output_type_ids = TRUE,
+                         observable_unit = list("origin_date", "location", "target", "horizon", "target_end_date")))
+write_json(tdj, file.path(CFG_DIR, "target-data.json"), auto_unbox = TRUE, pretty = TRUE)
 
 # ---- model-metadata-schema.json --------------------------------------------------------------------
 str_prop <- function(desc) list(type = "string", description = desc)

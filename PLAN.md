@@ -235,6 +235,7 @@ The full git history across all branches and tags (`master`, `end-of-2018-2019-s
 - **Downstream findings from the modelimportance smoke test** (`src/11_smoke_modelimportance.R`, passing):
   - hubEvals/scoringutils drop rows with NA task IDs → drop all-NA `horizon`/`target_end_date` before scoring seasonal targets (file hubEvals issue once the hub is live).
   - modelimportance renames `origin_date` → `reference_date` in forecasts but not in `oracle_output_data` → rename the oracle column too (worth reporting to modelimportance).
+  - hubValidations 3.0.0 `target_tbl_output_type_ids` (oracle check) is not round-aware: with per-season week-date bins it expects every season's ids for every task, even with `round_id` set. Replaced by a round-aware check in `src/10_validate_target_data.R` (worth reporting to hubValidations).
 
 - **Badly named files** (Phase 1 review):
   - `real-time-component-models/CUBMA/EW63-2019-CUBMA.csv`: week 63 doesn't exist. CUBMA already has every week 40–52 and 01–13, and this file differs from EW43. Find which week it matches, or exclude it.

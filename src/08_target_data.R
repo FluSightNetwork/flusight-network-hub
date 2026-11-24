@@ -34,18 +34,19 @@ obs[, truth_source := "FSN scores/target-multivals.csv"]
 # seasons (e.g. 11 late-2018/19 target weeks); same method, which reproduces FSN's values exactly
 obs_d <- rbindlist(lapply(2010:max(DERIVED_SEASONS), function(y) rbindlist(lapply(LOCATIONS, function(l) weekly_truths(y, l)))))
 obs_d <- obs_d[!obs[, .(target_end_date, location)], on = .(target_end_date, location)]
-# for FSN seasons, keep only derived weeks that some hub forecast targets
+# keep only derived weeks that some hub forecast targets (hubverse rejects other dates)
 needed_ted <- open_dataset(file.path(REPO_ROOT, "model-output"), format = "parquet",
                            schema = arrow::schema(origin_date = date32(), location = utf8(), target = utf8(), horizon = int32(),
                                                   target_end_date = date32(), output_type = utf8(), output_type_id = utf8(), value = float64())) |>
   dplyr::filter(target == "ili perc") |> dplyr::distinct(target_end_date) |> dplyr::collect()
-obs_d <- obs_d[season_of(target_end_date) %in% sprintf("%d/%d", DERIVED_SEASONS, DERIVED_SEASONS + 1L) |
-               target_end_date %in% needed_ted$target_end_date]
+obs_d <- obs_d[target_end_date %in% needed_ted$target_end_date]   # only weeks some hub forecast targets
 obs <- rbind(obs, obs_d[, .(target_end_date, location, observation,
                             truth_source = paste0("derived: ILINet issue ", issue_used, " (src/compute_truths.R)"))])
 conf <- obs[, .(n = uniqueN(observation)), by = .(target_end_date, location)][n > 1]
 if (nrow(conf)) { print(conf); stop("conflicting weekly observations in target-multivals") }
 setorder(obs, location, target_end_date)
+obs[, target := "ili perc"]
+setcolorder(obs, c("target_end_date", "location", "target", "observation", "truth_source"))
 fwrite(obs, file.path(TD, "time-series.csv"))
 message("time-series: ", nrow(obs), " rows, ", min(obs$target_end_date), " to ", max(obs$target_end_date))
 
@@ -61,7 +62,7 @@ wk_ids[, season := season_of(origin_date)]
 wk_ids <- unique(wk_ids[, .(season, target, output_type_id)])
 
 # ---- ili perc oracle ------------------------------------------------------------------------------
-ili <- merge(tasks[target == "ili perc"], obs, by = c("target_end_date", "location"))
+ili <- merge(tasks[target == "ili perc"], obs[, .(target_end_date, location, observation)], by = c("target_end_date", "location"))
 ili[, bin := sprintf("%.1f", pmin(floor(observation * 10 + 1e-9) / 10, 13))]
 ili_pmf <- ili[, .(output_type_id = ILI_BINS), by = .(origin_date, location, target, horizon, target_end_date, bin)]
 ili_pmf[, `:=`(output_type = "pmf", oracle_value = as.numeric(output_type_id == bin))]

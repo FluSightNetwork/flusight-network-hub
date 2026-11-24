@@ -1,0 +1,25 @@
+file,check,result
+hub-config,valid_config,pass
+time-series.csv,target_file_exists,pass
+time-series.csv,target_partition_file_name,info
+time-series.csv,target_file_ext,pass
+time-series.csv,target_file_read,pass
+time-series.csv,target_tbl_colnames,pass
+time-series.csv,target_tbl_coltypes,pass
+time-series.csv,target_tbl_ts_targets,pass
+time-series.csv,target_tbl_rows_unique,pass
+time-series.csv,target_tbl_values,pass
+time-series.csv,target_tbl_output_type_ids,info
+time-series.csv,target_tbl_oracle_value,info
+hub-config,valid_config,pass
+oracle-output.parquet,target_file_exists,pass
+oracle-output.parquet,target_partition_file_name,info
+oracle-output.parquet,target_file_ext,pass
+oracle-output.parquet,target_file_read,pass
+oracle-output.parquet,target_tbl_colnames,pass
+oracle-output.parquet,target_tbl_coltypes,pass
+oracle-output.parquet,target_tbl_ts_targets,info
+oracle-output.parquet,target_tbl_rows_unique,pass
+oracle-output.parquet,target_tbl_values,pass
+oracle-output.parquet,target_tbl_output_type_ids,replaced (not round-aware): was FAIL
+oracle-output.parquet,round_aware_output_type_ids_and_single_observed,pass
