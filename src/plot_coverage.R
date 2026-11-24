@@ -1,5 +1,5 @@
 # Figure: which model IDs have forecasts in which seasons (number of weekly files per model and season).
-# Reads the file map (validation/file-map.csv + file-map-repaired.csv); writes figures/model-coverage.png.
+# Reads the file map (validation/file-map.csv + file-map-repaired.csv); writes validation/model-coverage.png.
 #   Rscript src/plot_coverage.R
 
 source("src/00_config.R")
@@ -29,7 +29,6 @@ p <- ggplot(x, aes(season, model_id, fill = kind)) +
   theme(legend.position = "top", panel.grid = element_blank(), strip.text.y = element_text(angle = 0, hjust = 0),
         plot.title.position = "plot")
 
-out <- file.path(REPO_ROOT, "figures", "model-coverage.png")
-dir.create(dirname(out), showWarnings = FALSE)
+out <- file.path(VALIDATION_DIR, "model-coverage.png")
 ggsave(out, p, width = 8, height = 13, dpi = 150, bg = "white")
-message("wrote figures/model-coverage.png (", uniqueN(x$model_id), " model IDs)")
+message("wrote validation/model-coverage.png (", uniqueN(x$model_id), " model IDs)")
