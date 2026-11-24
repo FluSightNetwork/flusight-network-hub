@@ -21,7 +21,7 @@ R with data.table, arrow, hubAdmin, hubValidations, hubData, yaml, jsonlite.
 | `10_validate_hubverse.R` | hubValidations on every file; hubData load check |
 | `11_smoke_modelimportance.R` | modelimportance on hub data |
 | `diag_cv_ensembles.R` | diagnostic that reproduced FSN's cv ensembles and found the stacking bug |
-| `plot_coverage.R` | `figures/model-coverage.png`: weekly files per model ID and season |
+| `plot_coverage.R` | `validation/model-coverage.png`: weekly files per model ID and season |
 
 Inputs maintained by hand: `model_ids.csv` (source directory → model IDs), `model_versions.csv`
 (retrained models → one ID per version), `ensemble_builds.csv` (FSN's pre-season ensemble builds → one ID per method per build), `baselines.csv`

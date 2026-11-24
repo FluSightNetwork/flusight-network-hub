@@ -74,7 +74,7 @@ CW constant weights, EW equal weights, TW target-based, TTW target-type-based, T
 target-and-region-based, SRTRW static regularized target-region weights. Each build covers weeks
 EW43–EW18 of the earlier seasons.
 
-![Model coverage by season: number of weekly forecast files per model ID and season, coloured by whether they were made in real time](figures/model-coverage.png)
+![Model coverage by season: number of weekly forecast files per model ID and season, coloured by whether they were made in real time](validation/model-coverage.png)
 
 *Weekly forecast files per model ID and season (made by `src/plot_coverage.R`).*
 
@@ -92,7 +92,8 @@ forecasts made in real-time you can filter on `is_real_time`.
     snapshot from which FSN built its last ensemble (2019/20 weights and leave-one-season-out forecasts);
   - for version 1 of a retrained model (`CU-BMA1`, `Protea-*1`), the version just before the retraining
     commit, i.e. the backcasts the 2017/18 and 2018/19 ensembles were built from;
-  - for the ReichLab `kcde_backfill` models (`ReichLab-KCDE_NB`, `_PHB`), their 2019-10-26 re-run;
+  - for the ReichLab `kcde_backfill` models, only used in the 2019/2020 season (`ReichLab-KCDE_NB`, `_PHB`),
+    their 2019-10-26 re-run;
   - for models FSN removed before 2019-10-25 (e.g. Delphi `…_PD`, LANL-DBM, UTAustin-edm,
     ReichLab-KCDE), the last version before removal.
 
@@ -190,7 +191,6 @@ See the hubverse [hub structure](https://docs.hubverse.io/en/latest/user-guide/h
 | `target-data/` | time series and oracle output *(PR 2)* |
 | `auxiliary-data/` | original point forecasts, file provenance (`is_real_time`), superseded forecasts, ILINet snapshots *(PR 2)* |
 | `excluded_output/` | forecasts excluded by the quality rules *(with model output)* |
-| `figures/` | the model coverage figure |
 | `src/` | the conversion pipeline (see `src/README.md`) |
 | `validation/` | manifests, file map, change logs and check results |
 | `.github/workflows/` | CI: hub config validation, model-output/metadata validation with [hubValidations](https://hubverse-org.github.io/hubValidations/) on PRs (submission-window check skipped), round-aware target-data validation |
