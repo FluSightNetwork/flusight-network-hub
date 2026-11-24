@@ -52,7 +52,7 @@ Issues found:
 | Point forecasts | Replaced by **medians computed from each pmf** (rule below), **for the weekly `ili perc` targets (1–4 wk ahead) only**. Seasonal targets (onset, peak week, peak %) get no median, as in the current CDC FluSight hub. All original points are kept untouched in `auxiliary-data/`. |
 | Renormalisation | Renormalise pmfs that miss 1 by 0.1 or less (the CDC 2015/16 rule used by the reference archive). Bigger problems go to a review queue and are decided as they come up. |
 | Real-time vs training | **Revised 2026-11-23:** one model ID per component model holding every round, real-time version preferred; `real_time_seasons` in metadata and a per-round `is_real_time` flag (see "Model structure"). Replaces the earlier plain/`_train` suffix design. |
-| Ensemble model IDs | Real-time: `FSNetwork-<ABBR>`. Cross-validated: `FSNetwork-<ABBR>_cv`. |
+| Ensemble model IDs | One per method per FSN pre-season build: `FSNetwork-<ABBR>_<YYYY_YY>` = that build's leave-one-season-out files + its season's real-time files; `…_repaired` copies (user decision 2026-11-23; replaced `FSNetwork-<ABBR>` / `_cv`). |
 | Models removed from master | Included, using each file's last version from git history: Delphi `*_PackageDefaults`, `Delphi_EmpiricalBayes_*`, `Delphi_Stat_*`, `LANL_DBM`, `UTAustin_edm`, `ReichLab_kcde`, `FluSight_unweighted_avg`, and the old `cv-ensemble-models/target-and-region-based-weights` (→ `FSNetwork-TRW_cv`). |
 | Real-time files edited after submission | Keep the version present at submission (the copy in `real-time-component-models/` during the season). Later edits are logged in the provenance table. |
 | Scoring | No custom multi-bin log score (FluSight's version is improper). Archive data must work with the standard hubEvals log score. |
@@ -70,7 +70,7 @@ Issues found:
 | Model structure *(revised 2026-11-23)* | One ID per component model; retrained models split into versions (`CU-BMA1/2`, `Protea-<model>1/2`); the 2 remaining one-file conflicts keep the real-time file, training version in `auxiliary-data/superseded-forecasts.parquet`; late real-time files fill rounds with no other version (`is_real_time = FALSE`). |
 | FluSight-unweighted_avg 2018/19–2019/20 *(2026-11-23)* | Added from CDC's originals (`cdcepi/FluSight-forecasts`). |
 | Hub identity *(Phase 1)* | Set 2026-11-23 in `admin.json`: "FluSight Network Forecast Archive", maintained by the Reich Lab, repository `FluSightNetwork/flusight-network-hub`. No S3/cloud. |
-| cv-ensemble sums *(Phase 1)* | Diagnosed (`src/diag_cv_ensembles.R`): FSN's `stack_forecasts()` joined components on bin start **and** end; CU-BMA (first component) writes the week-52 bin as [52, 1) while most models write [52, 53), so other models' week-52 probability was dropped from every cv ensemble. Explains all 6,291 cv forecasts off by more than 0.1 (all week targets). **Repair (option c): decision pending.** Until then these forecasts are excluded by the 0.1 rule. |
+| cv-ensemble sums *(Phase 1)* | Diagnosed (`src/diag_cv_ensembles.R`): FSN's `stack_forecasts()` joined components on bin start **and** end; CU-BMA (first component) writes the week-52 bin as [52, 1) while most models write [52, 53), so other models' week-52 probability was dropped from every cv ensemble. Explains all 6,291 cv forecasts off by more than 0.1 (all week targets). **Repaired** (user decision 2026-11-23: keep original and repaired). Step 2 found the same bug in the 2017/18 and 2018/19 builds (week 53 of 2014/15, and smaller week-52 losses in every season); all 3,375 build files rebuild from FSN's components and weights to ≤ 9e-16 outside the repaired bin. |
 
 ### Proposed here (my calls; flag any you disagree with)
 1. **Task ID columns** are `origin_date`, `location`, `target`, `horizon` and `target_end_date`. *(Confirmed by the user, 2026-11-22.)*
@@ -131,7 +131,11 @@ Issues found:
 
 **FluSight-unweighted_avg:** FSN's copies for 2015/16–2017/18 (2016/17–2017/18 byte-identical to CDC's; FSN's 2015/16 copies use one-decimal bins, unlike CDC's 2015/16 originals), plus CDC's originals from `cdcepi/FluSight-forecasts` (`UnwghtAvg/`, CC BY 4.0) for 2018/19 (29 files) and 2019/20 (20 files, through EW09-2020), all committed by the real-time cutoff.
 
-**Ensembles (step 2, pending):** one ID per method per pre-season build, `FSNetwork-<ABBR>_<YYYY_YY>` (user decision 2026-11-23), holding that build's leave-one-season-out forecasts plus its season's real-time forecasts; `_repaired` copies kept alongside originals where the stacking bug applies. FSN's builds: 2017-11-04 (`76d9a33`), 2018-10-23 (`7b8ec6b`), 2019-10-25 (`58bd222`). Until step 2 the hub keeps `FSNetwork-<ABBR>` (real-time), `_cv` and `_cv_repaired` (2019/20 build).
+**Ensembles (step 2, done 2026-11-23):** one ID per method per pre-season build, `FSNetwork-<ABBR>_<YYYY_YY>` (user decision 2026-11-23), holding that build's leave-one-season-out forecasts plus its season's real-time forecasts, and a `_repaired` copy of each (30 IDs).
+- Builds (`src/ensemble_builds.csv`): 2017-11-04 (`76d9a33`; CW, EW, TRW, TTW, TW), 2018-10-23 (`7b8ec6b`, weights `c1d1927`; same methods), 2019-10-25 (`58bd222`, weights `3b73e33`; CW, EW, SRTRW, TTW, TW).
+- Each build's leave-one-season-out set is EW43–EW18 (28 files a season, 29 in 2014/15): 197 / 225 / 253 files per method.
+- The 2017/18 and 2018/19 build trees also held 14 EW19/EW20 files per method last written on 2017-10-24 (`3e548b9`) and never rebuilt: stale, excluded (logged in `file-map-excluded.csv`). They caused the earlier 30-file `TRW_cv` seasons and a 0.05 gap in a 2011/12 non-week target.
+- `_repaired` copies hold every file of the build: repaired leave-one-season-out files plus unchanged real-time files, so each is complete on its own.
 
 ## Hub layout
 

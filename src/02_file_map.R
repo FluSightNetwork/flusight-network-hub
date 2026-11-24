@@ -13,7 +13,9 @@
 #   holds one model's backcasts and its real-time forecasts.
 # FluSight-unweighted_avg: FSN's copies (2015/16-2017/18) plus CDC's originals (2018/19-2019/20,
 #   cdcepi/FluSight-forecasts), real-time by the same cutoff rule.
-# Ensembles (unchanged for now): real-time FSNetwork-<ABBR>; cross-validated FSNetwork-<ABBR>_cv.
+# Ensembles: one model ID per method per FSN pre-season build, FSNetwork-<ABBR>_<YYYY_YY>
+#   (src/ensemble_builds.csv): the build's leave-one-season-out cv files plus that season's real-time
+#   files. Repaired copies (_repaired) are added by step 05.
 #
 # Outputs (committed):
 #   validation/file-map.csv              one row per (model_id, origin_date): the selected source version
@@ -113,6 +115,13 @@ v <- v[include == TRUE & valid_week == TRUE]
 # ---- REAL-TIME RECORD ---------------------------------------------------------------
 rt <- v[startsWith(tier, "rt_") | dir_key == "FluSight_unweighted_avg"]
 rt[, model_id := realtime_id]
+# ensembles: one model ID per method per FSN pre-season build (src/ensemble_builds.csv)
+builds <- fread(file.path(SRC_DIR, "ensemble_builds.csv"))
+ens_ids <- ids[kind == "ensemble", .(dir_key = dir, abbr_id = realtime_id)]
+rt[builds, on = "season", tag := i.tag]
+stopifnot(!anyNA(rt[dir_key %in% ens_ids$dir_key, tag]))
+rt[dir_key %in% ens_ids$dir_key, model_id := paste0(realtime_id, "_", tag)]
+rt[, tag := NULL]
 # preference among eligible versions: the file submitted to CDC, then FSN's own real-time file
 rt[, tier_rank := fcase(tier == "rt_submission", 1L,
                         tier %in% c("rt_component", "rt_ensemble"), 2L,
@@ -200,6 +209,8 @@ tr <- tr[startsWith(basename(path), "EW") | grepl("EW0*[0-9]{1,2}[-_][0-9]{4}", 
 tr <- merge(tr, unique(v[, .(path, blob, collection, dir, dir_key, tier, ew, ew_year, origin_date,
                              season, year_corrected, week_rolled_over, first_date, lag_days, train_id, realtime_id, id_note)]),
             by = c("path", "blob"), all.x = TRUE)
+# (cv-ensemble files are taken per build, below, not from the pin)
+tr <- tr[!startsWith(path, "model-forecasts/cv-ensemble-models/")]
 tr_unmatched <- tr[is.na(origin_date)]   # excluded dirs / invalid weeks / not in history table
 tr <- tr[!is.na(origin_date) & !is.na(train_id)]
 tr[, model_id := train_id]
@@ -215,10 +226,43 @@ tr_dupround <- tr[n_paths > 1]
 setorder(tr, model_id, origin_date, -date)
 tr_sel <- tr[, .SD[1], by = .(model_id, origin_date)]
 
-# ---- ensembles: cv files that duplicate a real-time ensemble file ----------------------------
-# a duplicate = identical content AND the same forecast date
-cv_sel <- tr_sel[record == "cross-validated"]
-rt_blobs <- rt_sel[, .(blob, origin_date, duplicate_of_model = model_id, duplicate_of_origin = origin_date)]
+# ---- ENSEMBLES: one model ID per method per FSN pre-season build (src/ensemble_builds.csv) ------------
+# FSNetwork-<ABBR>_<YYYY_YY> = the build's leave-one-season-out cv files (cv-ensemble-models/ in the
+# build commit's tree) + that season's real-time files. cv files in the tree that the build did not
+# rewrite (last modified > STALE_DAYS before the build commit) are stale leftovers of an earlier
+# interim build (EW19/EW20 files of 2017-10-24 in the 2017/18 and 2018/19 trees): excluded.
+STALE_DAYS <- 2L
+cv_build <- rbindlist(lapply(seq_len(nrow(builds)), function(i) {
+  b <- builds[i]
+  lg <- git("log", "--format=@%H %cI", "--name-only", b$cv_commit, "--", "model-forecasts/cv-ensemble-models")
+  hd <- cumsum(startsWith(lg, "@"))
+  lm <- data.table(path = lg, h = lg[match(hd, hd)])[!startsWith(path, "@") & nzchar(path)]
+  lm <- lm[!duplicated(path)]                                   # newest first: last commit touching each path
+  lm[, last_modified := as.POSIXct(substr(sub("^@\\S+ ", "", h), 1, 19), format = "%Y-%m-%dT%H:%M:%S", tz = "UTC")]
+  st <- ls_tree(b$cv_commit, "model-forecasts/cv-ensemble-models")[grepl("EW0*[0-9]{1,2}[-_][0-9]{4}", basename(path))]
+  st <- merge(st, lm[, .(path, last_modified)], by = "path", all.x = TRUE)
+  t_build <- as.POSIXct(git("show", "-s", "--format=%ct", b$cv_commit) |> as.numeric(), origin = "1970-01-01", tz = "UTC")
+  st[, `:=`(build_season = b$season, tag = b$tag, cv_commit = b$cv_commit,
+            stale = as.numeric(difftime(t_build, last_modified, units = "days")) > STALE_DAYS)]
+}))
+cv_build <- merge(cv_build, unique(v[tier == "train_cv", .(path, blob, collection, dir, dir_key, tier, ew, ew_year, origin_date,
+                                                           season, year_corrected, week_rolled_over, first_date, lag_days)]),
+                  by = c("path", "blob"), all.x = TRUE)
+stopifnot(!anyNA(cv_build$origin_date), all(cv_build$dir_key %in% ens_ids$dir_key), all(cv_build$season < cv_build$build_season))
+cv_stale <- cv_build[stale == TRUE]
+cv_build <- merge(cv_build[stale == FALSE], first_commit, by = c("path", "blob"), all.x = TRUE)
+cv_build[ens_ids, on = "dir_key", model_id := paste0(i.abbr_id, "_", tag)]
+cv_build[, `:=`(record = "cross-validated", from_unmerged_pr = FALSE,
+                selection = paste0("cv-ensemble-models/ at FSN's ", build_season, " build (", substr(cv_commit, 1, 7), ")"))]
+stopifnot(!anyDuplicated(cv_build[, .(model_id, origin_date)]))
+
+# real-time ensemble files (model IDs set by season above)
+ens_rt <- rt_sel[dir_key %in% ens_ids$dir_key]
+stopifnot(all(unique(ens_rt$model_id) %in% unique(cv_build$model_id)))
+
+# a cv file that duplicates a real-time ensemble file = identical content AND the same forecast date
+cv_sel <- cv_build
+rt_blobs <- ens_rt[, .(blob, origin_date, duplicate_of_model = model_id, duplicate_of_origin = origin_date)]
 cv_sel <- merge(cv_sel, rt_blobs[!duplicated(rt_blobs[, .(blob, origin_date)])], by = c("blob", "origin_date"), all.x = TRUE)
 cv_sel[, duplicate_of := fifelse(is.na(duplicate_of_model), NA_character_,
                                  paste0(duplicate_of_model, " ", duplicate_of_origin))]
@@ -302,7 +346,7 @@ stopifnot(!any(cdc_sel$origin_date %in% comp_sel[model_id == "FluSight-unweighte
 cols <- c("model_id", "record", "origin_date", "season", "path", "blob", "commit", "author_date", "week_rolled_over", "from_unmerged_pr",
           "tier", "dir_key", "selection", "year_corrected", "first_date", "lag_days")
 fm <- rbind(
-  rt_sel[!dir_key %in% comp_dirs, c(cols, "cutoff"), with = FALSE],
+  rt_sel[!dir_key %in% comp_dirs, c(cols, "cutoff"), with = FALSE],   # real-time ensembles
   comp_sel[, c(cols, "cutoff"), with = FALSE],
   cdc_sel[, c(cols, "cutoff"), with = FALSE],
   cv_sel[, from_unmerged_pr := FALSE][, c(cols, "duplicate_of"), with = FALSE], fill = TRUE)
@@ -326,6 +370,9 @@ excl_all <- rbind(
                    reason = "training file not mapped (excluded dir or invalid week)")],
   tr_dupround[!paste(path, blob) %in% tr_sel[, paste(path, blob)],
               .(path, blob, tier, dir_key, reason = "renamed duplicate of another file for the same round")],
+  cv_stale[, .(path, blob, tier = "train_cv", dir_key = basename(dirname(path)),
+               reason = paste0("stale cv file in FSN's ", build_season, " build tree: last modified ", format(last_modified, "%Y-%m-%d"),
+                               ", not rebuilt with that build's components and weights"))],
   fill = TRUE)
 fwrite_csv(unique(excl_all), "file-map-excluded.csv")
 

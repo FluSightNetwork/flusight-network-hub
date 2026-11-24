@@ -134,7 +134,7 @@ mms <- list(
                                 "Each version holds that model's backcasts and its real-time forecasts.")),
     version_note = str_prop("What distinguishes this version (retraining commit, seasons, FSN ensemble use)."),
     paired_model_id = list(type = c("string", "null"),
-                           description = "Ensembles only: the corresponding real-time, cross-validated or repaired ensemble ID."),
+                           description = "Ensembles only: the repaired copy of this ensemble build (FSNetwork-<ABBR>_<YYYY_YY>_repaired), or for a repaired copy the original."),
     source_dirs = list(type = "array", items = list(type = "string"),
                        description = "Source directories (FluSightNetwork/cdc-flusight-ensemble unless prefixed with another repository)."),
     seasons = list(type = "array", items = list(type = "string"), description = "Seasons with at least one forecast."),

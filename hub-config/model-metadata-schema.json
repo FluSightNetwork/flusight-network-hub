@@ -60,7 +60,7 @@
     },
     "paired_model_id": {
       "type": ["string", "null"],
-      "description": "Ensembles only: the corresponding real-time, cross-validated or repaired ensemble ID."
+      "description": "Ensembles only: the repaired copy of this ensemble build (FSNetwork-<ABBR>_<YYYY_YY>_repaired), or for a repaired copy the original."
     },
     "source_dirs": {
       "type": "array",

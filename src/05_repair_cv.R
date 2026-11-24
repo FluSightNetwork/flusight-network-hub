@@ -11,7 +11,9 @@
 #
 # Outputs:
 #   .cache/work/std/repaired-<blob>.parquet       repaired standardised tables (input to step 04)
-#   validation/file-map-repaired.csv               file-map rows for FSNetwork-<ABBR>_cv_repaired
+#   validation/file-map-repaired.csv               file-map rows for FSNetwork-<ABBR>_<YYYY_YY>_repaired: every
+#                                                  file of the build (repaired cv files, unchanged cv files and the
+#                                                  season's real-time files), for builds where the repair changed a value
 #   validation/cv-repair.csv                       per-file repair report
 #   validation/cv-repair-values.parquet            every changed value: original vs repaired
 
@@ -100,16 +102,24 @@ values <- rbindlist(lapply(res, `[[`, "values"))
 fwrite_csv(report, "cv-repair.csv")
 write_parquet(values, file.path(VALIDATION_DIR, "cv-repair-values.parquet"))
 
-fmr <- merge(cv, report[repaired == TRUE, .(model_id, origin_date = as.IDate(origin_date))], by = c("model_id", "origin_date"))
-fmr[, `:=`(model_id = paste0(model_id, "_repaired"), blob = paste0("repaired-", blob),
-           selection = paste(selection, "+ week-52 bin repaired (src/05_repair_cv.R)"),
-           duplicate_of = NA_character_)]
+bad <- report[repaired != TRUE]
+if (nrow(bad)) stop(nrow(bad), " cv files could not be repaired (rebuild did not reproduce FSN's other bins); see cv-repair.csv")
+changed <- values[abs(repaired - original) > 0, .(n_changed = .N), by = .(model_id, origin_date)]
+rep_models <- unique(changed$model_id)
+fmr <- merge(cv[model_id %in% rep_models], changed[, .(model_id, origin_date = as.IDate(origin_date), n_changed)],
+             by = c("model_id", "origin_date"), all.x = TRUE)
+fmr[!is.na(n_changed), `:=`(blob = paste0("repaired-", blob),
+                            selection = paste(selection, "+ last-week bin repaired (src/05_repair_cv.R)"))]
+fmr[, n_changed := NULL]
+fmr <- rbind(fmr, fm[model_id %in% rep_models & record != "cross-validated"], fill = TRUE)   # the season's real-time files, unchanged
+fmr[, `:=`(model_id = paste0(model_id, "_repaired"), duplicate_of = NA_character_)]
 fmr[, output_file := sprintf("model-output/%s/%s-%s.parquet", model_id, origin_date, model_id)]
 fwrite_csv(fmr, "file-map-repaired.csv")
 
 cat("\n=== cv repair ===\n")
+cat("repaired models (builds where a value changed):", paste(rep_models, collapse = ", "), "\n")
 print(report[, .(files = .N, repaired = sum(repaired, na.rm = TRUE), not_repaired = sum(!repaired, na.rm = TRUE),
                  max_diff_other_bins = max(max_abs_diff_other_bins, na.rm = TRUE),
-                 max_added_mass = max(max_added_mass, na.rm = TRUE)), by = .(ensemble = sub("_cv$", "", model_id))])
+                 max_added_mass = max(max_added_mass, na.rm = TRUE)), by = .(ensemble = model_id)])
 if ("error" %in% names(report)) print(report[!is.na(error), .N, by = error])
 print(head(report[repaired == FALSE], 10))

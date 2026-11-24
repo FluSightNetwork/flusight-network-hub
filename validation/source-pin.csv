@@ -1,3 +1,3 @@
 name,commit,description,date
 master_head,8c3100af015cae2fb43db823c3f61e7e6a7d59ea,source master HEAD (2020-05-04),2020-05-04T07:19:44-04:00
-training_pin,58bd22206953531861775b6dc6bc75277f4c9a07,"commit that rebuilt all cv-ensemble files; defines the training record (_train, _cv)",2019-10-25T22:40:32+02:00
+training_pin,58bd22206953531861775b6dc6bc75277f4c9a07,"commit that rebuilt all cv-ensemble files; defines the training backcasts of component models",2019-10-25T22:40:32+02:00

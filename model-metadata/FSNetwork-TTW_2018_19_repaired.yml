@@ -1,0 +1,54 @@
+team_abbr: FSNetwork
+model_abbr: TTW_2018_19_repaired
+team_name: FSNetwork
+model_name: target-type-weights
+model_contributors:
+- name: Nutcha Wattanachit
+- name: Thomas McAndrew
+- name: Nicholas G. Reich
+real_time_seasons:
+- 2018/2019
+paired_model_id: FSNetwork-TTW_2018_19
+source_dirs:
+- cv-ensemble-models/target-type-based-weights
+- real-time-ensemble-models/target-type-based-weights
+seasons:
+- 2010/2011
+- 2011/2012
+- 2012/2013
+- 2013/2014
+- 2014/2015
+- 2015/2016
+- 2016/2017
+- 2017/2018
+- 2018/2019
+this_model_is_an_ensemble: true
+methods: This is an ensemble of stacked entries from all component models. We use
+  the EM algorithm to estimate weights for each model that are specific for each target-type
+  (i.e. one set of weights for the weekly incidence outcomes and another for the seasonal
+  outcomes).
+data_inputs: other models
+designated_model: false
+notes: 'REPAIRED copy of FSNetwork-TTW_2018_19 (user decision 2026-11-23: keep original
+  and revised). FSN''s stacking code joined component bins on start AND end, so where
+  components label the last week of the year differently (week 52, or 53 in 2014/15:
+  [52, 1) vs [52, 53)) some components'' probability for that bin was dropped. In
+  the affected leave-one-season-out files only that bin is recomputed, from FSN''s
+  own components and weights; every other value, and every real-time file, is identical
+  to the original (see validation/cv-repair.csv). FSN''s pre-season build for 2017/18
+  (commit 76d9a33, 2017-11-04: ''updated cv ensemble entries and weights, based on
+  latest delphi update''). Leave-one-season-out forecasts for 2010/11-2016/17. This
+  model ID holds that build: the leave-one-season-out forecasts (not real-time) and
+  FSN''s 2017/2018 real-time forecasts made with the same method. Components and weights:
+  validation/ensemble-components.csv and FSN''s weights/ at the build commit. FSN''s
+  pre-season build for 2018/19 (commit 7b8ec6b, 2018-10-23: ''updated ensemble files
+  after protea model updates''; weights committed a minute later in c1d1927). Leave-one-season-out
+  forecasts for 2010/11-2017/18. This model ID holds that build: the leave-one-season-out
+  forecasts (not real-time) and FSN''s 2018/2019 real-time forecasts made with the
+  same method. Components and weights: validation/ensemble-components.csv and FSN''s
+  weights/ at the build commit. FSN''s pre-season build for 2019/20 (commit 58bd222,
+  2019-10-25: ''major file overhaul for cv-ensemble files''; weights in 3b73e33).
+  Leave-one-season-out forecasts for 2010/11-2018/19. This model ID holds that build:
+  the leave-one-season-out forecasts (not real-time) and FSN''s 2019/2020 real-time
+  forecasts made with the same method. Components and weights: validation/ensemble-components.csv
+  and FSN''s weights/ at the build commit.'
